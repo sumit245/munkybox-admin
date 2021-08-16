@@ -1,0 +1,1064 @@
+.chartjs-size-monitor-expand > div {
+  position: absolute;
+  width: 1000000px;
+  height: 1000000px;
+  left: 0;
+  top: 0;
+}
+
+.chartjs-size-monitor-shrink > div {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  left: 0;
+  top: 0;
+}
+
+.chartjs-size-monitor-expand > div {
+  position: absolute;
+  width: 1000000px;
+  height: 1000000px;
+  left: 0;
+  top: 0;
+}
+
+.chartjs-size-monitor-shrink > div {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  left: 0;
+  top: 0;
+}
+
+.chartjs-size-monitor-expand > div {
+  position: absolute;
+  width: 1000000px;
+  height: 1000000px;
+  left: 0;
+  top: 0;
+}
+
+.chartjs-size-monitor-shrink > div {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  left: 0;
+  top: 0;
+}
+
+.chartjs-size-monitor-expand > div {
+  position: absolute;
+  width: 1000000px;
+  height: 1000000px;
+  left: 0;
+  top: 0;
+}
+
+.chartjs-size-monitor-shrink > div {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  left: 0;
+  top: 0;
+}
+
+.chartjs-size-monitor-expand > div {
+  position: absolute;
+  width: 1000000px;
+  height: 1000000px;
+  left: 0;
+  top: 0;
+}
+
+.chartjs-size-monitor-shrink > div {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  left: 0;
+  top: 0;
+}
+
+#preloader-wrap {
+}
+
+#ms-side-nav {
+}
+
+#side-nav-accordion {
+}
+
+#dashboard {
+}
+
+#product {
+}
+
+#invoice {
+}
+
+#customer {
+}
+
+#basic-elements {
+}
+
+#advanced-elements {
+}
+
+#form-elements {
+}
+
+#charts {
+}
+
+#tables {
+}
+
+#popups {
+}
+
+#icons {
+}
+
+#maps {
+}
+
+#bonuspages {
+}
+
+#pages {
+}
+
+#authentication {
+}
+
+#apps {
+}
+
+#ms-recent-activity {
+}
+
+#activityLog {
+}
+
+#ms-nav-options {
+}
+
+#mailDropdown {
+}
+
+#notificationDropdown {
+}
+
+#userDropdown {
+}
+
+#line-chart {
+  display: block;
+  width: 203px;
+  height: 101px;
+}
+
+#line-chart-2 {
+  display: block;
+  width: 203px;
+  height: 101px;
+}
+
+#line-chart-3 {
+  display: block;
+  width: 203px;
+  height: 101px;
+}
+
+#line-chart-4 {
+  display: block;
+  width: 203px;
+  height: 101px;
+}
+
+#exampleSelect {
+}
+
+#youtube-subscribers {
+  display: block;
+  width: 471px;
+  height: 235px;
+}
+
+#btc {
+}
+
+#xrp {
+}
+
+#ltc {
+}
+
+#eth {
+}
+
+#zec {
+}
+
+#ms-quick-bar {
+}
+
+#qa-toDo {
+}
+
+#task-block {
+}
+
+#qa-reminder {
+}
+
+#qa-notes {
+}
+
+#qa-invite {
+}
+
+#qa-settings {
+}
+
+#dark-mode {
+}
+
+#remove-quickbar {
+}
+
+#reminder-modal {
+}
+
+#dp1613522822156 {
+}
+
+#notes-modal {
+}
+
+#NoteModal {
+}
+
+#ui-datepicker-div {
+}
+
+.spinner.spinner-8 {
+}
+
+.ms-circle1.ms-child {
+}
+
+.ms-circle2.ms-child {
+}
+
+.ms-circle3.ms-child {
+}
+
+.ms-circle4.ms-child {
+}
+
+.ms-circle5.ms-child {
+}
+
+.ms-circle6.ms-child {
+}
+
+.ms-circle7.ms-child {
+}
+
+.ms-circle8.ms-child {
+}
+
+.ms-circle9.ms-child {
+}
+
+.ms-circle10.ms-child {
+}
+
+.ms-circle11.ms-child {
+}
+
+.ms-circle12.ms-child {
+}
+
+.ms-aside-overlay.ms-overlay-left.ms-toggler {
+}
+
+.ms-aside-overlay.ms-overlay-right.ms-toggler {
+}
+
+.logo-sn.ms-d-block-lg {
+}
+
+.pl-0.ml-0.text-center {
+}
+
+.menu-item {
+}
+
+.has-chevron.active {
+}
+
+.material-icons.fs-16 {
+}
+
+.active {
+}
+
+.has-chevron {
+}
+
+.fa.fa-archive.fs-16 {
+}
+
+.fas.fa-clipboard-list.fs-16 {
+}
+
+.fa.fa-tasks.fs-16 {
+}
+
+.fas.fa-file-invoice.fs-16 {
+}
+
+.fas.fa-user-friends.fs-16 {
+}
+
+.fa.fa-briefcase.fs-16 {
+}
+
+.ps__rail-x {
+  left: 0px;
+  bottom: 0px;
+}
+
+.ps__thumb-x {
+  left: 0px;
+  width: 0px;
+}
+
+.ps__rail-y {
+  top: 0px;
+  height: 194px;
+  right: 0px;
+}
+
+.ps__thumb-y {
+  top: 0px;
+  height: 32px;
+}
+
+.ms-aside-header {
+}
+
+.nav.nav-tabs.tabs-bordered.d-flex.nav-justified.mb-3 {
+}
+
+.fs-12 {
+}
+
+.close.ms-toggler.text-center {
+}
+
+.ms-aside-body {
+}
+
+.tab-content {
+}
+
+.ms-activity-log {
+}
+
+.ms-btn-icon.btn-pill.icon.btn-light {
+}
+
+.flaticon-gear {
+}
+
+.material-icons {
+}
+
+.fs-14 {
+}
+
+.ms-btn-icon.btn-pill.icon.btn-success {
+}
+
+.flaticon-tick-inside-circle {
+}
+
+.ms-btn-icon.btn-pill.icon.btn-warning {
+}
+
+.flaticon-alert-1 {
+}
+
+.ms-btn-icon.btn-pill.icon.btn-danger {
+}
+
+.flaticon-alert {
+}
+
+.ms-btn-icon.btn-pill.icon.btn-info {
+}
+
+.flaticon-information {
+}
+
+.ms-btn-icon.btn-pill.icon.btn-secondary {
+}
+
+.flaticon-diamond {
+}
+
+.btn.btn-primary.d-block {
+}
+
+.body-content {
+}
+
+.navbar.ms-navbar {
+}
+
+.ms-aside-toggler.ms-toggler.pl-0 {
+}
+
+.ms-toggler-bar.bg-primary {
+}
+
+.logo-sn.logo-sm.ms-d-block-sm {
+}
+
+.pl-0.ml-0.text-center.navbar-brand.mr-0 {
+}
+
+.ms-nav-item.ms-search-form.pb-0.py-0 {
+}
+
+.ms-form {
+}
+
+.ms-form-group.my-0.mb-0.has-icon.fs-14 {
+}
+
+.ms-form-input {
+}
+
+.flaticon-search.text-disabled {
+}
+
+.ms-nav-item.dropdown {
+}
+
+.flaticon-mail {
+}
+
+.dropdown-menu.dropdown-menu-right {
+}
+
+.dropdown-menu-header {
+}
+
+.dropdown-header.ms-inline.m-0 {
+}
+
+.text-disabled {
+}
+
+.badge.badge-pill.badge-success {
+}
+
+.dropdown-divider {
+}
+
+.ms-scrollable.ms-dropdown-list.ps {
+}
+
+.media.p-2 {
+}
+
+.ms-chat-status.ms-status-offline.ms-chat-img.mr-2.align-self-center {
+}
+
+.ms-img-round {
+}
+
+.media-body {
+}
+
+.fs-10.my-1.text-disabled {
+}
+
+.ms-chat-status.ms-status-online.ms-chat-img.mr-2.align-self-center {
+}
+
+.dropdown-menu-footer.text-center {
+}
+
+.flaticon-bell {
+}
+
+.badge.badge-pill.badge-info {
+}
+
+.ms-nav-item.ms-nav-user.dropdown {
+}
+
+.ms-user-img.ms-img-round.float-right {
+}
+
+.dropdown-menu.dropdown-menu-right.user-dropdown {
+}
+
+.ms-dropdown-list {
+}
+
+.media.fs-14.p-2 {
+}
+
+.flaticon-user.mr-2 {
+}
+
+.flaticon-mail.mr-2 {
+}
+
+.flaticon-gear.mr-2 {
+}
+
+.dropdown-menu-footer {
+}
+
+.flaticon-security.mr-2 {
+}
+
+.flaticon-shut-down.mr-2 {
+}
+
+.ms-toggler.ms-d-block-sm.pr-0.ms-nav-toggler {
+}
+
+.ms-content-wrapper {
+}
+
+.row {
+}
+
+.col-md-12 {
+}
+
+.db-header-title {
+}
+
+.col-xl-3.col-lg-6.col-md-6 {
+}
+
+.ms-card.ms-widget.has-graph-full-width.ms-infographics-widget {
+}
+
+.chartjs-size-monitor {
+  position: absolute;
+  inset: 0px;
+  overflow: hidden;
+  pointer-events: none;
+  visibility: hidden;
+  z-index: -1;
+}
+
+.chartjs-size-monitor-expand {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  pointer-events: none;
+  visibility: hidden;
+  z-index: -1;
+}
+
+.chartjs-size-monitor-shrink {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  pointer-events: none;
+  visibility: hidden;
+  z-index: -1;
+}
+
+.ms-chart-label.bg-black {
+}
+
+.ms-card-body.media {
+}
+
+.black-text {
+}
+
+.ms-chart-label.bg-red {
+}
+
+.col-xl-6.col-md-12 {
+}
+
+.ms-panel {
+}
+
+.ms-panel-header {
+}
+
+.d-flex.justify-content-between {
+}
+
+.align-self-center.align-left {
+}
+
+.btn.btn-primary {
+}
+
+.ms-panel-body {
+}
+
+.table-responsive {
+}
+
+.table.table-hover {
+}
+
+.ms-table-f-w {
+}
+
+.ms-panel.ms-panel-fh {
+}
+
+.ms-panel-header.new {
+}
+
+.progress-label {
+}
+
+.progress {
+}
+
+.progress-bar.bg-primary {
+  width: 25%;
+}
+
+.col-xl-3.col-lg-6.col-md-6.col-sm-6 {
+}
+
+.ms-card.no-margin {
+}
+
+.ms-card-img {
+}
+
+.ms-card-body {
+}
+
+.ms-card-heading-title {
+}
+
+.green-text {
+}
+
+.red-text {
+}
+
+.col-xl-7.col-md-12 {
+}
+
+.ms-header-text {
+}
+
+.ms-panel-body.pt-0 {
+}
+
+.d-flex.justify-content-between.ms-graph-meta {
+}
+
+.ms-list-flex.mt-3.mb-5 {
+}
+
+.ms-count {
+}
+
+.col-xl-5.col-md-12 {
+}
+
+.ms-panel.ms-widget.ms-crypto-widget {
+}
+
+.ms-panel-body.p-0 {
+}
+
+.nav.nav-tabs.nav-justified.has-gap.px-4.pt-4 {
+}
+
+.active.show {
+}
+
+.table.table-hover.thead-light {
+}
+
+.ms-text-success {
+}
+
+.ms-text-danger {
+}
+
+.ms-quick-stats {
+}
+
+.ms-stats-grid {
+}
+
+.fa.fa-star {
+}
+
+.ms-text-dark {
+}
+
+.fa.fa-university {
+}
+
+.col-12 {
+}
+
+.table.table-hover.thead-primary {
+}
+
+.badge.badge-primary {
+}
+
+.badge.badge-dark {
+}
+
+.badge.badge-success {
+}
+
+.col-lg-4.col-md-6.col-sm-6 {
+}
+
+.media.fs-14 {
+}
+
+.mr-2.align-self-center {
+}
+
+.dropdown.float-right {
+}
+
+.fs-12.my-1.text-disabled {
+}
+
+.ms-star-rating.rating-fill.rating-circle.ratings-new {
+}
+
+.ms-rating-item {
+}
+
+.ms-rating-item.rated {
+}
+
+.ms-card-footer.text-disabled.d-flex {
+}
+
+.ms-card-options {
+}
+
+.ms-list.ms-feed.ms-twitter-feed.ms-recent-support-tickets {
+}
+
+.ms-list-item {
+}
+
+.media.clearfix {
+}
+
+.ms-img-round.ms-img-small {
+}
+
+.ms-feed-user.mb-0 {
+}
+
+.my-2.d-block {
+}
+
+.d-block {
+}
+
+.d-flex.justify-content-between.align-items-end {
+}
+
+.ms-feed-controls {
+}
+
+.badge.badge-danger {
+}
+
+.ms-panel.ms-panel-fh.ms-widget.ms-chat-conversations {
+}
+
+.ms-chat-header.justify-content-between {
+}
+
+.ms-chat-user-container.media.clearfix {
+}
+
+.ms-chat-status.ms-status-online.ms-chat-img.mr-3.align-self-center {
+}
+
+.media-body.ms-chat-user-info.mt-1 {
+}
+
+.text-disabled.fs-12 {
+}
+
+.ms-list.ms-list-flex.ms-chat-controls {
+}
+
+.ms-panel-body.ms-scrollable.ps.ps--active-y {
+}
+
+.ms-chat-bubble.ms-chat-message.ms-chat-outgoing.media.clearfix {
+}
+
+.ms-chat-status.ms-status-online.ms-chat-img {
+}
+
+.ms-chat-text {
+}
+
+.ms-chat-time {
+}
+
+.ms-chat-bubble.ms-chat-message.ms-chat-incoming.media.clearfix {
+}
+
+.ms-panel-footer {
+}
+
+.ms-chat-textbox {
+}
+
+.ms-list-flex.mb-0 {
+}
+
+.ms-chat-vn {
+}
+
+.ms-chat-input {
+}
+
+.ms-chat-text-controls.ms-list-flex {
+}
+
+.nav.nav-tabs.ms-quick-bar-list.ui-sortable.ui-sortable-disabled {
+}
+
+.ms-quick-bar-item.ms-has-qa.ui-sortable-handle.ui-draggable.ui-draggable-handle.ui-draggable-disabled {
+}
+
+.flaticon-list {
+}
+
+.flaticon-pencil {
+}
+
+.flaticon-share-1 {
+}
+
+.ms-configure-qa {
+}
+
+.flaticon-hammer {
+}
+
+.ms-quick-bar-content {
+}
+
+.ms-quick-bar-header.clearfix {
+}
+
+.ms-quick-bar-title.float-left {
+}
+
+.close.ms-toggler {
+}
+
+.ms-quick-bar-body.tab-content {
+}
+
+.ms-quickbar-container.ms-todo-list-container.ms-scrollable.ps {
+}
+
+.ms-add-task-block {
+}
+
+.form-group.mx-3.mt-0.fs-14.clearfix {
+}
+
+.ms-btn-icon.bg-primary.float-right {
+}
+
+.material-icons.text-disabled {
+}
+
+.ms-todo-list {
+}
+
+.ms-card.ms-qa-card.ms-deletable {
+}
+
+.ms-card-header.clearfix {
+}
+
+.ms-card-title {
+}
+
+.ms-add-task-to-block.ms-btn-icon.float-right {
+}
+
+.ms-list.ms-task-block {
+}
+
+.ms-list-item.ms-to-do-task.ms-deletable {
+}
+
+.ms-checkbox-wrap.ms-todo-complete {
+}
+
+.ms-checkbox-check {
+}
+
+.close {
+}
+
+.flaticon-trash.ms-delete-trigger {
+}
+
+.ms-card-footer.clearfix {
+}
+
+.text-disabled.mr-2 {
+}
+
+.flaticon-archive {
+}
+
+.text-disabled.ms-delete-trigger.float-right {
+}
+
+.flaticon-trash {
+}
+
+.ms-quickbar-container.ms-reminders {
+}
+
+.ms-qa-options {
+}
+
+.ms-quickbar-container.ms-scrollable.ps {
+}
+
+.material-icons.fs-14 {
+}
+
+.ms-note-editor.float-right {
+}
+
+.text-disabled.ms-delete-trigger {
+}
+
+.flaticon-sticky-note {
+}
+
+.flaticon-excel {
+}
+
+.ms-card-header {
+}
+
+.ms-note-members.clearfix.mb-0 {
+}
+
+.ms-deletable {
+}
+
+.dropdown.float-left {
+}
+
+.dropdown-menu {
+}
+
+.ms-scrollable.ms-dropdown-list.ms-members-list.ps {
+}
+
+.ms-quickbar-container.text-center.ms-invite-member {
+}
+
+.flaticon-network {
+}
+
+.ms-form-group {
+}
+
+.form-control {
+}
+
+.btn.btn-primary.w-100 {
+}
+
+.col-md-12.text-left.mb-5 {
+}
+
+.section-title.bold {
+}
+
+.ms-switch {
+}
+
+.ms-switch-slider.round {
+}
+
+.col-md-12.text-left {
+}
+
+.ms-directions.mb-0 {
+}
+
+.modal-dialog.modal-dialog-centered {
+}
+
+.modal-content {
+}
+
+.modal-header.bg-secondary {
+}
+
+.modal-title.has-icon.text-white {
+}
+
+.modal-body {
+}
+
+.ms-option-name.fs-14 {
+}
+
+.ms-switch.float-right {
+}
+
+.col-md-6 {
+}
+
+.modal-footer {
+}
+
+.btn.btn-light {
+}
+
+.btn.btn-secondary.shadow-none {
+}
