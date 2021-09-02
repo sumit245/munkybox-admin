@@ -13,16 +13,16 @@ router.route("/").get(function (req, res) {
 });
 //get all restaurants
 router.route("/login").post(function (req, res) {
-  NewRestaurant.findOne({ email: req.body.email })
+  NewRestaurant.findOne({ phone: req.body.phone })
     .then((profile) => {
       if (!profile) {
-        res.send("User does not exist");
+        res.send({ status: "203", msg: "User does not exist", data: null });
       } else {
-        if (profile.phone === req.body.phone) {
-          res.send(profile);
-        } else {
-          res.send("Authentication Failed");
-        }
+        res.send({
+          status: "200",
+          msg: "Welcome to munkybox-chef",
+          data: profile,
+        });
       }
     })
     .catch((err) => {

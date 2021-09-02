@@ -11,10 +11,10 @@ import {
 import { MdRestaurantMenu } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { getClients } from "../../controllers/ClientController";
-import {getRestaurants} from '../../controllers/RestaurantController'
+// import {getRestaurants} from '../../controllers/RestaurantController'
 
 const Clt = getClients();
-const Restaurants = getRestaurants();
+// const Restaurants = getRestaurants();
 export default class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -48,20 +48,20 @@ export default class Dashboard extends Component {
       .catch((err) => {
         console.log(err);
       });
-    Restaurants.then((data) => {
-      let active = data.filter(function (e) {
-        return e.status === 'Active'
-      })
-      let inactive = data.filter(function (e) {
-        return e.status === 'Inactive'
-      })
+    // Restaurants.then((data) => {
+    //   let active = data.filter(function (e) {
+    //     return e.status === 'Active'
+    //   })
+    //   let inactive = data.filter(function (e) {
+    //     return e.status === 'Inactive'
+    //   })
 
-      this.setState({ restaurants: data, activeRestaurants: active, inactiveRestaurants: inactive })
+    //   this.setState({ restaurants: data, activeRestaurants: active, inactiveRestaurants: inactive })
 
-    })
-      .catch((err) => {
-        console.log(err);
-      });
+    // })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
 
   }
   render() {

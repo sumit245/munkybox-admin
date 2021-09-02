@@ -14,28 +14,48 @@ router.route("/").get(function (req, res) {
 });
 //get all user
 
-router.route("/").post(function (req, res) {
-  let data = new Users(req.body);
-  console.log(data);
-  Users.findOne({ phone: req.body.phone }).then((user) => {
-    if (user) {
-      return res.json({ status: 201, data: user, msg: "User Already Exists" });
+router.route("/").post(async function (req, res) {
+  let data = req.body;
+  if (typeof data.phone !== "undefined") {
+    const phone = await Users.findOne({ phone: data.phone }).exec();
+    if (phone) {
+      return res.json({ status: 201, data: phone, msg: "User Already Exists" });
     } else {
-      data.save((err, users) => {
-        if (users) {
-          res.json({ status: 200, data: users, msg: "Welcome to Munky-Box" });
-        } else {
-          Users.findOne({ email_id: data.email_id }).then((user) => {
-            return res.json({
-              status: 202,
-              data: user,
-              msg: "Email Already Taken",
-            });
+      const users = new Users(data);
+      users
+        .save()
+        .then((response) => {
+          res.json({
+            status: 200,
+            data: response,
+            msg: "Welcome to Munky-Box",
           });
-        }
-      });
+        })
+        .catch((err) => {
+          res.send(err);
+        });
     }
-  });
+  }
+  if (typeof data.email_id !== "undefined") {
+    const email = await Users.findOne({ email_id: data.email_id }).exec();
+    if (email) {
+      return res.json({ status: 201, data: email, msg: "Email Already Taken" });
+    } else {
+      const users = new Users(data);
+      users
+        .save()
+        .then((response) => {
+          res.json({
+            status: 200,
+            data: response,
+            msg: "Welcome to Munky-Box",
+          });
+        })
+        .catch((err) => {
+          res.send(err);
+        });
+    }
+  }
 });
 //save a singe user to database
 
@@ -53,7 +73,7 @@ router.put("/:id", function (req, res, next) {
   Users.findByIdAndUpdate(id, req.body, (err, response) => {
     if (err) {
       console.log(err);
-      res.json({status:403,msg:'Bad Request'})
+      res.json({ status: 403, msg: "Bad Request" });
     } else {
       Users.findById(id, function (error, user) {
         res.json({
@@ -200,6 +220,36 @@ router.route("/getcards/:id").get(function (req, res, next) {
       res.json({ status: 400 });
     }
   });
+});
+router.route("/add_review/:restaurant/:user").post(function (req, res) {
+  const user = req.params.user;
+  const review = {
+    user_name: user,
+    reviews: req.body.reviews,
+  };
+  const restaurant_name = req.params.restaurant;
+  NewRestaurant.findOne(
+    { restaurant_name: restaurant_name },
+    function (err, restaurant) {
+      let myReview = restaurant.reviews;
+      myReview.push(review);
+      let id = restaurant._id;
+      NewRestaurant.updateOne(
+        { reviews: myReview },
+        function (err, affected, resp) {
+          if (err) {
+            res.send({ status: 400, data: err, msg: "" });
+          } else {
+            res.send({
+              status: "200",
+              data: resp,
+              msg: "Thank you for your review",
+            });
+          }
+        }
+      );
+    }
+  ).catch((err) => res.send(err));
 });
 
 //add to favourite
