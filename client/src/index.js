@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import './assets/css/dashforge.css'
+import './css/bootstrap.min.css'
+import './font-awesome/css/font-awesome.css'
+import './css/animate.css'
+import './css/style.css'
 import App from './views/App';
 import reportWebVitals from './reportWebVitals';
 
