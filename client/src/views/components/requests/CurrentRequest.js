@@ -2,15 +2,6 @@ import React from "react";
 
 export default function CurrentRequest({ partner }) {
   return (
-    // <div className="col-lg-8">
-    //   <div className="ibox">
-    //     <div className="ibox-title">
-    //       <h5>
-    //
-    //       </h5>
-    //     </div>
-    //   </div>
-    // </div>
     <div className="col-lg-8 animated fadeInRight">
       <div className="mail-box-header">
         <div className="float-right tooltip-demo">

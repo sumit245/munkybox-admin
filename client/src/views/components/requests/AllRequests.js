@@ -4,7 +4,7 @@ import axios from "axios";
 export default function AllRequests() {
   const [request, setRequest] = useState([]);
   useEffect(() => {
-    axios.get("http://localhost:5000/api/partnerrequest").then((res) => {
+    axios.get("https://munkybox-admin.herokuapp.com/api/partnerrequest").then((res) => {
       setRequest(res.data);
     });
   }, []);

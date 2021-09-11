@@ -19,7 +19,7 @@ export default function TopNavigation() {
   const [request, setRequest] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/partnerrequest").then((res) => {
+    axios.get("https://munkybox-admin.herokuapp.com/api/partnerrequest").then((res) => {
       let numOfRequests = res.data.length;
       document.getElementById("partnerRequest").innerHTML = numOfRequests;
       res.data.length = 5;

@@ -9,7 +9,7 @@ export default function Requests() {
   const [partner, setPartner] = useState({});
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/partnerrequest/" + id)
+      .get("https://munkybox-admin.herokuapp.com/api/partnerrequest/" + id)
       .then((res) => {
         console.log(res);
         setPartner(res.data)

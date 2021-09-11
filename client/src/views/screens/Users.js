@@ -8,7 +8,7 @@ export default function Users() {
   const [user, setUser] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/users")
+      .get("https://munkybox-admin.herokuapp.com/api/users")
       .then((res) => {
         setUser(res.data);
       })
