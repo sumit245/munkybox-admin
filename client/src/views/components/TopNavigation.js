@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { NavDropdown } from "react-bootstrap";
 import axios from "axios";
 
+
 const envelope = (
   <a className="dropdown-toggle count-info" data-toggle="dropdown" href="/">
     <span className="label label-warning" id="partnerRequest"></span>
@@ -16,13 +17,10 @@ const notifications = (
 );
 export default function TopNavigation() {
   const [request, setRequest] = useState([]);
-  const [numRequest, setNumRequest] = useState(0);
 
   useEffect(() => {
     axios.get("http://localhost:5000/api/partnerrequest").then((res) => {
       let numOfRequests = res.data.length;
-      console.log(numOfRequests);
-      setNumRequest(numOfRequests);
       document.getElementById("partnerRequest").innerHTML = numOfRequests;
       res.data.length = 5;
       setRequest(res.data);
@@ -30,11 +28,7 @@ export default function TopNavigation() {
   }, []);
 
   return (
-    <nav
-      className="navbar navbar-static-top white-bg"
-      role="navigation"
-      style={{ marginBottom: 0 }}
-    >
+    <nav className="navbar navbar-static-top white-bg">
       <div className="navbar-header">
         <a
           className="navbar-minimalize minimalize-styl-2 btn btn-primary"
@@ -43,9 +37,9 @@ export default function TopNavigation() {
           <i className="fa fa-bars" />
         </a>
         <form
-          role="search"
+          // role="search"
           className="navbar-form-custom"
-          action="search_results.html"
+          // action="search_results.html"
         >
           <div className="form-group">
             <input
@@ -69,6 +63,7 @@ export default function TopNavigation() {
           <NavDropdown title={envelope} id="navbarScrollingDropdown">
             {request.map((data, key) => (
               <NavDropdown.Item
+                key={key}
                 href={`/newrequest/${data._id}`}
                 className="p-2 mt-0 mb-0 text-success tx-10"
               >
@@ -80,13 +75,13 @@ export default function TopNavigation() {
           </NavDropdown>
         </li>
         <li>
-          <NavDropdown
-            title={notifications}
-            id="navbarScrollingDropdown"
-            className="dropdown"
-          >
-            <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-            <NavDropdown.Item href="#action4">Another action</NavDropdown.Item>
+          <NavDropdown title={notifications}>
+            <NavDropdown.Item href="#action3">
+              Action
+            </NavDropdown.Item>
+            <NavDropdown.Item href="#action4">
+              Another action
+            </NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Item href="#action5">View All</NavDropdown.Item>
           </NavDropdown>

@@ -19,11 +19,11 @@ export default function AllRequests() {
             {request.map((data, key) => (
               <li className="list-group-item" key={key}>
                 <p>
-                  <a className="text-info" href="#">
+                  <a className="text-info" href="/">
                     {data.first_name + " " + data.last_name}
                   </a>{" "}
                   want to get partnership for his restaurant{" "}
-                  <a className="text-info" href="#">
+                  <a className="text-info" href="/">
                     @{data.restaurant_name}
                   </a>{" "}
                 </p>

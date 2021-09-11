@@ -27,9 +27,8 @@ export default function App() {
                 <Route exact path="/restaurant" component={Restaurant} />
                 <Route exact path="/orders" component={Orders} />
                 <Route exact path="/payments" component={Payouts} />
-                
-                <Route path="/newrequest" render={()=><Requests/>}/>
-
+                <Route path="/newrequest/:id" component={Requests} />
+        
               </Switch>
             </div>
           </div>
