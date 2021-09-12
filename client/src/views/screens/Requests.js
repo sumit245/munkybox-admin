@@ -15,7 +15,7 @@ export default function Requests() {
         setPartner(res.data)
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [id]);
   return (
     <div className="wrapper wrapper-content">
       <div className="row">

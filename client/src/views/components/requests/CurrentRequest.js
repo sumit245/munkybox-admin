@@ -5,24 +5,26 @@ export default function CurrentRequest({ partner }) {
     <div className="col-lg-8 animated fadeInRight">
       <div className="mail-box-header">
         <div className="float-right tooltip-demo">
-          <a
-            href="#"
-            className="btn btn-white btn-sm"
-            data-toggle="tooltip"
+          <button
+            title
             data-placement="top"
-            title="Print email"
-          >
-            <i className="fa fa-print" />{" "}
-          </a>
-          <a
-            href="mailbox.html"
-            className="btn btn-white btn-sm"
             data-toggle="tooltip"
-            data-placement="top"
-            title="Move to trash"
+            type="button"
+            data-original-title="Print"
+            className="btn btn-sm btn-white mr-1"
           >
-            <i className="fa fa-trash-o" />{" "}
-          </a>
+            <i className="fa fa-print" /> Print
+          </button>
+          <button
+            title
+            data-placement="top"
+            data-toggle="tooltip"
+            type="button"
+            data-original-title="Print"
+            className="btn btn-sm btn-white"
+          >
+            <i className="fa fa-trash-o" /> Delete
+          </button>
         </div>
         <h2>View Message</h2>
         <div className="mail-tools tooltip-demo m-t-md">
@@ -89,7 +91,11 @@ export default function CurrentRequest({ partner }) {
                 <a href="#">
                   <span className="corner" />
                   <div className="image">
-                    <img alt="image" className="img-fluid" src="img/p1.jpg" />
+                    <img
+                      alt="Italy Street.jpg"
+                      className="img-fluid"
+                      src="img/p1.jpg"
+                    />
                   </div>
                   <div className="file-name">
                     Italy street.jpg
@@ -99,28 +105,21 @@ export default function CurrentRequest({ partner }) {
                 </a>
               </div>
             </div>
-            <div className="file-box">
-              <div className="file">
-                <a href="#">
-                  <span className="corner" />
-                  <div className="image">
-                    <img alt="image" className="img-fluid" src="img/p2.jpg" />
-                  </div>
-                  <div className="file-name">
-                    My feel.png
-                    <br />
-                    <small>Added: Jan 7, 2014</small>
-                  </div>
-                </a>
-              </div>
-            </div>
+
             <div className="clearfix" />
           </div>
         </div>
         <div className="mail-body text-right tooltip-demo">
-          <a className="btn btn-sm btn-white" href="mail_compose.html">
+          <button
+            title
+            data-placement="top"
+            data-toggle="tooltip"
+            type="button"
+            data-original-title="Print"
+            className="btn btn-sm btn-white mr-1"
+          >
             <i className="fa fa-reply" /> Reply
-          </a>
+          </button>
           <button
             title
             data-placement="top"

@@ -9,6 +9,7 @@ import Payouts from "./screens/Payouts";
 import Restaurant from "./screens/Restaurant";
 import Users from "./screens/Users";
 import Requests from "./screens/Requests"
+import AddRestaurant from "./components/restaurant/AddRestaurant";
 
 export default function App() {
   return (
@@ -25,10 +26,10 @@ export default function App() {
                 <Route exact path="/" render={() => <Dashboard />} />
                 <Route exact path="/users" component={Users} />
                 <Route exact path="/restaurant" component={Restaurant} />
+                <Route exact path="/add_restaurant" component={AddRestaurant} />
                 <Route exact path="/orders" component={Orders} />
                 <Route exact path="/payments" component={Payouts} />
                 <Route path="/newrequest/:id" component={Requests} />
-        
               </Switch>
             </div>
           </div>

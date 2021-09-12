@@ -69,7 +69,7 @@ export default function SideNav() {
                 <NavDropdown.Item href="#action/3.2" className="text-white-50">
                   Unapproved
                 </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3" className="text-white-50">
+                <NavDropdown.Item href="/add_restaurant" className="text-white-50">
                   Add Restaurant
                 </NavDropdown.Item>
               </ul>

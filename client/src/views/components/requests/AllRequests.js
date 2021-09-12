@@ -15,7 +15,7 @@ export default function AllRequests() {
           <h5>Current Requests</h5>
         </div>
         <div className="ibox-content no-padding">
-          <ul className="list-group">
+          <ul className="list-group" style={{overflowY:"scroll",height:600,paddingBottom:10}}>
             {request.map((data, key) => (
               <li className="list-group-item" key={key}>
                 <p>
