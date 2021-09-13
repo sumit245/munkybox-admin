@@ -12,7 +12,7 @@ const envelope = (
 const notifications = (
   <a className="dropdown-toggle count-info" data-toggle="dropdown" href="/">
     <i className="fa fa-bell" />
-    <span className="label label-primary">8</span>
+    <span className="label label-primary">0</span>
   </a>
 );
 export default function TopNavigation() {

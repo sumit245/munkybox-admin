@@ -1,8 +1,8 @@
-const { response } = require("express");
 const express = require("express");
 const router = express.Router();
 const Users = require("../models/users.model");
 const NewRestaurant = require("../models/newrest.model");
+
 router.route("/").get(function (req, res) {
   Users.find(function (err, users) {
     if (err) {
@@ -69,7 +69,6 @@ router.route("/:id").get(function (req, res) {
 
 router.put("/:id", function (req, res, next) {
   let id = req.params.id;
-  console.log(req.body);
   Users.findByIdAndUpdate(id, req.body, (err, response) => {
     if (err) {
       console.log(err);
