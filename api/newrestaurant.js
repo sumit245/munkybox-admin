@@ -141,7 +141,12 @@ router.route("/price/:order").get(function (req, res) {
     }
   });
 });
-
 // filter by price
+router.route('/').delete((req, res, next)=>{
+    NewRestaurant.deleteMany({}, (err, resp) => {
+        res.json({msg:'All Deleted'})
+    })
+})
+//delete all
 
 module.exports = router;

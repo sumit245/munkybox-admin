@@ -23,7 +23,7 @@ export default function TopNavigation() {
       let numOfRequests = res.data.length;
       document.getElementById("partnerRequest").innerHTML = numOfRequests;
       res.data.length = 5;
-      setRequest(res.data);
+      setRequest(res.data.reverse());
     });
   }, []);
 

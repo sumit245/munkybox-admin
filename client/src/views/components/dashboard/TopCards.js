@@ -1,6 +1,8 @@
 import React,{useEffect} from "react";
 import { useSelector, useDispatch} from 'react-redux'
-import { getOrders, getUsers } from "../../../actions/actions";
+import { getOrders } from "../../../actions/orderAction";
+import {getUsers} from "../../../actions/actions"
+
 export default function TopCards() {
   const dispatch = useDispatch()
   const orders = useSelector(state => state.orders)

@@ -7,7 +7,7 @@ router.route("/").get(function (req, res) {
     if (err) {
       res.json({ status: "404", data: err, msg: "Request not found" });
     } else {
-      res.json({ status: "404", data: partners, msg: "Request not found" });
+      res.json({ status: "200", data: partners.reverse(), msg: "Requests found" });
     }
   });
 });
@@ -16,7 +16,6 @@ router.route("/").post(function (req, res) {
   let partner = new Partner(req.body);
   partner
     .save()
-    .then((partner) => partner)
     .then((partner) => {
       res.json({
         status: 200,
@@ -77,4 +76,5 @@ router.route('/').delete((req, res, next)=>{
         res.json({msg:'All Deleted'})
     })
 })
+//delete all
 module.exports = router;

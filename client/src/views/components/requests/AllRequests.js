@@ -5,7 +5,7 @@ export default function AllRequests() {
   const [request, setRequest] = useState([]);
   useEffect(() => {
     axios.get("https://munkybox-admin.herokuapp.com/api/partnerrequest").then((res) => {
-      setRequest(res.data);
+      setRequest(res.data.reverse());
     });
   }, []);
   return (
@@ -15,7 +15,10 @@ export default function AllRequests() {
           <h5>Current Requests</h5>
         </div>
         <div className="ibox-content no-padding">
-          <ul className="list-group" style={{overflowY:"scroll",height:600,paddingBottom:10}}>
+          <ul
+            className="list-group"
+            style={{ overflowY: "scroll", height: 600, paddingBottom: 10 }}
+          >
             {request.map((data, key) => (
               <li className="list-group-item" key={key}>
                 <p>
@@ -33,7 +36,7 @@ export default function AllRequests() {
                 </small>
                 <a
                   className="text-center text-success align-self-center "
-                  href={`/newnerrequest/${data._id}`}
+                  href={`/newrequest/${data._id}`}
                 >
                   Click to See more
                 </a>

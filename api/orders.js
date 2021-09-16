@@ -63,5 +63,11 @@ router.put("/:id", function (req, res, next) {
     }
   });
 });
+router.route('/').delete((req, res, next)=>{
+    Order.deleteMany({}, (err, resp) => {
+        res.json({msg:'All Deleted'})
+    })
+})
+//delete all
 
 module.exports = router;

@@ -62,6 +62,7 @@ let NewRestaurant = Schema({
             {
               add_on: { type: String },
               add_on_price: { type: String },
+              add_on_image: {type:String}
             },
           ],
         },

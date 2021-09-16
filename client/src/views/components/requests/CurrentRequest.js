@@ -1,6 +1,17 @@
+import axios from "axios";
 import React from "react";
 
 export default function CurrentRequest({ partner }) {
+  const handleDelete = (id) => {
+    axios
+      .delete("http://localhost:5000/api/partnerrequest/" + id)
+      .then((alert("Deleted"), window.location.href="/"))
+      .catch((err) => {
+        console.log("====================================");
+        console.log(err);
+        console.log("====================================");
+      });
+  };
   return (
     <div className="col-lg-8 animated fadeInRight">
       <div className="mail-box-header">
@@ -22,6 +33,7 @@ export default function CurrentRequest({ partner }) {
             type="button"
             data-original-title="Print"
             className="btn btn-sm btn-white"
+            onClick={() => handleDelete(partner._id)}
           >
             <i className="fa fa-trash-o" /> Delete
           </button>
@@ -54,8 +66,9 @@ export default function CurrentRequest({ partner }) {
             <strong>Phone:</strong>
             {partner.phone}
             <br />
-            <strong>Status:</strong>
-            Pending
+            <strong>Postal Code:</strong>
+            {partner.postal_code}
+            <br />
           </p>
           <p>
             <strong>
@@ -63,52 +76,7 @@ export default function CurrentRequest({ partner }) {
             </strong>
           </p>
         </div>
-        <div className="mail-attachment">
-          <p>
-            <span>
-              <i className="fa fa-paperclip" /> 2 attachments -{" "}
-            </span>
-            <a href="#">Download all</a>|<a href="#">View all images</a>
-          </p>
-          <div className="attachment">
-            <div className="file-box">
-              <div className="file">
-                <a href="#">
-                  <span className="corner" />
-                  <div className="icon">
-                    <i className="fa fa-file" />
-                  </div>
-                  <div className="file-name">
-                    Document_2014.doc
-                    <br />
-                    <small>Added: Jan 11, 2014</small>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div className="file-box">
-              <div className="file">
-                <a href="#">
-                  <span className="corner" />
-                  <div className="image">
-                    <img
-                      alt="Italy Street.jpg"
-                      className="img-fluid"
-                      src="img/p1.jpg"
-                    />
-                  </div>
-                  <div className="file-name">
-                    Italy street.jpg
-                    <br />
-                    <small>Added: Jan 6, 2014</small>
-                  </div>
-                </a>
-              </div>
-            </div>
 
-            <div className="clearfix" />
-          </div>
-        </div>
         <div className="mail-body text-right tooltip-demo">
           <button
             title
