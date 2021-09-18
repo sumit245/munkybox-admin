@@ -1,5 +1,5 @@
 import React from "react";
-import { NavDropdown } from "react-bootstrap";
+import { NavDropdown,Nav } from "react-bootstrap";
 import adminImage from "../../img/profile_small.jpg";
 
 const RestaurantLabel = (
@@ -18,7 +18,7 @@ const UserLabel = (
 
 export default function SideNav() {
   return (
-    <nav className="navbar-default navbar-static-side" role="navigation">
+    <Nav className="navbar-default navbar-static-side" role="navigation">
       <div className="sidebar-collapse">
         <ul className="nav metismenu" id="side-menu">
           <li className="nav-header">
@@ -129,6 +129,6 @@ export default function SideNav() {
           </li>
         </ul>
       </div>
-    </nav>
+    </Nav>
   );
 }

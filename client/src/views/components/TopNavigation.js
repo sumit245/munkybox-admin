@@ -20,10 +20,10 @@ export default function TopNavigation() {
 
   useEffect(() => {
     axios.get("https://munkybox-admin.herokuapp.com/api/partnerrequest").then((res) => {
-      let numOfRequests = res.data.length;
+      let numOfRequests = res.data.data.length;
       document.getElementById("partnerRequest").innerHTML = numOfRequests;
-      res.data.length = 5;
-      setRequest(res.data.reverse());
+      res.data.data.length = 5;
+      setRequest(res.data.data);
     });
   }, []);
 

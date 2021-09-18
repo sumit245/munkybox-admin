@@ -4,7 +4,7 @@ import React from "react";
 export default function CurrentRequest({ partner }) {
   const handleDelete = (id) => {
     axios
-      .delete("http://localhost:5000/api/partnerrequest/" + id)
+      .delete("http://munkybox-admin.herokuapp.com/api/partnerrequest/" + id)
       .then((alert("Deleted"), window.location.href="/"))
       .catch((err) => {
         console.log("====================================");
@@ -33,7 +33,7 @@ export default function CurrentRequest({ partner }) {
             type="button"
             data-original-title="Print"
             className="btn btn-sm btn-white"
-            onClick={() => handleDelete(partner._id)}
+            onClick={() => handleDelete(partner.data._id)}
           >
             <i className="fa fa-trash-o" /> Delete
           </button>
@@ -42,12 +42,12 @@ export default function CurrentRequest({ partner }) {
         <div className="mail-tools tooltip-demo m-t-md">
           <h3>
             <span className="font-normal">Subject: </span>New Request from{" "}
-            {partner.first_name + " " + partner.last_name}
+            {partner.data.first_name + " " + partner.data.last_name}
           </h3>
           <h5>
-            <span className="float-right font-normal">{partner.datetime}</span>
+            <span className="float-right font-normal">{partner.data.created_at}</span>
             <span className="font-normal">From: </span>
-            {partner.email}
+            {partner.data.email}
           </h5>
         </div>
       </div>
@@ -61,13 +61,13 @@ export default function CurrentRequest({ partner }) {
           </p>
           <p>
             <strong> Chef Name:</strong>{" "}
-            {partner.first_name + " " + partner.last_name}
+            {partner.data.first_name + " " + partner.data.last_name}
             <br />
             <strong>Phone:</strong>
-            {partner.phone}
+            {partner.data.phone}
             <br />
             <strong>Postal Code:</strong>
-            {partner.postal_code}
+            {partner.data.postal_code}
             <br />
           </p>
           <p>

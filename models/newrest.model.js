@@ -3,13 +3,11 @@ const Schema = mongoose.Schema;
 let NewRestaurant = Schema({
   about: { type: String },
   area: { type: String },
-  bank_info: {
-    account_name: { type: String },
-    account_number: { type: String },
-    bank_name: { type: String },
-    branch_number: { type: String },
-    institution_number: { type: String },
-  },
+  account_name: { type: String },
+  account_number: { type: String },
+  bank_name: { type: String },
+  branch_number: { type: String },
+  institution_number: { type: String },
   city: { type: String },
   country: { type: String },
   commission: { type: String },
@@ -62,7 +60,7 @@ let NewRestaurant = Schema({
             {
               add_on: { type: String },
               add_on_price: { type: String },
-              add_on_image: {type:String}
+              add_on_image: { type: String },
             },
           ],
         },
