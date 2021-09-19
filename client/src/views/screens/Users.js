@@ -12,7 +12,7 @@ export default function Users() {
       .then((res) => {
         setUser(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   }, []);
   return (
     <div className="wrapper wrapper-content">

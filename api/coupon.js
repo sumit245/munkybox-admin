@@ -5,7 +5,7 @@ const Coupon = require("../models/coupons.model");
 router.route("/").get(function (req, res) {
     Coupon.find(function (err, coupons) {
         if (err) {
-            console.log(err);
+            res.json(err)
         } else {
             res.json(coupons);
         }
@@ -38,10 +38,9 @@ router.route("/:id").get(function (req, res) {
 router.route("/:id").delete((req, res, next) => {
     Coupon.findByIdAndDelete(req.params.id, (err, data) => {
         if (err) {
-            console.log(next(err));
-            res.status(200).json({ data: "deleted" });
+            res.status(200).json({ data: err });
         } else {
-            console.log("deleted_succesfully");
+            res.json({status:200,data:data})
         }
     });
 });

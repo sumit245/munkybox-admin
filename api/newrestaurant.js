@@ -35,10 +35,9 @@ router.route("/login").post(function (req, res) {
 router.route("/:id").delete((req, res, next) => {
   NewRestaurant.findByIdAndDelete(req.params.id, (err, data) => {
     if (err) {
-      console.log(next(err));
-      res.status(200).json({ data: "deleted" });
+      res.json({ msg: "deleted",status:200,data:err });
     } else {
-      console.log("deleted successfully");
+      res.json({ msg: "deleted", status: 200, data: data });
     }
   });
 });
@@ -49,10 +48,10 @@ router.route("/").post(function (req, res) {
   restaurant
     .save()
     .then((restaurant) => {
-      res.status(200).json({ restaurant: "restaurant added successfully" });
+      res.json({ data:restaurant,status:200,msg:"Restaurant Added Successfully" });
     })
     .catch((err) => {
-      res.status(400).send("Failed");
+      res.json({status:400,msg:"Some error"})
     });
 });
 //save a restaurant

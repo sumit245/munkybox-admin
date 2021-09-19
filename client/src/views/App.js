@@ -9,7 +9,8 @@ import Payouts from "./screens/Payouts";
 import Restaurant from "./screens/Restaurant";
 import Users from "./screens/Users";
 import Requests from "./screens/Requests"
-import AddRestaurant from "./components/restaurant/AddRestaurant";
+import AddRestaurant from "./components/restaurant/add/AddRestaurant";
+import ViewRestaurant from './components/restaurant/view/ViewRestaurant'
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
               <div className="row border-bottom">
                 <TopNavigation />
               </div>
+              
               <Switch>
                 <Route exact path="/" render={() => <Dashboard />} />
                 <Route exact path="/users" component={Users} />
@@ -30,6 +32,7 @@ export default function App() {
                 <Route exact path="/orders" component={Orders} />
                 <Route exact path="/payments" component={Payouts} />
                 <Route path="/newrequest/:id" component={Requests} />
+                <Route path="/view_restaurant/:id" component={ViewRestaurant}/>
               </Switch>
             </div>
           </div>

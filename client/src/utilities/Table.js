@@ -9,10 +9,6 @@ export default function Table({ title, data, columns }) {
     columns,
     data,
   };
-  const onRowSelected = (row) => {
-    let id = row._id;
-    console.log(id);
-  };
   return (
     <div className="ibox-content">
       <DataTableExtensions filterPlaceholder="Search..." {...tableData}>
@@ -26,9 +22,6 @@ export default function Table({ title, data, columns }) {
           noHeader
           customStyles={customStyles}
           selectableRows
-        //   paginationRowsPerPageOptions={[1,2,4]}
-        //   paginationPerPage={2}
-          onRowDoubleClicked={onRowSelected}
         />
       </DataTableExtensions>
     </div>

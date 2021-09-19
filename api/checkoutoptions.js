@@ -5,7 +5,7 @@ const Checkout = require("../models/checkout.model");
 router.route("/").get(function (req, res) {
     Checkout.find(function (err, checks) {
         if (err) {
-            console.log(err);
+            res.json(err)
         } else {
             res.json(checks);
         }

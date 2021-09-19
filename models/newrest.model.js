@@ -42,7 +42,7 @@ let NewRestaurant = Schema({
   },
   state: { type: String },
   restaurant_name: { type: String },
-  status: { type: String },
+  status: { type: String,default:'inactive' },
 
   meals: {
     type: Array,

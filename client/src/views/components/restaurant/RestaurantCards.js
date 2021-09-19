@@ -42,7 +42,7 @@ export default function RestaurantCards() {
             <h5>Inactive</h5>
           </div>
           <div className="ibox-content">
-            <h1 className="no-margins">0</h1>
+            <h1 className="no-margins">4</h1>
             <div className="stat-percent font-bold text-navy">
               0% <i className="fa fa-level-up" />
             </div>
@@ -58,7 +58,7 @@ export default function RestaurantCards() {
             <h5>Unapproved</h5>
           </div>
           <div className="ibox-content">
-            <h1 className="no-margins">1</h1>
+            <h1 className="no-margins">0</h1>
             <div className="stat-percent font-bold text-success">
               1% <i className="fa fa-level-up" />
             </div>

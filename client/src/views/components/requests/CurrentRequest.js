@@ -7,9 +7,7 @@ export default function CurrentRequest({ partner }) {
       .delete("http://munkybox-admin.herokuapp.com/api/partnerrequest/" + id)
       .then((alert("Deleted"), window.location.href="/"))
       .catch((err) => {
-        console.log("====================================");
-        console.log(err);
-        console.log("====================================");
+        alert(err)
       });
   };
   return (

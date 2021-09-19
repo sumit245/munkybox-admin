@@ -11,10 +11,9 @@ export default function Requests() {
     axios
       .get("https://munkybox-admin.herokuapp.com/api/partnerrequest/" + id)
       .then((res) => {
-        console.log(res);
         setPartner(res.data)
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   }, [id]);
   return (
     <div className="wrapper wrapper-content">

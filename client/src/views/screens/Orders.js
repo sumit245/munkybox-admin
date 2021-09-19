@@ -12,7 +12,7 @@ export default function Orders() {
       .then((res) => {
         setOrders(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   }, []);
   return (
     <div className="wrapper wrapper-content">
