@@ -121,8 +121,8 @@ export default function SideNav() {
           </li>
           {/* Other pages */}
 
-          <li className="special_link">
-            <a href="package.html">
+          <li>
+            <a href="/setting">
               <i className="fa fa-gear" />
               <span className="nav-label">Setting</span>
             </a>
