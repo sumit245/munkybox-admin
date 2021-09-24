@@ -21,7 +21,7 @@ router.route("/:id").get(function (req, res) {
 
 router.put("/:id", function (req, res) {
   let id = req.params.id;
-  let plans = req.body;
+  let {plans} = req.body;
   console.log(plans);
   Plan.findByIdAndUpdate(id, plans, function (err, resp) {
     res.json(plans);

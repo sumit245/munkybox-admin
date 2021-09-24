@@ -7,7 +7,11 @@ router.route("/").get(function (req, res) {
     if (err) {
       res.json({ status: "404", data: err, msg: "Request not found" });
     } else {
-      res.json({ status: "200", data: partners.reverse(), msg: "Requests found" });
+      res.json({
+        status: "200",
+        data: partners.reverse(),
+        msg: "Requests found",
+      });
     }
   });
 });
@@ -32,22 +36,24 @@ router.route("/").post(function (req, res) {
 router.route("/:id").get(function (req, res) {
   let id = req.params.id;
   Partner.findById(id, function (err, partner) {
-      if (err) {
-        res.json({status:404,data:err,msg:"No Request Found!!! Please try later"})
-      }
-      else {
-          res.json({status:200,data:partner,msg:"Request received"})
-      }
+    if (err) {
+      res.json({
+        status: 404,
+        data: err,
+        msg: "No Request Found!!! Please try later",
+      });
+    } else {
+      res.json({ status: 200, data: partner, msg: "Request received" });
+    }
   });
 });
 //get specific partner
-
 
 router.put("/:id", function (req, res, next) {
   let id = req.params.id;
   Partner.findByIdAndUpdate(id, req.body, (err, response) => {
     if (err) {
-      res.json({ status: 403, msg: "Bad Request" });
+      res.json({ status: 403, msg: "Bad Request", data: response });
     } else {
       Partner.findById(id, function (error, partner) {
         res.json({
@@ -64,17 +70,17 @@ router.put("/:id", function (req, res, next) {
 router.route("/:id").delete((req, res, next) => {
   Partner.findByIdAndDelete(req.params.id, (err, data) => {
     if (err) {
-      console.log(next(err));
-      res.status(200).json({ data: "deleted" });
+      res.json({ data: err, msg: "Request Not Found", status: 404 });
     } else {
-      console.log("deleted_succesfully");
+      res.json({ data: data, msg: "Request Deleted", status: 200 });
     }
   });
 });
-router.route('/').delete((req, res, next)=>{
-    Partner.deleteMany({}, (err, resp) => {
-        res.json({msg:'All Deleted'})
-    })
-})
+
+router.route("/").delete((req, res, next) => {
+  Partner.deleteMany({}, (err, resp) => {
+    res.json({ msg: "All Deleted" });
+  });
+});
 //delete all
 module.exports = router;

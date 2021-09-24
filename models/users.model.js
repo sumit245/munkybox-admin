@@ -32,9 +32,8 @@ let Users = new Schema({
       },
     },
   },
-  cards: {
-    type: Array,
-    card: {
+  cards: [
+    {
       card_holder: String,
       number: String,
       expiry: String,
@@ -43,9 +42,10 @@ let Users = new Schema({
       postal_code: String,
       country: String,
     },
-  },
+  ],
   status: {
     type: String,
+    default: "Active",
   },
   favorite: {
     type: Array,

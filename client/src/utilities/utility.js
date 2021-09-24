@@ -243,3 +243,39 @@ export const orderColumns = [
     ),
   },
 ];
+export const cuisineColumns = [
+  {
+    name: "ID",
+    selector: "_id",
+    sortable: true,
+  },
+  {
+    name: "Cuisine Name",
+    selector: "cuisine_name",
+    sortable: true,
+  },
+  {
+    name: "Cuisine Image",
+    selector: "image",
+    sortable: true,
+  },
+  {
+    name: "Actions",
+    center: true,
+    selector: (row) => (
+      <>
+        <a href={`/view_restaurant/${row._id}`} className="p-1 ">
+          <i className="fa fa-eye text-navy" />
+        </a>
+
+        <a href="/" className="p-1">
+          <i className="fa fa-edit text-primary" />
+        </a>
+
+        <a href="/" className="p-1">
+          <i className="fa fa-trash text-danger tx-118-f " />
+        </a>
+      </>
+    ),
+  },
+];

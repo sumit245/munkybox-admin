@@ -1,16 +1,24 @@
-import React,{useEffect} from "react";
-import { useSelector, useDispatch} from 'react-redux'
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { getOrders } from "../../../actions/orderAction";
-import {getUsers} from "../../../actions/actions"
+import { getUsers } from "../../../actions/actions";
+import { getAllRestaurant } from "../../../actions/restaurantAction";
+import { getRequests } from "../../../actions/requestAction";
 
 export default function TopCards() {
-  const dispatch = useDispatch()
-  const orders = useSelector(state => state.orders)
-  const users = useSelector(state => state.users)
+  const dispatch = useDispatch();
+  const orders = useSelector((state) => state.orders.orders);
+  const users = useSelector((state) => state.users.users);
+  const restaurant = useSelector((state) => state.restaurant);
+  const requests = useSelector((state) => state.requests);
+  console.log(requests);
+
   useEffect(() => {
-    dispatch(getUsers())
-    dispatch(getOrders())
-  }, [dispatch])
+    dispatch(getUsers());
+    dispatch(getOrders());
+    dispatch(getAllRestaurant());
+    dispatch(getRequests());
+  }, [dispatch]);
   return (
     <div className="row">
       <div className="col-lg-3">
@@ -20,7 +28,9 @@ export default function TopCards() {
             <h5>Requests</h5>
           </div>
           <div className="ibox-content">
-            <h1 className="no-margins">0</h1>
+            <h1 className="no-margins">
+              {requests && Object.keys(requests).length}
+            </h1>
             <div className="stat-percent font-bold text-danger">
               0% <i className="fa fa-bolt" />
             </div>
@@ -28,7 +38,7 @@ export default function TopCards() {
           </div>
         </div>
       </div>
-    
+
       <div className="col-lg-3">
         <div className="ibox">
           <div className="ibox-title">
@@ -36,7 +46,7 @@ export default function TopCards() {
             <h5>User</h5>
           </div>
           <div className="ibox-content">
-            <h1 className="no-margins">{users.length}</h1>
+            <h1 className="no-margins">{users && users.length}</h1>
             <div className="stat-percent font-bold text-danger">
               0% <i className="fa fa-level-down" />
             </div>
@@ -52,7 +62,7 @@ export default function TopCards() {
             <h5>Orders</h5>
           </div>
           <div className="ibox-content">
-            <h1 className="no-margins">{ orders.length}</h1>
+            <h1 className="no-margins">{orders && orders.length}</h1>
             <div className="stat-percent font-bold text-danger">
               0% <i className="fa fa-level-up" />
             </div>
@@ -68,7 +78,9 @@ export default function TopCards() {
             <h5>Restaurants</h5>
           </div>
           <div className="ibox-content">
-            <h1 className="no-margins">0</h1>
+            <h1 className="no-margins">
+              {restaurant && Object.keys(restaurant).length}
+            </h1>
             <div className="stat-percent font-bold text-navy">
               0% <i className="fa fa-level-up" />
             </div>

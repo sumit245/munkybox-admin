@@ -13,7 +13,6 @@ router.route("/").get(function (req, res) {
 });
 //get all restaurants
 router.route("/login").post(function (req, res) {
-  console.log(req.body);
   NewRestaurant.findOne({ phone: req.body.phone })
     .then((profile) => {
       if (!profile) {

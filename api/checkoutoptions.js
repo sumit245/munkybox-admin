@@ -7,7 +7,7 @@ router.route("/").get(function (req, res) {
         if (err) {
             res.json(err)
         } else {
-            res.json(checks);
+            res.json({status:200,data:checks})
         }
     });
 });

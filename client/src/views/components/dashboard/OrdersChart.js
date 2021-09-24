@@ -2,73 +2,184 @@ import React from "react";
 
 export default function OrdersChart() {
   return (
-    <div className="row">
-      <div className="col-lg-12">
-        <div className="ibox">
-          <div className="ibox-title">
-            <h5>Orders</h5>
-            <div className="float-right">
-              <div className="btn-group">
-                <button type="button" className="btn btn-xs btn-white active">
-                  Today
-                </button>
-                <button type="button" className="btn btn-xs btn-white">
-                  Monthly
-                </button>
-                <button type="button" className="btn btn-xs btn-white">
-                  Annual
-                </button>
+    <>
+      <div className="row">
+        <div className="col-lg-6">
+          <div className="ibox">
+            <div className="ibox-title">
+              <h5>Order Statistics</h5>
+              <div className="float-right">
+                <div className="btn-group">
+                  <button type="button" className="btn btn-xs btn-white active">
+                    Today
+                  </button>
+                  <button type="button" className="btn btn-xs btn-white">
+                    Monthly
+                  </button>
+                  <button type="button" className="btn btn-xs btn-white">
+                    Annual
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className="ibox-content">
+              <div className="row justify-content-between mb-1">
+                <div className="card col-lg-6 bg-primary">
+                  <div className="card-body">
+                    <h5 className="text-white">Total Orders</h5>
+                    <h1 className="no-margins">0</h1>
+                  </div>
+                </div>
+
+                <div className="card col-lg-6 bg-warning">
+                  <h5 className="text-white">In Progress</h5>
+                  <h1 className="no-margins">0</h1>
+                </div>
+              </div>
+              <div className="row justify-content-between mt-1">
+                <div className="card col-lg-6 bg-success">
+                  <div className="card-body">
+                    <h5 className="text-white">Completed</h5>
+                    <h1 className="no-margins">0</h1>
+                  </div>
+                </div>
+
+                <div className="card col-lg-6 bg-danger">
+                  <h5 className="text-white">Cancelled</h5>
+                  <h1 className="no-margins">0</h1>
+                </div>
               </div>
             </div>
           </div>
-          <div className="ibox-content">
-            <div className="row">
-              <div className="col-lg-9">
-                <div className="flot-chart">
-                  <div
-                    className="flot-chart-content"
-                    id="flot-dashboard-chart"
-                  />
+        </div>
+        <div className="col-lg-6">
+          <div className="ibox">
+            <div className="ibox-title">
+              <h5>Total Revenue($)</h5>
+              <div className="float-right">
+                <div className="btn-group">
+                  <button type="button" className="btn btn-xs btn-white active">
+                    Today
+                  </button>
+                  <button type="button" className="btn btn-xs btn-white">
+                    Monthly
+                  </button>
+                  <button type="button" className="btn btn-xs btn-white">
+                    Annual
+                  </button>
                 </div>
               </div>
-              <div className="col-lg-3">
-                <ul className="stat-list">
-                  <li>
-                    <h2 className="no-margins">2,346</h2>
-                    <small>Total orders in period</small>
-                    <div className="stat-percent">
-                      48% <i className="fa fa-level-up text-navy" />
-                    </div>
-                    <div className="progress progress-mini">
-                      <div style={{ width: "48%" }} className="progress-bar" />
-                    </div>
-                  </li>
-                  <li>
-                    <h2 className="no-margins">4,422</h2>
-                    <small>Orders in last month</small>
-                    <div className="stat-percent">
-                      60% <i className="fa fa-level-down text-navy" />
-                    </div>
-                    <div className="progress progress-mini">
-                      <div style={{ width: "60%" }} className="progress-bar" />
-                    </div>
-                  </li>
-                  <li>
-                    <h2 className="no-margins">9,180</h2>
-                    <small>Monthly income from orders</small>
-                    <div className="stat-percent">
-                      22% <i className="fa fa-bolt text-navy" />
-                    </div>
-                    <div className="progress progress-mini">
-                      <div style={{ width: "22%" }} className="progress-bar" />
-                    </div>
-                  </li>
-                </ul>
+            </div>
+            <div className="ibox-content">
+              <div className="row justify-content-between mb-1">
+                <div className="card col-lg-4 bg-primary">
+                  <div className="card-body">
+                    <h5 className="text-white">Meal Plan</h5>
+                    <h1 className="no-margins">$0</h1>
+                  </div>
+                </div>
+
+                <div className="card col-lg-4 bg-warning">
+                  <div className="card-body">
+                    <h5 className="text-white">Service Charges</h5>
+                    <h1 className="no-margins">$0</h1>
+                  </div>
+                </div>
+                <div className="card col-lg-4 bg-info">
+                  <div className="card-body">
+                    <h5 className="text-white">Delivery Charges</h5>
+                    <h1 className="no-margins">$0</h1>
+                  </div>
+                </div>
+              </div>
+              <div className="row justify-content-between mt-1">
+                <div className="card col-lg-6 bg-success">
+                  <div className="card-body">
+                    <h5 className="text-white">Tip</h5>
+                    <h1 className="no-margins">$0</h1>
+                  </div>
+                </div>
+
+                <div className="card col-lg-6 bg-danger">
+                  <div className="card-body">
+                    <h5 className="text-white">Taxes</h5>
+                    <h1 className="no-margins">$0</h1>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+      <div className="row">
+        <div className="col-lg-6">
+          <div className="ibox">
+            <div className="ibox-title">
+              <h5>Commission Revenue($)</h5>
+              <div className="float-right">
+                <div className="btn-group">
+                  <button type="button" className="btn btn-xs btn-white active">
+                    Today
+                  </button>
+                  <button type="button" className="btn btn-xs btn-white">
+                    Monthly
+                  </button>
+                  <button type="button" className="btn btn-xs btn-white">
+                    Annual
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className="ibox-content">
+              <div className="row justify-content-between mt-1">
+                <div className="card col-lg-6 bg-success">
+                  <div className="card-body">
+                    <h5 className="text-white">Base Price</h5>
+                    <h1 className="no-margins">$0</h1>
+                  </div>
+                </div>
+
+                <div className="card col-lg-6 bg-danger">
+                  <div className="card-body">
+                    <h5 className="text-white">Add Ons</h5>
+                    <h1 className="no-margins">$0</h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="col-lg-6">
+          <div className="ibox">
+            <div className="ibox-title">
+              <h5>Marketing Revenue($)</h5>
+              <div className="float-right">
+                <div className="btn-group">
+                  <button type="button" className="btn btn-xs btn-white active">
+                    Today
+                  </button>
+                  <button type="button" className="btn btn-xs btn-white">
+                    Monthly
+                  </button>
+                  <button type="button" className="btn btn-xs btn-white">
+                    Annual
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className="ibox-content">
+              <div className="row justify-content-between mt-1">
+                <div className="card col-lg-12 bg-success">
+                  <div className="card-body">
+                    <h5 className="text-white">Banner Marketing</h5>
+                    <h1 className="no-margins">$0</h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }

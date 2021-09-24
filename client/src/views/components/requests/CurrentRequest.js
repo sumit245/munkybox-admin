@@ -5,9 +5,9 @@ export default function CurrentRequest({ partner }) {
   const handleDelete = (id) => {
     axios
       .delete("http://munkybox-admin.herokuapp.com/api/partnerrequest/" + id)
-      .then((alert("Deleted"), window.location.href="/"))
+      .then((alert("Deleted"), (window.location.href = "/")))
       .catch((err) => {
-        alert(err)
+        alert(err);
       });
   };
   return (
@@ -15,7 +15,6 @@ export default function CurrentRequest({ partner }) {
       <div className="mail-box-header">
         <div className="float-right tooltip-demo">
           <button
-            title
             data-placement="top"
             data-toggle="tooltip"
             type="button"
@@ -25,7 +24,6 @@ export default function CurrentRequest({ partner }) {
             <i className="fa fa-print" /> Print
           </button>
           <button
-            title
             data-placement="top"
             data-toggle="tooltip"
             type="button"
@@ -43,7 +41,9 @@ export default function CurrentRequest({ partner }) {
             {partner.data.first_name + " " + partner.data.last_name}
           </h3>
           <h5>
-            <span className="float-right font-normal">{partner.data.created_at}</span>
+            <span className="float-right font-normal">
+              {partner.data.created_at}
+            </span>
             <span className="font-normal">From: </span>
             {partner.data.email}
           </h5>
@@ -77,7 +77,6 @@ export default function CurrentRequest({ partner }) {
 
         <div className="mail-body text-right tooltip-demo">
           <button
-            title
             data-placement="top"
             data-toggle="tooltip"
             type="button"
@@ -87,7 +86,6 @@ export default function CurrentRequest({ partner }) {
             <i className="fa fa-reply" /> Reply
           </button>
           <button
-            title
             data-placement="top"
             data-toggle="tooltip"
             type="button"

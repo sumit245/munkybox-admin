@@ -7,11 +7,13 @@ import axios from "axios";
 export default function Requests() {
   const { id } = useParams();
   const [partner, setPartner] = useState({});
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     axios
       .get("https://munkybox-admin.herokuapp.com/api/partnerrequest/" + id)
       .then((res) => {
-        setPartner(res.data)
+        setPartner(res.data);
+        setLoading(true);
       })
       .catch((err) => console.error(err));
   }, [id]);
@@ -19,7 +21,7 @@ export default function Requests() {
     <div className="wrapper wrapper-content">
       <div className="row">
         <AllRequests />
-        <CurrentRequest partner={partner} />
+        {loading && <CurrentRequest partner={partner} />}
       </div>
     </div>
   );
