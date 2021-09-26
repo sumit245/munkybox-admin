@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/static/css/main.35313880.chunk.css",
+    "main.js": "/static/js/main.3a86524e.chunk.js",
+    "main.js.map": "/static/js/main.3a86524e.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.dbc4556b.js",
+    "runtime-main.js.map": "/static/js/runtime-main.dbc4556b.js.map",
+    "static/css/2.7970808b.chunk.css": "/static/css/2.7970808b.chunk.css",
+    "static/js/2.5f33a9d4.chunk.js": "/static/js/2.5f33a9d4.chunk.js",
+    "static/js/2.5f33a9d4.chunk.js.map": "/static/js/2.5f33a9d4.chunk.js.map",
+    "static/js/3.285982c1.chunk.js": "/static/js/3.285982c1.chunk.js",
+    "static/js/3.285982c1.chunk.js.map": "/static/js/3.285982c1.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.7970808b.chunk.css.map": "/static/css/2.7970808b.chunk.css.map",
+    "static/css/main.35313880.chunk.css.map": "/static/css/main.35313880.chunk.css.map",
+    "static/js/2.5f33a9d4.chunk.js.LICENSE.txt": "/static/js/2.5f33a9d4.chunk.js.LICENSE.txt",
+    "static/media/style.css": "/static/media/word_map.59621c9b.png",
+    "static/media/font-awesome.css": "/static/media/fontawesome-webfont.f691f37e.woff",
+    "static/media/profile_small.f34d837c.jpg": "/static/media/profile_small.f34d837c.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.dbc4556b.js",
+    "static/css/2.7970808b.chunk.css",
+    "static/js/2.5f33a9d4.chunk.js",
+    "static/css/main.35313880.chunk.css",
+    "static/js/main.3a86524e.chunk.js"
+  ]
+}

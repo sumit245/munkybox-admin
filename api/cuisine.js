@@ -14,7 +14,6 @@ router.route("/").get(function (req, res) {
 
 router.route("/").post(function (req, res) {
   let cuisine = new Cuisine(req.body);
-  cuisine._id = "CUIS" + Cuisine.length;
   cuisine
     .save()
     .then((cuisine) => cuisine)
