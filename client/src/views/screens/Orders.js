@@ -8,7 +8,7 @@ export default function Orders() {
   const [orders, setOrders] = useState([]);
   useEffect(() => {
     axios
-      .get("http://munkybox-admin.herokuapp.com/api/orders")
+      .get("https://munkybox-admin.herokuapp.com/api/orders")
       .then((res) => {
         setOrders(res.data);
       })

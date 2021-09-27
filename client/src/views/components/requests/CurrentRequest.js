@@ -4,7 +4,7 @@ import React from "react";
 export default function CurrentRequest({ partner }) {
   const handleDelete = (id) => {
     axios
-      .delete("http://munkybox-admin.herokuapp.com/api/partnerrequest/" + id)
+      .delete("https://munkybox-admin.herokuapp.com/api/partnerrequest/" + id)
       .then((alert("Deleted"), (window.location.href = "/")))
       .catch((err) => {
         alert(err);
