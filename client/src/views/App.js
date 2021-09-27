@@ -12,7 +12,6 @@ import Requests from "./screens/Requests";
 import AddRestaurant from "./components/restaurant/add/AddRestaurant";
 import ViewRestaurant from "./components/restaurant/view/ViewRestaurant";
 import Settings from "./screens/Settings";
-import SidebarComponent from "./components/SidebarComponent";
 
 export default function App() {
   return (

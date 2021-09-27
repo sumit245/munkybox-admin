@@ -135,14 +135,14 @@ export default function SideNav() {
         as="li"
         onClick={onClickDashboard}
       >
-        <NavLink to="/" activeClassName="active">
+        <NavLink to="/" activeClassName="active" className="active">
           <i className="fa fa-th-large" />{" "}
           <span className="nav-label">Dashboard</span>
         </NavLink>
       </Nav.Item>
       {/* Dashboard */}
 
-      <Nav.Item ref={user} className="active" as="li">
+      <Nav.Item ref={user} className="" as="li">
         <NavLink to="#" activeClassName="active" onClick={onClickUser}>
           <i className="fa fa-user text-white-50" />
           <span className="text-white-50 nav-label">User </span>
