@@ -13,6 +13,7 @@ import AddRestaurant from "./components/restaurant/add/AddRestaurant";
 import ViewRestaurant from "./components/restaurant/view/ViewRestaurant";
 import Settings from "./screens/Settings";
 import DeleteAlert from "../utilities/DeleteAlert";
+import EditRestaurant from "./components/restaurant/edit/EditRestaurant";
 
 export default function App() {
   return (
@@ -31,6 +32,11 @@ export default function App() {
                 <Route exact path="/users" component={Users} />
                 <Route exact path="/restaurant" render={() => <Restaurant />} />
                 <Route exact path="/add_restaurant" component={AddRestaurant} />
+                <Route
+                  exact
+                  path="/edit_restaurant/:id"
+                  component={EditRestaurant}
+                />
                 <Route exact path="/orders" component={Orders} />
                 <Route exact path="/payments" component={Payouts} />
                 <Route exact path="/setting" component={Settings} />

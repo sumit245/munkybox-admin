@@ -10,7 +10,7 @@ export default function RestaurantCards({ data }) {
     );
     setActive(activeRestaurant);
     let inactiveRestaurants = data.filter(
-      (restaurant) => restaurant.status === "inactive"
+      (restaurant) => restaurant.status === "Inactive"
     );
     setInactive(inactiveRestaurants);
     let unapprovedRestaurants = data.filter(

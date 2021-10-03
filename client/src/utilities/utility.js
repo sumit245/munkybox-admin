@@ -176,7 +176,7 @@ export const restaurantColumns = [
           <i className="fa fa-eye text-navy" />
         </a>
 
-        <a href="/" className="p-1">
+        <a href={`/edit_restaurant/${row._id}`} className="p-1">
           <i className="fa fa-edit text-primary" />
         </a>
 
