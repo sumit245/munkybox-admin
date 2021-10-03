@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 let Checkout = new Schema({
+    commission:{type:String},
     delivery_fee: {
         type: String
     },

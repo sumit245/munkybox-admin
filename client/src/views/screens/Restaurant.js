@@ -16,7 +16,7 @@ export default function Restaurant() {
   }, []);
   return (
     <div className="wrapper wrapper-content">
-      <RestaurantCards />
+      <RestaurantCards data={restaurant} />
       <Table title="Restaurant" data={restaurant} columns={restaurantColumns} />
     </div>
   );

@@ -34,7 +34,7 @@ router.route("/login").post(function (req, res) {
 router.route("/:id").delete((req, res, next) => {
   NewRestaurant.findByIdAndDelete(req.params.id, (err, data) => {
     if (err) {
-      res.json({ msg: "deleted",status:200,data:err });
+      res.json({ msg: "not delete",status:403,data:err });
     } else {
       res.json({ msg: "deleted", status: 200, data: data });
     }

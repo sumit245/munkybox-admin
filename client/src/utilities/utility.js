@@ -180,7 +180,7 @@ export const restaurantColumns = [
           <i className="fa fa-edit text-primary" />
         </a>
 
-        <a href="/" className="p-1">
+        <a href={`/newrest/${row._id}`} className="p-1">
           <i className="fa fa-trash text-danger tx-118-f " />
         </a>
       </>
@@ -241,6 +241,17 @@ export const orderColumns = [
         </a>
       </>
     ),
+  },
+];
+export const ORDER = [
+  {
+    _id: "ORD001",
+    user_name: "Sumit",
+    restaurant: "Ananda Foods Limited",
+    plan: "15 Days",
+    start_date: "02 Oct 2021",
+    end_date: "17 Oct 2021",
+    status: "Pending",
   },
 ];
 export const cuisineColumns = [

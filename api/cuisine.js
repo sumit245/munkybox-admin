@@ -31,9 +31,13 @@ router.route("/").post(function (req, res) {
 });
 
 router.route("/:id").delete((req, res, next) => {
-  Cuisine.findOneAndDelete({ _id: req.params.id })
-    .then((data) => res.json(data))
-    .catch(next);
+  Cuisine.findByIdAndDelete(req.params.id, (err, data) => {
+    if (err) {
+      res.json({ msg: "not deleted", status: 403, data: err });
+    } else {
+      res.json({ msg: "deleted", status: 200, data: data });
+    }
+  });
 });
 //delete a user
 

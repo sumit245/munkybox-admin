@@ -1,6 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-export default function RestaurantCards() {
+export default function RestaurantCards({ data }) {
+  const [active, setActive] = useState([]);
+  const [inactive, setInactive] = useState([]);
+  const [unapproved, setUnapproved] = useState([]);
+  useEffect(() => {
+    let activeRestaurant = data.filter(
+      (restaurant) => restaurant.status === "Active"
+    );
+    setActive(activeRestaurant);
+    let inactiveRestaurants = data.filter(
+      (restaurant) => restaurant.status === "inactive"
+    );
+    setInactive(inactiveRestaurants);
+    let unapprovedRestaurants = data.filter(
+      (restaurant) => restaurant.status === "unapproved"
+    );
+    setUnapproved(unapprovedRestaurants);
+  }, [data]);
   return (
     <div className="row">
       <div className="col-lg-3">
@@ -10,7 +27,7 @@ export default function RestaurantCards() {
             <h5>Total</h5>
           </div>
           <div className="ibox-content">
-            <h1 className="no-margins">0</h1>
+            <h1 className="no-margins">{data.length}</h1>
             <div className="stat-percent font-bold text-danger">
               0% <i className="fa fa-bolt" />
             </div>
@@ -26,7 +43,7 @@ export default function RestaurantCards() {
             <h5>Active</h5>
           </div>
           <div className="ibox-content">
-            <h1 className="no-margins">0</h1>
+            <h1 className="no-margins">{active.length}</h1>
             <div className="stat-percent font-bold text-danger">
               0% <i className="fa fa-level-down" />
             </div>
@@ -42,7 +59,7 @@ export default function RestaurantCards() {
             <h5>Inactive</h5>
           </div>
           <div className="ibox-content">
-            <h1 className="no-margins">1</h1>
+            <h1 className="no-margins">{inactive.length}</h1>
             <div className="stat-percent font-bold text-navy">
               0% <i className="fa fa-level-up" />
             </div>
@@ -58,7 +75,7 @@ export default function RestaurantCards() {
             <h5>Unapproved</h5>
           </div>
           <div className="ibox-content">
-            <h1 className="no-margins">0</h1>
+            <h1 className="no-margins">{unapproved.length}</h1>
             <div className="stat-percent font-bold text-success">
               1% <i className="fa fa-level-up" />
             </div>

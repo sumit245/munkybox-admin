@@ -12,6 +12,7 @@ import Requests from "./screens/Requests";
 import AddRestaurant from "./components/restaurant/add/AddRestaurant";
 import ViewRestaurant from "./components/restaurant/view/ViewRestaurant";
 import Settings from "./screens/Settings";
+import DeleteAlert from "../utilities/DeleteAlert";
 
 export default function App() {
   return (
@@ -35,6 +36,8 @@ export default function App() {
                 <Route exact path="/setting" component={Settings} />
                 <Route path="/newrequest/:id" component={Requests} />
                 <Route path="/view_restaurant/:id" component={ViewRestaurant} />
+                <Route path="/newrest/:id" component={DeleteAlert} />
+                <Route path="/cuisine/:id" component={DeleteAlert} />
               </Switch>
             </div>
           </div>

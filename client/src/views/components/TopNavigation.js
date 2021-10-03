@@ -70,7 +70,7 @@ export default function TopNavigation() {
               </NavDropdown.Item>
             ))}
             <NavDropdown.Divider />
-            <NavDropdown.Item href="#action5">View All</NavDropdown.Item>
+            <NavDropdown.Item href="/newrequest">View All</NavDropdown.Item>
           </NavDropdown>
         </li>
         <li>

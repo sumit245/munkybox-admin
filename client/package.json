@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
     "date-fns": "^2.16.1",
+    "jquery": "^3.6.0",
     "jquery-steps": "^1.1.0",
     "material-ui": "^0.20.2",
     "mongo-image-converter": "^1.0.2",
