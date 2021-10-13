@@ -4,7 +4,7 @@ import React from "react";
 export default function CurrentRequest({ partner }) {
   const handleDelete = (id) => {
     axios
-      .delete("https://munkybox-admin.herokuapp.com/api/partnerrequest/" + id)
+      .delete("/api/partnerrequest/" + id)
       .then((alert("Deleted"), (window.location.href = "/")))
       .catch((err) => {
         alert(err);
@@ -14,7 +14,7 @@ export default function CurrentRequest({ partner }) {
     const id = partner.data._id;
     const status = { status: "Done" };
     const response = await axios.put(
-      "http://192.168.1.4:5000/api/partnerrequest/" + id,
+      "/api/partnerrequest/" + id,
       status
     );
     console.log(response.data);
@@ -23,7 +23,7 @@ export default function CurrentRequest({ partner }) {
     const id = partner.data._id;
     const status = { status: "Reject" };
     const response = await axios.put(
-      "http://192.168.1.4:5000/api/partnerrequest/" + id,
+      "/api/partnerrequest/" + id,
       status
     );
     console.log(response.data);

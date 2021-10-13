@@ -6,7 +6,7 @@ export default function AllRequests() {
   const [request, setRequest] = useState([]);
   useEffect(() => {
     axios
-      .get("https://munkybox-admin.herokuapp.com/api/partnerrequest")
+      .get("/api/partnerrequest")
       .then((res) => {
         setRequest(res.data.data);
       });

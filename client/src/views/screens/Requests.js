@@ -10,7 +10,7 @@ export default function Requests() {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     axios
-      .get("https://munkybox-admin.herokuapp.com/api/partnerrequest/" + id)
+      .get("/api/partnerrequest/" + id)
       .then((res) => {
         setPartner(res.data);
         setLoading(true);
