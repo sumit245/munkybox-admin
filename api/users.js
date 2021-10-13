@@ -62,10 +62,10 @@ router.route("/").post(async function (req, res) {
 router.route("/:id").get(function (req, res) {
   let id = req.params.id;
   Users.findById(id, function (err, user) {
-    res.json({ favorites: user });
+    res.json(user);
   });
 });
-//get specific user
+//get specific users
 
 router.put("/:id", function (req, res, next) {
   let id = req.params.id;
@@ -201,7 +201,7 @@ router.put("/addcard/:id", function (req, res) {
 });
 //add a card
 
-router.route("/getaddress/:id").get(function (req, res, next) {
+router.route("/getaddress/:id").get(function (req, res) {
   const id = req.params.id;
   Users.findById(id, function (err, user) {
     if (user) {
@@ -213,7 +213,7 @@ router.route("/getaddress/:id").get(function (req, res, next) {
   });
 });
 //get an address
-router.route("/getcards/:id").get(function (req, res, next) {
+router.route("/getcards/:id").get(function (req, res) {
   const id = req.params.id;
   Users.findById(id, function (err, user) {
     if (user) {
@@ -225,6 +225,22 @@ router.route("/getcards/:id").get(function (req, res, next) {
   });
 });
 //get a card
+router.route("/deletecards/:userid/:cardid").get(function (req, res) {
+  Users.findById(id, function (err, user) {
+    if (user) {
+      let { cards } = user;
+      cards.findOneAndDelete(
+        { _id: req.params.cardid },
+        function (err, response) {
+          if (response) {
+            res.json({ status: 200, data: response, msg: "Deleted" });
+          }
+        }
+      );
+    }
+  });
+});
+//delete a card
 router.route("/add_review/:restaurant/:user").post(function (req, res) {
   const user = req.params.user;
   const review = {
@@ -256,11 +272,11 @@ router.route("/add_review/:restaurant/:user").post(function (req, res) {
   ).catch((err) => res.send(err));
 });
 //add a review
-router.route('/').delete((req, res, next)=>{
-    Users.deleteMany({}, (err, resp) => {
-        res.json({msg:'All Deleted'})
-    })
-})
+router.route("/").delete((req, res, next) => {
+  Users.deleteMany({}, (err, resp) => {
+    res.json({ msg: "All Deleted" });
+  });
+});
 //delete all users
 
 module.exports = router;

@@ -1,29 +1,40 @@
 import React, { useState, useEffect } from "react";
 import { NavDropdown } from "react-bootstrap";
+import "../../css/bootstrap.min.css";
 import axios from "axios";
 
-
 const envelope = (
-  <a className="dropdown-toggle count-info" data-toggle="dropdown" href="/">
-    <span className="label label-warning" id="partnerRequest"></span>
+  <>
     <i className="fa fa-envelope" />
-  </a>
+    <span
+      className="label label-warning float-right"
+      style={{ width: 20, marginLeft: 2, marginTop: -10 }}
+      id="partnerRequest"
+    ></span>
+  </>
 );
 const notifications = (
-  <a className="dropdown-toggle count-info" data-toggle="dropdown" href="/">
+  <>
     <i className="fa fa-bell" />
-    <span className="label label-primary">0</span>
-  </a>
+    <span
+      className="label label-primary float-right"
+      style={{ width: 20, marginLeft: 2, marginTop: -10 }}
+    >
+      0
+    </span>
+  </>
 );
 export default function TopNavigation() {
   const [request, setRequest] = useState([]);
   useEffect(() => {
-    axios.get("https://munkybox-admin.herokuapp.com/api/partnerrequest").then((res) => {
-      let numOfRequests = res.data.data.length;
-      document.getElementById("partnerRequest").innerHTML = numOfRequests;
-      res.data.data.length = 5;
-      setRequest(res.data.data);
-    });
+    axios
+      .get("https://munkybox-admin.herokuapp.com/api/partnerrequest")
+      .then((res) => {
+        let numOfRequests = res.data.data.length;
+        document.getElementById("partnerRequest").innerHTML = numOfRequests;
+        res.data.data.length = 5;
+        setRequest(res.data.data);
+      });
   }, []);
 
   return (
@@ -35,11 +46,7 @@ export default function TopNavigation() {
         >
           <i className="fa fa-bars" />
         </a>
-        <form
-          // role="search"
-          className="navbar-form-custom"
-          // action="search_results.html"
-        >
+        <form role="search" className="navbar-form-custom">
           <div className="form-group">
             <input
               type="text"
@@ -59,28 +66,46 @@ export default function TopNavigation() {
           </span>
         </li>
         <li>
-          <NavDropdown title={envelope} id="navbarScrollingDropdown">
+          <NavDropdown
+            title={envelope}
+            id="navbarScrollingDropdown"
+            bsPrefix={"dropdown-toggle nav-link"}
+          >
             {request.map((data, key) => (
               <NavDropdown.Item
                 key={key}
                 href={`/newrequest/${data._id}`}
-                className="p-2 mt-0 mb-0 text-success tx-10"
+                bsPrefix={"dropdown-item text-success"}
+                style={{
+                  padding: 4,
+                  marginBottom: -24,
+                }}
               >
-                {"New request from\n " + data.first_name + " " + data.last_name}
+                <small className="mb-0">
+                  {"New request from\n " +
+                    data.first_name +
+                    " " +
+                    data.last_name}
+                </small>
               </NavDropdown.Item>
             ))}
             <NavDropdown.Divider />
-            <NavDropdown.Item href="/newrequest">View All</NavDropdown.Item>
+            <NavDropdown.Item
+              style={{
+                padding: 4,
+                marginBottom: -24,
+                textAlign: "center",
+              }}
+              href="/newrequest"
+            >
+              <h5 style={{ color: "dodgerblue" }}>View all</h5>
+            </NavDropdown.Item>
           </NavDropdown>
         </li>
         <li>
           <NavDropdown title={notifications}>
-            <NavDropdown.Item href="#action3">
-              Action
-            </NavDropdown.Item>
-            <NavDropdown.Item href="#action4">
-              Another action
-            </NavDropdown.Item>
+            <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
+            <NavDropdown.Item href="#action4">Another action</NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Item href="#action5">View All</NavDropdown.Item>
           </NavDropdown>

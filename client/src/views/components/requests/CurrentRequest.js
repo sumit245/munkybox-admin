@@ -10,6 +10,24 @@ export default function CurrentRequest({ partner }) {
         alert(err);
       });
   };
+  const handleDone = async () => {
+    const id = partner.data._id;
+    const status = { status: "Done" };
+    const response = await axios.put(
+      "http://192.168.1.4:5000/api/partnerrequest/" + id,
+      status
+    );
+    console.log(response.data);
+  };
+  const handleReject = async () => {
+    const id = partner.data._id;
+    const status = { status: "Reject" };
+    const response = await axios.put(
+      "http://192.168.1.4:5000/api/partnerrequest/" + id,
+      status
+    );
+    console.log(response.data);
+  };
   return (
     <div className="col-lg-8 animated fadeInRight">
       <div className="mail-box-header">
@@ -34,7 +52,21 @@ export default function CurrentRequest({ partner }) {
             <i className="fa fa-trash-o" /> Delete
           </button>
         </div>
-        <h2>View Message</h2>
+        <h2 className="row">
+          View Message
+          <h6>
+            <i
+              className={
+                partner.data.status === "Done"
+                  ? "fa fa-circle text-success mx-2"
+                  : partner.data.status === "Reject"
+                  ? "fa fa-circle text-danger mx-2"
+                  : "fa fa-circle text-warning mx-2"
+              }
+            />
+          </h6>
+        </h2>
+
         <div className="mail-tools tooltip-demo m-t-md">
           <h3>
             <span className="font-normal">Subject: </span>New Request from{" "}
@@ -75,24 +107,26 @@ export default function CurrentRequest({ partner }) {
           </p>
         </div>
 
-        <div className="mail-body text-right tooltip-demo">
+        <div className="mail-body text-right tooltip-demo ">
           <button
             data-placement="top"
             data-toggle="tooltip"
             type="button"
             data-original-title="Print"
-            className="btn btn-sm btn-white mr-1"
+            className="btn btn-sm btn-success mr-1"
+            onClick={handleDone}
           >
-            <i className="fa fa-reply" /> Reply
+            <i className="fa fa-check" /> Done
           </button>
           <button
             data-placement="top"
             data-toggle="tooltip"
             type="button"
             data-original-title="Print"
-            className="btn btn-sm btn-white"
+            className="btn btn-sm btn-danger"
+            onClick={handleReject}
           >
-            <i className="fa fa-print" /> Print
+            <i className="fa fa-times" /> Reject
           </button>
         </div>
       </div>

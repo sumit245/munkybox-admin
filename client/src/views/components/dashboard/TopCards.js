@@ -11,7 +11,6 @@ export default function TopCards() {
   const users = useSelector((state) => state.users.users);
   const restaurant = useSelector((state) => state.restaurant);
   const requests = useSelector((state) => state.requests);
-  console.log(restaurant);
 
   useEffect(() => {
     dispatch(getUsers());

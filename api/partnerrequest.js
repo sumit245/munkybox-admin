@@ -17,19 +17,30 @@ router.route("/").get(function (req, res) {
 });
 
 router.route("/").post(function (req, res) {
-  let partner = new Partner(req.body);
-  partner
-    .save()
-    .then((partner) => {
-      res.json({
-        status: 200,
-        data: partner,
-        msg: "Request Submitted successfully",
-      });
-    })
-    .catch((err) => {
-      res.json({ status: 404, data: err, msg: "adding new partner failed" });
-    });
+  Partner.findOne({ phone: req.body.phone },function (err,partners) {
+      if (partners === null) {
+        let partner = new Partner(req.body);
+        partner
+          .save()
+          .then((partner) => {
+            res.json({
+              status: 200,
+              data: partner,
+              msg: "Request Submitted successfully",
+            });
+          })
+          .catch((err) => {
+            res.json({
+              status: 404,
+              data: err,
+              msg: "Adding new partner failed",
+            });
+          });
+      } else {
+        res.json({ status: 403, data: [], msg: "You have already requested" });
+      }
+  });
+
 });
 //save a singe partner to database
 

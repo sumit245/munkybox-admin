@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 let Order = new Schema({
+  order_id: { type: String },
+  restaurant_id:{type:String},
   user_id: { type: String },
   user_name: { type: String },
   phone: { type: String },

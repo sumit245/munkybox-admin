@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 let NewRestaurant = Schema({
+  restaurant_id:{type:String},
   about: { type: String },
   pin: { type: String },
-  area: { type: String },
   account_name: { type: String },
   account_number: { type: String },
   bank_name: { type: String },
@@ -27,24 +27,12 @@ let NewRestaurant = Schema({
   owner_name: { type: String },
   postal_code: { type: String },
   phone: { type: String },
-  plan: {
-    twoPlan: {
-      base_2price: { type: String },
-      customer_2price: { type: String },
-    },
-    fifteenPlan: {
-      base_15price: { type: String },
-      customer_15price: { type: String },
-    },
-    thirtyPlan: {
-      base_30price: { type: String },
-      customer_30price: { type: String },
-    },
-  },
+  base_2price: { type: String },
+  base_15price: { type: String },
+  base_30price: { type: String },
   state: { type: String },
   restaurant_name: { type: String },
-  status: { type: String, default: "inactive" },
-
+  status: { type: String, default: "Inactive" },
   meals: {
     type: Array,
     items: [

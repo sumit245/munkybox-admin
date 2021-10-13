@@ -8,7 +8,7 @@ export default function Restaurant() {
   const [restaurant, setRestaurant] = useState([]);
   useEffect(() => {
     axios
-      .get("https://munkybox-admin.herokuapp.com/api/newrest/")
+      .get("/api/newrest/")
       .then((res) => {
         setRestaurant(res.data);
       })

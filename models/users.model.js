@@ -2,24 +2,14 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 let Users = new Schema({
-  first_name: {
-    type: String,
-  },
-  last_name: {
-    type: String,
-  },
-  profile_picture: {
-    type: String,
-  },
-  phone: {
-    type: String,
-  },
-  email_id: {
-    type: String,
-  },
-  addresses: {
-    type: Array,
-    address: {
+  user_id: { type: String },
+  first_name: { type: String },
+  last_name: { type: String },
+  profile_picture: {type: String},
+  phone: {type: String},
+  email_id: {type: String},
+  addresses: [
+    {
       flat_num: { type: String },
       locality: { type: String },
       city: { type: String },
@@ -31,7 +21,7 @@ let Users = new Schema({
         lng: { type: String },
       },
     },
-  },
+  ],
   cards: [
     {
       card_holder: String,

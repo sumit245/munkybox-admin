@@ -1,13 +1,5 @@
 import { defaultThemes } from "react-data-table-component-with-filter";
 
-export function convertArrayOfObjectsToCSV(array) {
-  return null;
-}
-
-export function downloadCSV(array) {
-  return null;
-}
-
 export const customStyles = {
   headRow: {
     style: {

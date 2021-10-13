@@ -5,36 +5,39 @@ const NewRestaurant = require("../models/newrest.model");
 router.route("/").get(function (req, res) {
   NewRestaurant.find(function (err, factories) {
     if (err) {
-      console.log(err);
+      res.json(err);
     } else {
       res.json(factories);
     }
   });
 });
-//get all restaurants
-router.route("/login").post(function (req, res) {
-  NewRestaurant.findOne({ phone: req.body.phone })
-    .then((profile) => {
-      if (!profile) {
-        res.send({ status: "203", msg: "User does not exist", data: null });
-      } else {
-        res.send({
-          status: "200",
-          msg: "Welcome to munkybox-chef",
-          data: profile,
-        });
-      }
-    })
-    .catch((err) => {
-      console.log("Error is", err.message);
-    });
+// get all restaurant for admin
+
+router.route("/active").get(function (req, res) {
+  NewRestaurant.find({ status: "Active" }, function (err, factories) {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(factories);
+    }
+  });
+});
+//get active restaurants for user
+
+router.route("/login").post(async (req, res) => {
+  const newChef = await NewRestaurant.findOne({ phone: req.body.phone }).exec();
+  if (newChef) {
+    res.json({ status: 200, data: newChef });
+  } else {
+    res.json({ status: 404 });
+  }
 });
 //restaurant login
 
 router.route("/:id").delete((req, res, next) => {
   NewRestaurant.findByIdAndDelete(req.params.id, (err, data) => {
     if (err) {
-      res.json({ msg: "not delete",status:403,data:err });
+      res.json({ msg: "not delete", status: 403, data: err });
     } else {
       res.json({ msg: "deleted", status: 200, data: data });
     }
@@ -47,10 +50,14 @@ router.route("/").post(function (req, res) {
   restaurant
     .save()
     .then((restaurant) => {
-      res.json({ data:restaurant,status:200,msg:"Restaurant Added Successfully" });
+      res.json({
+        data: restaurant,
+        status: 200,
+        msg: "Restaurant Added Successfully",
+      });
     })
     .catch((err) => {
-      res.json({status:400,msg:"Some error"})
+      res.json({ status: 400, msg: "Some error" });
     });
 });
 //save a restaurant
@@ -140,11 +147,11 @@ router.route("/price/:order").get(function (req, res) {
   });
 });
 // filter by price
-router.route('/').delete((req, res, next)=>{
-    NewRestaurant.deleteMany({}, (err, resp) => {
-        res.json({msg:'All Deleted'})
-    })
-})
+router.route("/").delete((req, res, next) => {
+  NewRestaurant.deleteMany({}, (err, resp) => {
+    res.json({ msg: "All Deleted" });
+  });
+});
 //delete all
 
 module.exports = router;
