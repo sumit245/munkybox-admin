@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function UserCards() {
+export default function UserCards({ total }) {
   return (
     <div className="row">
       <div className="col-lg-3">
@@ -10,11 +10,11 @@ export default function UserCards() {
             <h5>Users</h5>
           </div>
           <div className="ibox-content">
-            <h1 className="no-margins">0</h1>
+            <h1 className="no-margins">{total && total.length}</h1>
             <div className="stat-percent font-bold text-danger">
               0% <i className="fa fa-bolt" />
             </div>
-            <small>Total income</small>
+            <small>Total users</small>
           </div>
         </div>
       </div>
@@ -27,10 +27,10 @@ export default function UserCards() {
           </div>
           <div className="ibox-content">
             <h1 className="no-margins">0</h1>
-            <div className="stat-percent font-bold text-info">
-              0% <i className="fa fa-level-up" />
+            <div className="stat-percent font-bold text-danger">
+              0% <i className="fa fa-level-down" />
             </div>
-            <small>New users</small>
+            <small>Inactive users</small>
           </div>
         </div>
       </div>

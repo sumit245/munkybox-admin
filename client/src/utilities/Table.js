@@ -1,10 +1,10 @@
 import React from "react";
 import DataTable from "react-data-table-component";
-import {customStyles } from "./utility";
+import { customStyles } from "./utility";
 import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 
-export default function Table({ title, data, columns }) {
+export default function Table({ title, data, columns, flag }) {
   const tableData = {
     columns,
     data,
@@ -13,13 +13,14 @@ export default function Table({ title, data, columns }) {
     <div className="ibox-content">
       <DataTableExtensions filterPlaceholder="Search..." {...tableData}>
         <DataTable
-          title="User"
+          title={title}
           columns={columns}
           data={data}
           highlightOnHover
           pagination
           paginationServer
-          noHeader
+          noHeader={flag}
+          dense={flag}
           customStyles={customStyles}
           selectableRows
         />

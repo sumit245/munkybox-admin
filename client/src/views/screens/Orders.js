@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Table from "../../utilities/Table";
 import axios from "axios";
-import { orderColumns, ORDER } from "../../utilities/utility";
+import { orderColumns } from "../../utilities/utility";
 import OrderCards from "../components/orders/OrderCards";
 
 export default function Orders() {
@@ -16,8 +16,8 @@ export default function Orders() {
   }, []);
   return (
     <div className="wrapper wrapper-content">
-      <OrderCards />
-      <Table title="Orders" data={orders} columns={orderColumns} />
+      <OrderCards total={orders.length} />
+      <Table title="Orders" data={orders} flag={true} columns={orderColumns} />
     </div>
   );
 }

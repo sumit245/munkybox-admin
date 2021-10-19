@@ -90,7 +90,7 @@ export const customStyles = {
 export const userColumns = [
   {
     name: "ID",
-    selector: "_id",
+    selector: (row, index) => row.user_id,
     sortable: true,
   },
   {
@@ -118,15 +118,11 @@ export const userColumns = [
     center: true,
     selector: (row) => (
       <>
-        <a href="/users" className="p-1 ">
+        <a href={`/view_user/${row._id}`} className="p-1 ">
           <i className="fa fa-eye text-navy" />
         </a>
 
-        <a href="/" className="p-1">
-          <i className="fa fa-edit text-primary" />
-        </a>
-
-        <a href="/" className="p-1">
+        <a href={`/users/${row._id}`} className="p-1">
           <i className="fa fa-trash text-danger tx-118-f " />
         </a>
       </>
@@ -136,7 +132,7 @@ export const userColumns = [
 export const restaurantColumns = [
   {
     name: "ID",
-    selector: "_id",
+    selector: (row, index) => row.restaurant_id,
     sortable: true,
   },
   {
@@ -182,7 +178,7 @@ export const restaurantColumns = [
 export const orderColumns = [
   {
     name: "ID",
-    selector: "_id",
+    selector: "order_id",
     sortable: true,
   },
   {
@@ -220,32 +216,17 @@ export const orderColumns = [
     center: true,
     selector: (row) => (
       <>
-        <a href="/users" className="p-1 ">
+        <a href={`/view_order/${row._id}`} className="p-1 ">
           <i className="fa fa-eye text-navy" />
         </a>
-
-        <a href="/" className="p-1">
-          <i className="fa fa-edit text-primary" />
-        </a>
-
-        <a href="/" className="p-1">
+        <a href={`/orders/${row._id}`} className="p-1">
           <i className="fa fa-trash text-danger tx-118-f " />
         </a>
       </>
     ),
   },
 ];
-export const ORDER = [
-  {
-    _id: "ORD001",
-    user_name: "Sumit",
-    restaurant: "Ananda Foods Limited",
-    plan: "15 Days",
-    start_date: "02 Oct 2021",
-    end_date: "17 Oct 2021",
-    status: "Pending",
-  },
-];
+
 export const cuisineColumns = [
   {
     name: "ID",
@@ -277,6 +258,84 @@ export const cuisineColumns = [
 
         <a href="/" className="p-1">
           <i className="fa fa-trash text-danger tx-118-f " />
+        </a>
+      </>
+    ),
+  },
+];
+export const couponColumns = [
+  {
+    name: "ID",
+    selector: "promo_id",
+    sortable: true,
+  },
+  {
+    name: "Restaurant ID",
+    selector: "restaurant_id",
+    sortable: true,
+  },
+  {
+    name: "Plan",
+    selector: "plan_name",
+    sortable: true,
+  },
+  {
+    name: "Category",
+    selector: "category",
+    sortable: true,
+  },
+  {
+    name: "Value",
+    selector: (row, index) =>
+      row.absolute_value + (row.discount_type === "percentage" ? "%" : "$"),
+    sortable: true,
+  },
+  {
+    name: "Discount ($)",
+    selector: "discount",
+    sortable: true,
+  },
+
+  {
+    name: "Code",
+    selector: "promo_code",
+    sortable: true,
+  },
+  {
+    name: "Actions",
+    center: true,
+    selector: (row) => (
+      <>
+        <a href={`/view_coupons/${row._id}`} className="p-1 ">
+          View Details
+        </a>
+      </>
+    ),
+  },
+];
+export const promoColumns = [
+  {
+    name: "ID",
+    selector: "promo_id",
+    sortable: true,
+  },
+  {
+    name: "Restaurant ID",
+    selector: "restaurant_id",
+    sortable: true,
+  },
+  {
+    name: "Used By",
+    selector: "counts",
+    sortable: true,
+  },
+  {
+    name: "Actions",
+    center: true,
+    selector: (row) => (
+      <>
+        <a href={`/view_coupons/${row._id}`} className="p-1 ">
+          View Details
         </a>
       </>
     ),

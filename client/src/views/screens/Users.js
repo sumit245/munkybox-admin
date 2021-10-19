@@ -16,8 +16,8 @@ export default function Users() {
   }, []);
   return (
     <div className="wrapper wrapper-content">
-      <UserCards />
-      <Table title="User" data={user} columns={userColumns} />
+      <UserCards total={user} />
+      <Table title="User" flag={true} data={user} columns={userColumns} />
     </div>
   );
 }

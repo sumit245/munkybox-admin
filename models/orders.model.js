@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 let Order = new Schema({
   order_id: { type: String },
-  restaurant_id:{type:String},
+  restaurant_id: { type: String },
   user_id: { type: String },
   user_name: { type: String },
   phone: { type: String },
@@ -16,12 +16,19 @@ let Order = new Schema({
   plan: { type: String },
   price: { type: String },
   tip: { type: String },
+  service_fee: { type: String },
+  delivery_fee: { type: String },
+  taxes: { type: String },
+  promo_code: { type: String },
   discount: { type: String },
   total: { type: String },
   time: { type: String },
   notes: { type: String },
+  category: { type: String },
+  meal_type: { type: String },
   order_time: {
     type: String,
+    default: new Date().toLocaleString(),
   },
   status: {
     type: String,

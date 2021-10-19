@@ -14,6 +14,10 @@ import ViewRestaurant from "./components/restaurant/view/ViewRestaurant";
 import Settings from "./screens/Settings";
 import DeleteAlert from "../utilities/DeleteAlert";
 import EditRestaurant from "./components/restaurant/edit/EditRestaurant";
+import Promos from "./screens/Promos";
+import CouponDetails from "./components/promotions/CouponDetails";
+import { ViewOrders } from "./components/orders/ViewOrders";
+import ViewUser from "./components/users/viewuser/ViewUser";
 
 export default function App() {
   return (
@@ -29,7 +33,13 @@ export default function App() {
 
               <Switch>
                 <Route exact path="/" render={() => <Dashboard />} />
+
+                {/* User Routes  */}
                 <Route exact path="/users" component={Users} />
+                <Route exact path="/view_user/:id" component={ViewUser} />
+                <Route exact path="/users/:id" component={DeleteAlert} />
+
+                {/* Restaurant Routes */}
                 <Route exact path="/restaurant" render={() => <Restaurant />} />
                 <Route exact path="/add_restaurant" component={AddRestaurant} />
                 <Route
@@ -37,7 +47,19 @@ export default function App() {
                   path="/edit_restaurant/:id"
                   component={EditRestaurant}
                 />
+
+                {/* Orders Routes */}
                 <Route exact path="/orders" component={Orders} />
+                <Route exact path="/view_order/:id" component={ViewOrders} />
+                <Route exact path="/orders/:id" component={DeleteAlert} />
+
+                {/* Promotions Routes */}
+                <Route exact path="/coupons" component={Promos} />
+                <Route
+                  exact
+                  path="/view_coupons/:id"
+                  component={CouponDetails}
+                />
                 <Route exact path="/payments" component={Payouts} />
                 <Route exact path="/setting" component={Settings} />
                 <Route path="/newrequest/:id" component={Requests} />

@@ -30,25 +30,10 @@ export default function SideNav() {
           </Nav.Item>
           {/* Dashboard */}
           <Nav.Item className="ml-0" as="li">
-            <Nav.Link className="nav-label text-white-50">
+            <Nav.Link href="/users" className="text-white-50">
               <i className="fa fa-user" />
-              <span id="usermenu">User</span>
-              <i className="fa fa-angle-down float-right" />
+              <span>Users</span>
             </Nav.Link>
-            <Navbar>
-              <Nav className="nav nav-second-level" as="ul">
-                <Nav.Item as="li">
-                  <Nav.Link href="/users" className="text-white-50">
-                    Dashboard
-                  </Nav.Link>
-                </Nav.Item>
-                <Nav.Item as="li">
-                  <Nav.Link href="/add_user" className="text-white-50">
-                    Add New User
-                  </Nav.Link>
-                </Nav.Item>
-              </Nav>
-            </Navbar>
           </Nav.Item>
           {/* Users */}
 
@@ -65,7 +50,7 @@ export default function SideNav() {
                     Dashboard
                   </Nav.Link>
                 </Nav.Item>
-               
+
                 <Nav.Item as="li">
                   <Nav.Link href="/add_restaurant" className="text-white-50">
                     Add New Restaurant
@@ -85,7 +70,7 @@ export default function SideNav() {
           </Nav.Item>
           {/* Orders */}
           <Nav.Item className="ml-0" as="li">
-            <Nav.Link href="/" className="text-white-50 nav-label">
+            <Nav.Link href="/coupons" className="text-white-50 nav-label">
               <i className="fa fa-tags" />
               <span>Coupons</span>
             </Nav.Link>

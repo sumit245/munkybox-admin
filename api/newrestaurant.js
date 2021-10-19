@@ -84,46 +84,42 @@ router.route("/:id").get(function (req, res) {
 
 router.route("/cuisine_type/:meal").get(function (req, res) {
   const meal_type = req.params.meal;
-  NewRestaurant.find(function (err, restaurants) {
-    if (err) {
-      console.log(err);
-    } else {
-      const filtered_restaurant = restaurants.filter(function (item) {
-        return item.cuisine_type === meal_type;
-      });
-      res.json(filtered_restaurant);
+  NewRestaurant.find(
+    {
+      $and: [{ status: "Active" }, { cuisine_type: meal_type }],
+    },
+    function (err, restaurants) {
+      if (!err) {
+        res.json(restaurants);
+      }
     }
-  });
+  );
 });
 // filter by cuisine_type
 
 router.route("/category/:food").get(function (req, res) {
   const meal_type = req.params.food;
-  NewRestaurant.find(function (err, restaurants) {
-    if (err) {
-      console.log(err);
-    } else {
-      const filtered_restaurant = restaurants.filter(
-        (data) => data.category === meal_type
-      );
-      res.json(filtered_restaurant);
+  NewRestaurant.find(
+    { $and: [{ status: "Active" }, { category: meal_type }] },
+    function (err, restaurants) {
+      if (!err) {
+        res.json(restaurants);
+      }
     }
-  });
+  );
 });
 // filter by lunch dinner
 
 router.route("/meal_type/:food").get(function (req, res) {
   const meal_type = req.params.food;
-  NewRestaurant.find(function (err, restaurants) {
-    if (err) {
-      console.log(err);
-    } else {
-      const filt_rest = restaurants.filter(function (item) {
-        return item.meal_type === meal_type;
-      });
-      res.json(filt_rest);
+  NewRestaurant.find(
+    { $and: [{ status: "Active" }, { meal_type: meal_type }] },
+    function (err, restaurants) {
+      if (!err) {
+        res.json(restaurants);
+      }
     }
-  });
+  );
 });
 // filter by veg non-veg
 router.route("/price/:order").get(function (req, res) {
@@ -153,5 +149,30 @@ router.route("/").delete((req, res, next) => {
   });
 });
 //delete all
+
+router.route("/push_promo").put(async (req, res) => {
+  const id = req.body._id
+  const {coupon}=req.body
+  NewRestaurant.findById(id, function (err, rest) {
+    if (rest) {
+      rest.promo.push(coupon);
+      rest
+        .save()
+        .then((rest) => rest)
+        .then((restaurant) => {
+          res.json({
+            statusText: "updated",
+            data: restaurant,
+            msg: "Coupon Added Successfully",
+          });
+        })
+        .catch((err) => {
+          res.status(400).send("adding new coupon failed");
+        });
+    } else {
+      res.json({ statusText: "NF", msg: "Please login first to proceed" });
+    }
+  });
+});
 
 module.exports = router;

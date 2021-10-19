@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getOrders } from "../../../actions/orderAction";
 
 export default function OrdersChart() {
+  const dispatch = useDispatch();
+  const orders = useSelector((state) => state.orders.orders);
+
+  useEffect(() => {
+    dispatch(getOrders());
+  }, [dispatch]);
   return (
     <>
       <div className="row">
@@ -27,7 +35,7 @@ export default function OrdersChart() {
                 <div className="card col-lg-6 bg-primary">
                   <div className="card-body">
                     <h5 className="text-white">Total Orders</h5>
-                    <h1 className="no-margins">0</h1>
+                    <h1 className="no-margins">{orders && orders.length}</h1>
                   </div>
                 </div>
 

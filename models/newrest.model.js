@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 let NewRestaurant = Schema({
-  restaurant_id:{type:String},
+  restaurant_id: { type: String },
   about: { type: String },
   pin: { type: String },
   account_name: { type: String },
@@ -56,6 +56,16 @@ let NewRestaurant = Schema({
       },
     ],
   },
+  promo: [
+    {
+      promo_id: String,
+      promo_code: String,
+      plan_name: String,
+      discount: String,
+      discount_type: String,
+      status: String,
+    },
+  ],
   category: { type: String },
   meal_type: { type: String },
   rating: { type: String },

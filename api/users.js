@@ -272,6 +272,7 @@ router.route("/add_review/:restaurant/:user").post(function (req, res) {
   ).catch((err) => res.send(err));
 });
 //add a review
+
 router.route("/").delete((req, res, next) => {
   Users.deleteMany({}, (err, resp) => {
     res.json({ msg: "All Deleted" });

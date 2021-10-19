@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function OrderCards() {
+export default function OrderCards({ total }) {
   return (
     <div className="row">
       <div className="col-lg-3">
@@ -10,7 +10,7 @@ export default function OrderCards() {
             <h5>Total</h5>
           </div>
           <div className="ibox-content">
-            <h1 className="no-margins">0</h1>
+            <h1 className="no-margins">{total}</h1>
             <div className="stat-percent font-bold text-info">
               0% <i className="fa fa-bolt" />
             </div>

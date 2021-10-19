@@ -13,17 +13,13 @@ router.route("/").get(function (req, res) {
 });
 //get all orders
 
-router.route("/:id").delete((req, res, next) => {
-  Order.findByIdAndDelete(req.params.id, (err, data) => {
-    if (err) {
-      console.log(next(err));
-      res.status(200).json({ data: "deleted" });
-    } else {
-      console.log("deleted successfully");
-    }
-  });
+router.route("/:id").delete(async (req, res) => {
+  const response = await Order.findByIdAndDelete(req.params.id);
+  if (response !== null) {
+    res.json({ status: 200, msg: "Deleted", data: response });
+  }
 });
-//delete a order
+//delete single order
 
 router.route("/").post(function (req, res) {
   let order = new Order(req.body);
@@ -46,6 +42,13 @@ router.route("/:id").get(function (req, res) {
 });
 //get specific order
 
+router.route("/getorderbyuser/:user_id").get(function (req, res) {
+  let id = req.params.user_id;
+  Order.find({ user_id: id }, function (err, order) {
+    res.json(order);
+  });
+});
+//get specific order
 router.put("/:id", function (req, res, next) {
   let id = req.params.id;
   console.log(req.body);
@@ -63,11 +66,13 @@ router.put("/:id", function (req, res, next) {
     }
   });
 });
-router.route('/').delete((req, res, next)=>{
-    Order.deleteMany({}, (err, resp) => {
-        res.json({msg:'All Deleted'})
-    })
-})
+//update an order
+
+router.route("/").delete((req, res, next) => {
+  Order.deleteMany({}, (err, resp) => {
+    res.json({ msg: "All Deleted" });
+  });
+});
 //delete all
 
 module.exports = router;
