@@ -29,6 +29,7 @@ export default function SideNav() {
             </Nav.Link>
           </Nav.Item>
           {/* Dashboard */}
+
           <Nav.Item className="ml-0" as="li">
             <Nav.Link href="/users" className="text-white-50">
               <i className="fa fa-user" />
@@ -59,7 +60,6 @@ export default function SideNav() {
               </Nav>
             </Navbar>
           </Nav.Item>
-
           {/* Restaurant */}
 
           <Nav.Item className="ml-0" as="li">
@@ -69,6 +69,7 @@ export default function SideNav() {
             </Nav.Link>
           </Nav.Item>
           {/* Orders */}
+
           <Nav.Item className="ml-0" as="li">
             <Nav.Link href="/coupons" className="text-white-50 nav-label">
               <i className="fa fa-tags" />
@@ -76,12 +77,7 @@ export default function SideNav() {
             </Nav.Link>
           </Nav.Item>
           {/* Coupons */}
-          <Nav.Item className="ml-0" as="li">
-            <Nav.Link href="/invoices" className="text-white-50 nav-label">
-              <i className="fa fa-file" /> <span>Invoice</span>
-            </Nav.Link>
-          </Nav.Item>
-          {/* Invoice */}
+
           <Nav.Item className="ml-0" as="li">
             <Nav.Link href="/payments" className="text-white-50 nav-label">
               <i className="fa fa-credit-card" />{" "}
@@ -89,6 +85,17 @@ export default function SideNav() {
             </Nav.Link>
           </Nav.Item>
           {/* Payments */}
+
+          <Nav.Item className="ml-0" as="li">
+            <Nav.Link href="/setting" className="text-white-50 nav-label">
+              <i className="fa fa-life-buoy" />{" "}
+              <span className="nav-label text-white-50">
+                Contacts and Supports
+              </span>
+            </Nav.Link>
+          </Nav.Item>
+          {/* Support */}
+
           <Nav.Item className="ml-0" as="li">
             <Nav.Link href="/setting" className="text-white-50 nav-label">
               <i className="fa fa-gear" />{" "}

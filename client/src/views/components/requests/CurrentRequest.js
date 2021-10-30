@@ -13,20 +13,18 @@ export default function CurrentRequest({ partner }) {
   const handleDone = async () => {
     const id = partner.data._id;
     const status = { status: "Done" };
-    const response = await axios.put(
-      "/api/partnerrequest/" + id,
-      status
-    );
-    console.log(response.data);
+    const response = await axios.put("/api/partnerrequest/" + id, status);
+    if (response !== null) {
+      window.location.reload();
+    }
   };
   const handleReject = async () => {
     const id = partner.data._id;
     const status = { status: "Reject" };
-    const response = await axios.put(
-      "/api/partnerrequest/" + id,
-      status
-    );
-    console.log(response.data);
+    const response = await axios.put("/api/partnerrequest/" + id, status);
+    if (response !== null) {
+      window.location.reload();
+    }
   };
   return (
     <div className="col-lg-8 animated fadeInRight">
@@ -93,17 +91,15 @@ export default function CurrentRequest({ partner }) {
             <strong> Chef Name:</strong>{" "}
             {partner.data.first_name + " " + partner.data.last_name}
             <br />
+            <strong>Restaurant Name: </strong>
+            {partner.data.restaurant_name}
+            <br />
             <strong>Phone:</strong>
             {partner.data.phone}
             <br />
             <strong>Postal Code:</strong>
             {partner.data.postal_code}
             <br />
-          </p>
-          <p>
-            <strong>
-              In the below we can get documents from chef while putting request
-            </strong>
           </p>
         </div>
 

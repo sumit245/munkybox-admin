@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Coupon = require("../models/coupons.model");
 const Promo = require("../models/promo.model");
-const Banner = require("../models/bannerplan.model");
 
 router.route("/").get(function (req, res) {
   Coupon.find(function (err, coupons) {

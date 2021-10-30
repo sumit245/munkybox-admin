@@ -22,6 +22,12 @@ let NewRestaurant = Schema({
       },
     ],
   },
+  papers: [
+    {
+      image: { type: String },
+      image_name: { type: String },
+    },
+  ],
   email: { type: String },
   locality: { type: String },
   owner_name: { type: String },
@@ -66,6 +72,7 @@ let NewRestaurant = Schema({
       status: String,
     },
   ],
+  advert_id: { type: String },
   category: { type: String },
   meal_type: { type: String },
   rating: { type: String },

@@ -12,8 +12,10 @@ const checkout = require("./api/checkoutoptions");
 const banner = require("./api/bannerPlan");
 const newrest = require("./api/newrestaurant");
 const coupon = require("./api/coupon");
+const promo=require("./api/promotions")
 const partner = require("./api/partnerrequest");
 const slot = require("./api/slots");
+
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -30,6 +32,8 @@ app.use("/api/cuisine", cuisine);
 app.use("/api/checkout", checkout);
 app.use("/api/banner", banner);
 app.use("/api/coupon", coupon);
+app.use("/api/promo/", promo)
+
 app.use("/api/partnerrequest", partner);
 app.use("/api/slots", slot);
 

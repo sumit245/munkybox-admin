@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const NewRestaurant = require("../models/newrest.model");
+const Orders = require("../models/orders.model");
 
 router.route("/").get(function (req, res) {
   NewRestaurant.find(function (err, factories) {
@@ -151,8 +152,8 @@ router.route("/").delete((req, res, next) => {
 //delete all
 
 router.route("/push_promo").put(async (req, res) => {
-  const id = req.body._id
-  const {coupon}=req.body
+  const id = req.body._id;
+  const { coupon } = req.body;
   NewRestaurant.findById(id, function (err, rest) {
     if (rest) {
       rest.promo.push(coupon);
@@ -174,5 +175,21 @@ router.route("/push_promo").put(async (req, res) => {
     }
   });
 });
-
+//
+router.route("/getorders/:restaurant_id").get(async (req, res) => {
+  const response = await NewRestaurant.findOne({
+    restaurant_id: req.params.restaurant_id,
+  });
+  const profile_pic = await response.documents[1].banner_image;
+  const myorders = await Orders.find({
+    restaurant_id: req.params.restaurant_id,
+  });
+  const totalOrders = await myorders.length;
+  const meals = await response.meals;
+  res.json({
+    totalOrders: totalOrders,
+    meals: meals,
+    profile_pic: profile_pic,
+  });
+});
 module.exports = router;
