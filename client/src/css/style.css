@@ -6246,3 +6246,13 @@ body.body-small .vote-icon {
 #mymodal {
   display: none;
 }
+.editable-meals {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  border: none;
+  border-color: transparent;
+  border-bottom: #717171 1px solid;
+  cursor: pointer;
+}
+[contenteditable] {
+  outline: 0px solid transparent;
+}
