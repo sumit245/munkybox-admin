@@ -27,14 +27,12 @@ const notifications = (
 export default function TopNavigation() {
   const [request, setRequest] = useState([]);
   useEffect(() => {
-    axios
-      .get("/api/partnerrequest")
-      .then((res) => {
-        let numOfRequests = res.data.data.length;
-        document.getElementById("partnerRequest").innerHTML = numOfRequests;
-        res.data.data.length = 5;
-        setRequest(res.data.data);
-      });
+    axios.get("/api/partnerrequest").then((res) => {
+      let numOfRequests = res.data.data.length;
+      document.getElementById("partnerRequest").innerHTML = numOfRequests;
+      res.data.data.length = 5;
+      setRequest(res.data.data);
+    });
   }, []);
 
   return (
@@ -71,24 +69,25 @@ export default function TopNavigation() {
             id="navbarScrollingDropdown"
             bsPrefix={"dropdown-toggle nav-link"}
           >
-            {request.map((data, key) => (
-              <NavDropdown.Item
-                key={key}
-                href={`/newrequest/${data._id}`}
-                bsPrefix={"dropdown-item text-success"}
-                style={{
-                  padding: 4,
-                  marginBottom: -24,
-                }}
-              >
-                <small className="mb-0">
-                  {"New request from\n " +
-                    data.first_name +
-                    " " +
-                    data.last_name}
-                </small>
-              </NavDropdown.Item>
-            ))}
+            {Array.isArray(request) &&
+              request.map((data, key) => (
+                <NavDropdown.Item
+                  key={key}
+                  href={`/newrequest/${data._id}`}
+                  bsPrefix={"dropdown-item text-success"}
+                  style={{
+                    padding: 4,
+                    marginBottom: -24,
+                  }}
+                >
+                  <small className="mb-0">
+                    {"New request from\n " +
+                      data.first_name +
+                      " " +
+                      data.last_name}
+                  </small>
+                </NavDropdown.Item>
+              ))}
             <NavDropdown.Divider />
             <NavDropdown.Item
               style={{
