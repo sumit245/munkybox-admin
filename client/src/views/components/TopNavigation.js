@@ -28,7 +28,9 @@ export default function TopNavigation() {
   const [request, setRequest] = useState([]);
   useEffect(() => {
     axios.get("/api/partnerrequest").then((res) => {
-      let numOfRequests = res.data.data.length;
+      let requests=res.data.data;
+      let pending=requests.filter(item=>item.status==="Pending")
+      let numOfRequests = pending.length;
       document.getElementById("partnerRequest").innerHTML = numOfRequests;
       res.data.data.length = 5;
       setRequest(res.data.data);

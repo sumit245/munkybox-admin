@@ -6,7 +6,7 @@ let BannerPlan = new Schema({
   pack_name: { type: String },
   rpc: { type: Number },
   duration: { type: String },
-  status: { type: String, default: "active" },
+  status: { type: String, default: "Active" },
 });
 
 module.exports = mongoose.model("BannerPlan", BannerPlan);

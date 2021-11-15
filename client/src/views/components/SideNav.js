@@ -87,7 +87,7 @@ export default function SideNav() {
           {/* Payments */}
 
           <Nav.Item className="ml-0" as="li">
-            <Nav.Link href="/setting" className="text-white-50 nav-label">
+            <Nav.Link href="/contacts" className="text-white-50 nav-label">
               <i className="fa fa-life-buoy" />{" "}
               <span className="nav-label text-white-50">
                 Contacts and Supports

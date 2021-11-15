@@ -18,6 +18,7 @@ import Promos from "./screens/Promos";
 import CouponDetails from "./components/promotions/CouponDetails";
 import { ViewOrders } from "./components/orders/ViewOrders";
 import ViewUser from "./components/users/viewuser/ViewUser";
+import Contacts from "./components/contacts/Contacts";
 
 export default function App() {
   return (
@@ -62,10 +63,13 @@ export default function App() {
                 />
                 <Route exact path="/payments" component={Payouts} />
                 <Route exact path="/setting" component={Settings} />
+                <Route exact path="/contacts" component={Contacts} />
                 <Route path="/newrequest/:id" component={Requests} />
                 <Route path="/view_restaurant/:id" component={ViewRestaurant} />
                 <Route path="/newrest/:id" component={DeleteAlert} />
                 <Route path="/cuisine/:id" component={DeleteAlert} />
+                <Route path="/banner/:id" component={DeleteAlert} />
+                <Route path="/policies/:id" component={DeleteAlert} />
               </Switch>
             </div>
           </div>
