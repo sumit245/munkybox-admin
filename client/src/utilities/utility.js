@@ -193,7 +193,14 @@ export const orderColumns = [
   },
   {
     name: "Plan",
-    selector: "plan",
+    selector: (row, index) =>
+      row.plan === "twoPlan"
+        ? "2 Meals"
+        : row.plan === "fifteenPlan"
+        ? "15 Meals"
+        : row.plan === "thirtyPlan"
+        ? "30 Meals"
+        : null,
     sortable: true,
   },
   {
