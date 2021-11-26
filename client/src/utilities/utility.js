@@ -187,7 +187,12 @@ export const orderColumns = [
     sortable: true,
   },
   {
-    name: "Restaurant",
+    name: "Restaurant ID",
+    selector: (row, index) => row.restaurant_id,
+    sortable: true,
+  },
+  {
+    name: "Restaurant Name",
     selector: (row, index) => row.restaurant,
     sortable: true,
   },
@@ -233,7 +238,6 @@ export const orderColumns = [
     ),
   },
 ];
-
 export const cuisineColumns = [
   {
     name: "ID",
