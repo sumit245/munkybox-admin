@@ -298,12 +298,14 @@ export const couponColumns = [
   {
     name: "Value",
     selector: (row, index) =>
-      row.absolute_value + (row.discount_type === "percentage" ? "%" : "$"),
+      row.discount_type === "%"
+        ? row.discount + "%"
+        : "$" + row.discount,
     sortable: true,
   },
   {
     name: "Discount ($)",
-    selector: "discount",
+    selector: (row,index)=>row.absolute_value,
     sortable: true,
   },
 
