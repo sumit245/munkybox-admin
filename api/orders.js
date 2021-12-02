@@ -42,16 +42,14 @@ router.route("/:id").get(function (req, res) {
 });
 //get specific order
 
-router.route("/getorderbyuser/:user_id").get(function (req, res) {
+router.route("/getorderbyuser/:user_id").get(async function (req, res) {
   let id = req.params.user_id;
-  Order.find({ user_id: id }, function (err, order) {
-    res.json(order);
-  });
+  const orders = await Order.find({ user_id: id });
+  res.json(orders)
 });
 //get specific order
 router.put("/:id", function (req, res, next) {
   let id = req.params.id;
-  console.log(req.body);
   Order.findByIdAndUpdate(id, req.body, (err, response) => {
     if (err) {
       res.json({ status: 403, msg: "Bad Request" });
