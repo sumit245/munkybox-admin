@@ -8,18 +8,18 @@ let Order = new Schema({
   phone: { type: String },
   email_id: { type: String },
   address: { type: Object },
-  
+
   card: { type: Object },
-  
+
   user_id: { type: String },
-  
+
   start_date: { type: String },
   end_date: { type: String },
-  
+
   restaurant_id: { type: String },
   restaurant: { type: String },
   plan: { type: String },
-  base_price:{type:String},
+  base_price: { type: String },
   price: { type: String },
   tip: { type: String },
   service_fee: { type: String },
@@ -34,7 +34,7 @@ let Order = new Schema({
   meal_type: { type: String },
   order_time: {
     type: String,
-    default: new Date().toLocaleString(),
+    default: Date.now().toLocaleString(),
   },
   status: {
     type: String,
@@ -47,9 +47,9 @@ let Order = new Schema({
       {
         item: { type: String },
         order_date: { type: String },
-        rate:{type:String},
+        rate: { type: String },
         qty: { type: String },
-        subtotal:{type:String},
+        subtotal: { type: String },
         price: { type: String },
       },
     ],
