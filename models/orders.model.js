@@ -3,17 +3,23 @@ const Schema = mongoose.Schema;
 
 let Order = new Schema({
   order_id: { type: String },
-  restaurant_id: { type: String },
-  user_id: { type: String },
+
   user_name: { type: String },
   phone: { type: String },
   email_id: { type: String },
   address: { type: Object },
+  
   card: { type: Object },
+  
+  user_id: { type: String },
+  
   start_date: { type: String },
   end_date: { type: String },
+  
+  restaurant_id: { type: String },
   restaurant: { type: String },
   plan: { type: String },
+  base_price:{type:String},
   price: { type: String },
   tip: { type: String },
   service_fee: { type: String },
@@ -34,14 +40,17 @@ let Order = new Schema({
     type: String,
     default: "pending",
   },
+
   add_on: {
     type: Array,
     items: [
       {
         item: { type: String },
         order_date: { type: String },
+        rate:{type:String},
+        qty: { type: String },
+        subtotal:{type:String},
         price: { type: String },
-        type: { type: String },
       },
     ],
   },
