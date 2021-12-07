@@ -13,6 +13,44 @@ router.route("/").get(function (req, res) {
 });
 //get all orders
 
+router.route("/:id").get(function (req, res) {
+  let id = req.params.id;
+  Order.findById(id, function (err, order) {
+    res.json(order);
+  });
+});
+//get specific order
+
+router.route("/custom/active").get(async (req, res) => {
+  const activeorders = await Order.find({ status: "started" });
+  res.json({ activeorders: activeorders, count: activeorders.length });
+});
+//get abc orders
+
+router.route("/custom/pending").get(async (req, res) => {
+  const orders = await Order.find({ status: "pending" });
+  res.json({ pendingorders: orders, count: orders.length });
+});
+//get abc orders
+
+router.route("/custom/rejected").get(async (req, res) => {
+  const rejectedorders = await Order.find({ status: "started" });
+  res.json({ rejectedorders: rejectedorders, count: rejectedorders.length });
+});
+//get abc orders
+
+router.route("/custom/completed").get(async (req, res) => {
+  const completedorders = await Order.find({ status: "completed" });
+  res.json({ completedorders: completedorders, count: completedorders.length });
+});
+//get abc orders
+
+router.route("/custom/cancelled").get(async (req, res) => {
+  const cancelled = await Order.find({ status: "cancelled" });
+  res.json({ cancelled: cancelled, count: cancelled.length });
+});
+//get abc orders
+
 router.route("/:id").delete(async (req, res) => {
   const response = await Order.findByIdAndDelete(req.params.id);
   if (response !== null) {
@@ -34,20 +72,13 @@ router.route("/").post(function (req, res) {
 });
 //save a order
 
-router.route("/:id").get(function (req, res) {
-  let id = req.params.id;
-  Order.findById(id, function (err, order) {
-    res.json(order);
-  });
-});
-//get specific order
-
 router.route("/getorderbyuser/:user_id").get(async function (req, res) {
   let id = req.params.user_id;
   const orders = await Order.find({ user_id: id });
-  res.json(orders)
+  res.json(orders);
 });
 //get specific order
+
 router.put("/:id", function (req, res, next) {
   let id = req.params.id;
   Order.findByIdAndUpdate(id, req.body, (err, response) => {

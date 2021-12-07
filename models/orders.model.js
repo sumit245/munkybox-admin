@@ -3,19 +3,14 @@ const Schema = mongoose.Schema;
 
 let Order = new Schema({
   order_id: { type: String },
-
   user_name: { type: String },
   phone: { type: String },
   email_id: { type: String },
   address: { type: Object },
-
   card: { type: Object },
-
   user_id: { type: String },
-
   start_date: { type: String },
   end_date: { type: String },
-
   restaurant_id: { type: String },
   restaurant: { type: String },
   plan: { type: String },
