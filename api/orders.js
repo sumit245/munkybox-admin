@@ -90,13 +90,28 @@ router.route("/dashboard/:restaurant_name").get(async (req, res) => {
   const fifteenOrders = await response.filter(
     (item) => item.plan === "fifteenPlan"
   );
+  function add(accumulator, a) {
+    return parseFloat(accumulator) + parseFloat(a);
+  }
   const thirtyOrders = await response.filter(
     (item) => item.plan === "thirtyPlan"
   );
-  let totalRevenue = "$150";
-  let totalDiscount = "$12";
-  let grossRevenue = "$138";
+  const sumTwo = twoOrders.map(item => item.base_price).reduce(add, 0)
+  const discountTwo = twoOrders.map((item) => item.discount).reduce(add, 0);
+  const sumFifteen = fifteenOrders.map((item) => item.base_price).reduce(add, 0);
+  const discountFifteen = fifteenOrders.map((item) => item.discount).reduce(add, 0);
+  const sumThirty = thirtyOrders.map((item) => item.base_price).reduce(add, 0);
+  const discountThirty = thirtyOrders.map((item) => item.discount).reduce(add, 0);
+  let totalDiscount = discountTwo+discountFifteen+discountThirty;
+  let totalRevenue = sumTwo + sumFifteen + sumThirty;
+  let grossRevenue=totalRevenue-totalDiscount
   res.json({
+    sumTwo: sumTwo,
+    discountTwo: discountTwo,
+    sumFifteen: sumFifteen,
+    discountThirty: discountThirty,
+    discountFifteen:discountFifteen,
+    sumThirty:sumThirty,
     totalRevenue: totalRevenue,
     totalDiscount: totalDiscount,
     grossRevenue: grossRevenue,
