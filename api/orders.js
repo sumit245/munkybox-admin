@@ -25,31 +25,31 @@ router.route("/custom/active").get(async (req, res) => {
   const activeorders = await Order.find({ status: "started" });
   res.json({ activeorders: activeorders, count: activeorders.length });
 });
-//get abc orders
+//get active orders
 
 router.route("/custom/pending").get(async (req, res) => {
   const orders = await Order.find({ status: "pending" });
   res.json({ pendingorders: orders, count: orders.length });
 });
-//get abc orders
+//get pending orders
 
 router.route("/custom/rejected").get(async (req, res) => {
   const rejectedorders = await Order.find({ status: "started" });
   res.json({ rejectedorders: rejectedorders, count: rejectedorders.length });
 });
-//get abc orders
+//get rejected orders
 
 router.route("/custom/completed").get(async (req, res) => {
   const completedorders = await Order.find({ status: "completed" });
   res.json({ completedorders: completedorders, count: completedorders.length });
 });
-//get abc orders
+//get completed orders
 
 router.route("/custom/cancelled").get(async (req, res) => {
   const cancelled = await Order.find({ status: "cancelled" });
   res.json({ cancelled: cancelled, count: cancelled.length });
 });
-//get abc orders
+//get cancelled orders
 
 router.route("/:id").delete(async (req, res) => {
   const response = await Order.findByIdAndDelete(req.params.id);
@@ -77,7 +77,34 @@ router.route("/getorderbyuser/:user_id").get(async function (req, res) {
   const orders = await Order.find({ user_id: id });
   res.json(orders);
 });
-//get specific order
+//get specific order by user
+
+router.route("/dashboard/:restaurant_name").get(async (req, res) => {
+  let restaurant = req.params.restaurant_name;
+  const response = await Order.find({
+    restaurant: restaurant,
+    status: "started",
+  });
+
+  const twoOrders = await response.filter((item) => item.plan === "twoPlan");
+  const fifteenOrders = await response.filter(
+    (item) => item.plan === "fifteenPlan"
+  );
+  const thirtyOrders = await response.filter(
+    (item) => item.plan === "thirtyPlan"
+  );
+  let totalRevenue = "$150";
+  let totalDiscount = "$12";
+  let grossRevenue = "$138";
+  res.json({
+    totalRevenue: totalRevenue,
+    totalDiscount: totalDiscount,
+    grossRevenue: grossRevenue,
+    countTwoMeals: twoOrders.length,
+    countFifteenMeals: fifteenOrders.length,
+    countThirtyMeals: thirtyOrders.length,
+  });
+});
 
 router.put("/:id", function (req, res, next) {
   let id = req.params.id;
