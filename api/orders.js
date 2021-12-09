@@ -21,6 +21,12 @@ router.route("/:id").get(function (req, res) {
 });
 //get specific order
 
+router.route("/custom/accepted").get(async (req, res) => {
+  const activeorders = await Order.find({ status: "accepted" });
+  res.json({ activeorders: activeorders, count: activeorders.length });
+});
+//get active orders
+
 router.route("/custom/active").get(async (req, res) => {
   const activeorders = await Order.find({ status: "started" });
   res.json({ activeorders: activeorders, count: activeorders.length });
