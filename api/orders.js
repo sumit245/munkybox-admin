@@ -21,38 +21,38 @@ router.route("/:id").get(function (req, res) {
 });
 //get specific order
 
-router.route("/custom/accepted").get(async (req, res) => {
-  const activeorders = await Order.find({ status: "accepted" });
+router.route("/accepted/:restaurant_name").get(async (req, res) => {
+  const activeorders = await Order.find({ status: "accepted",restaurant:req.params.restaurant_name });
   res.json({ activeorders: activeorders, count: activeorders.length });
 });
 //get active orders
 
-router.route("/custom/active").get(async (req, res) => {
-  const activeorders = await Order.find({ status: "started" });
+router.route("/active/:restaurant_name").get(async (req, res) => {
+  const activeorders = await Order.find({ status: "started",restaurant:req.params.restaurant_name });
   res.json({ activeorders: activeorders, count: activeorders.length });
 });
 //get active orders
 
-router.route("/custom/pending").get(async (req, res) => {
-  const orders = await Order.find({ status: "pending" });
+router.route("/pending/:restaurant_name").get(async (req, res) => {
+  const orders = await Order.find({ status: "pending",restaurant:req.params.restaurant_name });
   res.json({ pendingorders: orders, count: orders.length });
 });
 //get pending orders
 
-router.route("/custom/rejected").get(async (req, res) => {
-  const rejectedorders = await Order.find({ status: "started" });
+router.route("/rejected/:restaurant_name").get(async (req, res) => {
+  const rejectedorders = await Order.find({ status: "rejected",restaurant:req.params.restaurant_name });
   res.json({ rejectedorders: rejectedorders, count: rejectedorders.length });
 });
 //get rejected orders
 
-router.route("/custom/completed").get(async (req, res) => {
-  const completedorders = await Order.find({ status: "completed" });
+router.route("/completed/:restaurant_name").get(async (req, res) => {
+  const completedorders = await Order.find({ status: "completed",restaurant:req.params.restaurant_name });
   res.json({ completedorders: completedorders, count: completedorders.length });
 });
 //get completed orders
 
-router.route("/custom/cancelled").get(async (req, res) => {
-  const cancelled = await Order.find({ status: "cancelled" });
+router.route("/cancelled/:restaurant_name").get(async (req, res) => {
+  const cancelled = await Order.find({ status: "cancelled",restaurant:req.params.restaurant_name });
   res.json({ cancelled: cancelled, count: cancelled.length });
 });
 //get cancelled orders
