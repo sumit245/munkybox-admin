@@ -83,7 +83,7 @@ router.route("/dashboard/:restaurant_name").get(async (req, res) => {
   let restaurant = req.params.restaurant_name;
   const response = await Order.find({
     restaurant: restaurant,
-    status: "started",
+    $or: [{ status: "started" }, { status: "accepted" }, { status: "cancelled" }],
   });
 
   const twoOrders = await response.filter((item) => item.plan === "twoPlan");
