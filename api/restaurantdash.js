@@ -45,10 +45,27 @@ router.route("/:restaurant_name").get(async (req, res) => {
   let myorders = await Orders.find({
     restaurant: req.params.restaurant_name,
   });
+  let totalorders = myorders.length;
+  let accepted = myorders.filter(
+    (item) =>
+      item.status !== "rejected" ||
+      item.status !== "pending" ||
+      item.status !== "cancelled"
+  );
+  let rejected = myorders.filter((item) => item.status === "rejected");
+  let acceptedCount = accepted.length;
+  let rejectedCount = rejected.length;
   RestaurantDashboard.findOne(
     { restaurant_name: req.params.restaurant_name },
     function (err, orders) {
-      res.json({ totalOrders: myorders.length,orders });
+      res.json({
+        totalOrders: totalorders,
+        acceptedCount: acceptedCount,
+        rejectedCount: rejectedCount,
+        accptanceRate: (acceptedCount / totalorders) * 100,
+        rectanceRate: (rejectedCount / totalorders) * 100,
+        orders,
+      });
     }
   );
 });
