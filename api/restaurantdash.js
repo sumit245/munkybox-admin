@@ -50,15 +50,26 @@ router
       },
       function (err, response) {
         if (!err) {
-          let { menuvisits, _id } = response;
-          menuvisits = parseInt(menuvisits) + 1;
-          RestaurantDashboard.findByIdAndUpdate(
-            _id,
-            { menuvisits: menuvisits },
-            function (err, docs) {
-              res.json(docs);
-            }
-          );
+          if (response !== null) {
+            let { menuvisits, _id } = response;
+            menuvisits = parseInt(menuvisits) + 1;
+            RestaurantDashboard.findByIdAndUpdate(
+              _id,
+              { menuvisits: menuvisits },
+              function (err, docs) {
+                res.json(docs);
+              }
+            );
+          } else {
+            let dashboard = {
+              restaurant_name: req.params.restaurant,
+              menuvisits: 1,
+            };
+            let dash = new RestaurantDashboard(dashboard);
+            dash.save().then((response) => {
+              res.json(response);
+            });
+          }
         }
       }
     );
@@ -73,15 +84,28 @@ router
       },
       function (err, response) {
         if (!err) {
-          let { cartVisit, _id } = response;
-          cartVisit = parseInt(cartVisit) + 1;
-          RestaurantDashboard.findByIdAndUpdate(
-            _id,
-            { cartVisit: cartVisit },
-            function (err, docs) {
-              res.json(docs);
-            }
-          );
+          if (response !== null) {
+            let { cartVisit, _id } = response;
+            cartVisit = parseInt(cartVisit) + 1;
+            RestaurantDashboard.findByIdAndUpdate(
+              _id,
+              { cartVisit: cartVisit },
+              function (err, docs) {
+                res.json(docs);
+              }
+            );
+          } else {
+            let dashboard = {
+              restaurant_name: req.params.restaurant,
+              cartVisit: 1,
+            };
+            let dash = new RestaurantDashboard(dashboard);
+            dash.save().then((response) => {
+              res.json(response);
+            });
+          }
+        } else {
+          res.json(err);
         }
       }
     );
