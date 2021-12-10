@@ -28,5 +28,63 @@ router.route("/getusertypesbyrestaurant/:restaurant").get(async (req, res) => {
     more: x,
   });
 });
+router.route("/").post(function (req, res) {
+  let order = new RestaurantDashboard(req.body);
+  order
+    .save()
+    .then((response) => {
+      res.json({ data: response, msg: "Dashboard Created", status: 200 });
+    })
+    .catch((err) => {
+      res.status(400).send("Failed");
+    });
+});
+//create a dashboard
+
+router
+  .route("/getchefbynameandupdatemenucount/:restaurant")
+  .get(function (req, res) {
+    RestaurantDashboard.findOne(
+      {
+        restaurant_name: req.params.restaurant,
+      },
+      function (err, response) {
+        if (!err) {
+          let { menuvisits, _id } = response;
+          menuvisits = parseInt(menuvisits) + 1;
+          RestaurantDashboard.findByIdAndUpdate(
+            _id,
+            { menuvisits: menuvisits },
+            function (err, docs) {
+              res.json(docs);
+            }
+          );
+        }
+      }
+    );
+  });
+
+router
+  .route("/getchefbynameandupdatecartcount/:restaurant")
+  .get(function (req, res) {
+    RestaurantDashboard.findOne(
+      {
+        restaurant_name: req.params.restaurant,
+      },
+      function (err, response) {
+        if (!err) {
+          let { cartVisit, _id } = response;
+          cartVisit = parseInt(cartVisit) + 1;
+          RestaurantDashboard.findByIdAndUpdate(
+            _id,
+            { cartVisit: cartVisit },
+            function (err, docs) {
+              res.json(docs);
+            }
+          );
+        }
+      }
+    );
+  });
 
 module.exports = router;
