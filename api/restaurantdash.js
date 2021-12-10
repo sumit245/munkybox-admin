@@ -41,6 +41,18 @@ router.route("/").post(function (req, res) {
 });
 //create a dashboard
 
+router.route("/:restaurant_name").get(async (req, res) => {
+  let myorders = await Orders.find({
+    restaurant: req.params.restaurant_name,
+  });
+  RestaurantDashboard.findOne(
+    { restaurant_name: req.params.restaurant_name },
+    function (err, orders) {
+      res.json({ totalOrders: myorders.length,orders });
+    }
+  );
+});
+
 router
   .route("/getchefbynameandupdatemenucount/:restaurant")
   .get(function (req, res) {
