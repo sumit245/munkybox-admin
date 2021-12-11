@@ -14,6 +14,11 @@ router.route("/").get(function (req, res) {
 });
 //get all coupons
 
+router.route("/:restaurant").get(async (req, res) => {
+  const myCoupons = await Coupon.find({ restaurant_id: req.params.restaurant });
+  res.json(myCoupons);
+});
+
 router.route("/promo").get(function (req, res) {
   Promo.find(function (err, promo) {
     if (!err) {
