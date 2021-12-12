@@ -14,6 +14,17 @@ router.route("/").get(function (req, res) {
 });
 //get all coupons
 
+router.route("/:id").get(function (req, res) {
+  let id = req.params.id;
+  Coupon.findById({_id:id}, function (err, coupon) {
+    if (!err) {
+      res.json(coupon);
+    }
+  });
+});
+//get specific coupon
+
+
 router.route("/:restaurant").get(async (req, res) => {
   const myCoupons = await Coupon.find({ restaurant_id: req.params.restaurant });
   res.json(myCoupons);
@@ -65,13 +76,6 @@ router.route("/").post(function (req, res) {
 });
 //save a singe coupon to database
 
-router.route("/:id").get(function (req, res) {
-  let id = req.params.id;
-  Coupon.findById(id, function (err, coupon) {
-    res.json(coupon);
-  });
-});
-//get specific coupon
 
 router.route("/:id").delete((req, res, next) => {
   Coupon.findByIdAndDelete(req.params.id, (err, data) => {
