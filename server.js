@@ -31,6 +31,7 @@ app.use("/api/orders", orders);
 app.use("/api/plans", plan);
 app.use("/api/cuisine", cuisine);
 app.use("/api/checkout", checkout);
+
 app.use("/api/banner", banner);
 app.use("/api/coupon", coupon);
 app.use("/api/promo/", promo);

@@ -10,7 +10,6 @@ export default function Promos() {
   const getcoupons = async () => {
     const response = await axios.get("/api/coupon/");
     const coupons = await response.data;
-    console.log(coupons);
     setCoupon(coupons);
   };
   const getPromos = async () => {
