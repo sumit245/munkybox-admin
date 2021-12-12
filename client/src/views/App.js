@@ -19,6 +19,7 @@ import CouponDetails from "./components/promotions/CouponDetails";
 import { ViewOrders } from "./components/orders/ViewOrders";
 import ViewUser from "./components/users/viewuser/ViewUser";
 import Contacts from "./components/contacts/Contacts";
+import Banners from "./screens/Banners";
 
 export default function App() {
   return (
@@ -61,6 +62,8 @@ export default function App() {
                   path="/view_coupons/:id"
                   component={CouponDetails}
                 />
+
+                <Route exact path="/campaign" component={Banners} />
                 <Route exact path="/payments" component={Payouts} />
                 <Route exact path="/setting" component={Settings} />
                 <Route exact path="/contacts" component={Contacts} />
