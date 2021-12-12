@@ -24,7 +24,7 @@ router.route("/active").get(async (req, res) => {
 });
 //get promotions for users
 router.route("/:restaurant_id").get(async (req, res) => {
-  const banner = await Promo.find({ restaurant_id: restaurant_id });
+  const banner = await Promo.find({ restaurant_id: req.params.restaurant_id });
   res.json(banner);
 });
 router.route("/").post(async (req, res) => {
