@@ -12,12 +12,14 @@ export default function Promos() {
     const coupons = await response.data;
     setCoupon(coupons);
   };
+
   const getPromos = async () => {
     const response = await axios.get("/api/coupon/promo");
     const data = await response.data;
     const promotions = await data.data;
     setPromos(promotions);
   };
+  
   useEffect(() => {
     getcoupons();
     getPromos();

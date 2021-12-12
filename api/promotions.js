@@ -23,7 +23,10 @@ router.route("/active").get(async (req, res) => {
   res.json(promoted_restaurants);
 });
 //get promotions for users
-
+router.route("/:restaurant_id").get(async (req, res) => {
+  const banner = await Promo.find({ restaurant_id: restaurant_id });
+  res.json(banner);
+});
 router.route("/").post(async (req, res) => {
   const newBanner = new Promo(req.body);
   const banner = await newBanner.save();
