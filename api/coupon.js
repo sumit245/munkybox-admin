@@ -25,7 +25,8 @@ router.route("/:id").get(function (req, res) {
 });
 //get specific coupon
 
-router.route("/:restaurant").get(async (req, res) => {
+router.route("/getcouponforchef/:restaurant").get(async (req, res) => {
+  
   const myCoupons = await Coupon.find({ restaurant_id: req.params.restaurant });
   res.json(myCoupons);
 });
