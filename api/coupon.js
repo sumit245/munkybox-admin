@@ -26,13 +26,25 @@ router.route("/:id").get(function (req, res) {
 //get specific coupon
 
 router.route("/getcouponforchef/:restaurant").get(async (req, res) => {
-  
   const myCoupons = await Coupon.find({ restaurant_id: req.params.restaurant });
-  res.json(myCoupons);
+  const myOrders = await Orders.find({ restaurant_id: req.params.restaurant });
+  let promoted_restaurants = [];
+  if (myCoupons !== null && myOrders !== null) {
+    for (let i = 0; i < myCoupons.length; i++) {
+      for (let j = 0; j < myOrders.length; j++) {
+        if (myCoupons[i].promo_code === myOrders[j].promo_code) {
+          promoted_restaurants.push(myOrders[j]);
+        }
+      }
+    }
+    res.json({ coupons: myCoupons, promotedOrders: promoted_restaurants });
+  }
 });
 
 router.route("/getpromotedorders/:restaurant_id").get(async (req, res) => {
-  const myPromotedOrders = await Orders.find({ restaurant_id: req.params.restaurant_id });
+  const myPromotedOrders = await Orders.find({
+    restaurant_id: req.params.restaurant_id,
+  });
   res.json({
     used_by: myPromotedOrders.length,
     promotedOrders: myPromotedOrders,
