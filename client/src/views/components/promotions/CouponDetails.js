@@ -20,6 +20,7 @@ export default function CouponDetails() {
     setCoupLoaded(true);
     const data = await res.data;
     setUsedBy(data.used_by);
+    setUsers(data.promotedOrders)
     setLoaded(true);
   };
   useEffect(() => {
@@ -112,7 +113,6 @@ export default function CouponDetails() {
                 <tr>
                   <th>User ID</th>
                   <th>Order ID</th>
-                  <th>Plan</th>
                   <th>Meal Type</th>
                   <th>Ordered At</th>
                   <th>Discount</th>
@@ -123,9 +123,8 @@ export default function CouponDetails() {
                   <tr key={key}>
                     <td>{data.user_id}</td>
                     <td>{data.order_id}</td>
-                    <td>{data.plan_name}</td>
                     <td>{data.meal_type}</td>
-                    <td>{data.ordered_at}</td>
+                    <td>{ Date(data.order_time)}</td>
                     <td>{"$" + data.discount}</td>
                   </tr>
                 ))}
