@@ -15,11 +15,11 @@ export default function CouponDetails() {
     const coupons = await response.data;
     setCoupon(coupons);
     const res = await axios.get(
-      "/api/coupon/getpromotedorders/" + coupons.restaurant_id
+      "/api/coupon/getcouponforchef/" + coupons.restaurant_id
     );
     setCoupLoaded(true);
     const data = await res.data;
-    setUsedBy(data.used_by);
+    setUsedBy(data.unique);
     setUsers(data.promotedOrders)
     setLoaded(true);
   };
@@ -95,7 +95,7 @@ export default function CouponDetails() {
             <div className="row">
               <div className="col-lg-4">
                 <small className="stats-label">Total Used</small>
-                <h4>{usedby}</h4>
+                <h4>{users.length}</h4>
               </div>
               <div className="col-lg-4">
                 <small className="stats-label">Start Date</small>
