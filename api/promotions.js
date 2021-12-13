@@ -17,6 +17,7 @@ router.route("/active").get(async (req, res) => {
     for (let j = 0; j < allBanners.length; j++) {
       if (allBanners[j].restaurant_id === allRestaurants[i].restaurant_id) {
         promoted_restaurants.push(allRestaurants[i]);
+        promoted_restaurant.push(allBanners[j]);
       }
     }
   }
