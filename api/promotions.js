@@ -16,8 +16,9 @@ router.route("/active").get(async (req, res) => {
   for (let i = 0; i < allRestaurants.length; i++) {
     for (let j = 0; j < allBanners.length; j++) {
       if (allBanners[j].restaurant_id === allRestaurants[i].restaurant_id) {
-        let abc = allRestaurants[i]
-        abc["banner"]=allBanners[j]
+        let abc = {};
+        abc["restaurant"] = allRestaurants[i];
+        abc["banner"] = allBanners[j];
         promoted_restaurants.push(abc);
       }
     }
