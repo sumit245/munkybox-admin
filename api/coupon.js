@@ -29,16 +29,24 @@ router.route("/getcouponforchef/:restaurant").get(async (req, res) => {
   const myCoupons = await Coupon.find({ restaurant_id: req.params.restaurant });
   const myOrders = await Orders.find({ restaurant_id: req.params.restaurant });
   let promoted_restaurants = [];
-  if (myCoupons !== null && myOrders !== null) {
-    for (let i = 0; i < myCoupons.length; i++) {
-      for (let j = 0; j < myOrders.length; j++) {
-        if (myCoupons[i].promo_code === myOrders[j].promo_code) {
-          promoted_restaurants.push(myOrders[j]);
-        }
+  let revenue = 0;
+  let discount = 0;
+  for (let i = 0; i < myCoupons.length; i++) {
+    for (let j = 0; j < myOrders.length; j++) {
+      if (myCoupons[i].promo_code === myOrders[j].promo_code) {
+        promoted_restaurants.push(myOrders[j]);
       }
     }
-    res.json({ coupons: myCoupons, promotedOrders: promoted_restaurants });
+    revenue =
+      parseFloat(myCoupons[i].price) * parseFloat(promoted_restaurants.length);
+    discount = parseFloat(myCoupons[i].discount) * parseFloat(promoted_restaurants.length);
   }
+  res.json({
+    coupons: myCoupons,
+    promotedOrders: promoted_restaurants,
+    revenue: revenue,
+    discount: discount,
+  });
 });
 
 router.route("/getpromotedorders/:restaurant_id").get(async (req, res) => {
