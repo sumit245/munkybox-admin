@@ -39,12 +39,17 @@ router.route("/getcouponforchef/:restaurant").get(async (req, res) => {
     }
     revenue =
       parseFloat(myCoupons[i].price) * parseFloat(promoted_restaurants.length);
-    discount = parseFloat(myCoupons[i].discount) * parseFloat(promoted_restaurants.length);
+    discount =
+      parseFloat(myCoupons[i].discount) *
+      parseFloat(promoted_restaurants.length);
   }
+  const userids = promoted_restaurants.map((item) => item.user_id);
+  let uniq = [...new Set(userids)];
   res.json({
     coupons: myCoupons,
     promotedOrders: promoted_restaurants,
     revenue: revenue,
+    unique: uniq,
     discount: discount,
   });
 });
