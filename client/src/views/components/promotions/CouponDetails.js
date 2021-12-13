@@ -6,6 +6,7 @@ export default function CouponDetails() {
   const [coupon, setCoupon] = useState({});
   const [track, setTrack] = useState([]);
   const [users, setUsers] = useState([]);
+  const [usedby, setUsedBy] = useState("");
   const [loaded, setLoaded] = useState(false);
   const [couponLoaded, setCoupLoaded] = useState(false);
   const { id } = useParams();
@@ -13,23 +14,17 @@ export default function CouponDetails() {
     const response = await axios.get("/api/coupon/" + id);
     const coupons = await response.data;
     setCoupon(coupons);
-    setCoupLoaded(true);
-  };
-  const getPromoStat = async () => {
-    const response = await axios.get(
-      "/api/coupon/promo/" + coupon.promo_id
+    const res = await axios.get(
+      "/api/coupon/getpromotedorders/" + coupons.restaurant_id
     );
-    const data = await response.data;
-    const promotions = await data.data;
-    setTrack(promotions);
-    if (promotions.length !== 0) {
-      setUsers(promotions.used_by);
-    }
+    setCoupLoaded(true);
+    const data = await res.data;
+    setUsedBy(data.used_by);
+    setUsers(data.promotedOrders)
     setLoaded(true);
   };
   useEffect(() => {
     getCouponById(id);
-    getPromoStat();
   }, [id]);
   if (loaded && couponLoaded) {
     return (
@@ -100,7 +95,7 @@ export default function CouponDetails() {
             <div className="row">
               <div className="col-lg-4">
                 <small className="stats-label">Total Used</small>
-                <h4>{track.counts || 0}</h4>
+                <h4>{usedby}</h4>
               </div>
               <div className="col-lg-4">
                 <small className="stats-label">Start Date</small>
@@ -118,7 +113,6 @@ export default function CouponDetails() {
                 <tr>
                   <th>User ID</th>
                   <th>Order ID</th>
-                  <th>Plan</th>
                   <th>Meal Type</th>
                   <th>Ordered At</th>
                   <th>Discount</th>
@@ -129,9 +123,8 @@ export default function CouponDetails() {
                   <tr key={key}>
                     <td>{data.user_id}</td>
                     <td>{data.order_id}</td>
-                    <td>{data.plan_name}</td>
                     <td>{data.meal_type}</td>
-                    <td>{data.ordered_at}</td>
+                    <td>{ Date(data.order_time)}</td>
                     <td>{"$" + data.discount}</td>
                   </tr>
                 ))}

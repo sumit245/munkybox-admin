@@ -78,7 +78,7 @@ export default function SideNav() {
           </Nav.Item>
           {/* Coupons */}
           <Nav.Item className="ml-0" as="li">
-            <Nav.Link href="/coupons" className="text-white-50 nav-label">
+            <Nav.Link href="/campaign" className="text-white-50 nav-label">
               <i className="fa fa-tags" />
               <span>Campaigns</span>
             </Nav.Link>

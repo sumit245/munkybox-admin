@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Table from "../../utilities/Table";
 import axios from "axios";
-import { couponColumns, promoColumns } from "../../utilities/utility";
+import { bannerColumns, promoColumns } from "../../utilities/utility";
 import PromotionCard from "../components/promotions/PromotionCard";
 
 export default function Promos() {
   const [coupons, setCoupon] = useState([]);
   const [promos, setPromos] = useState([]);
   const getcoupons = async () => {
-    const response = await axios.get("/api/coupon/");
-    const coupons = await response.data;
-    setCoupon(coupons);
+    const response = await axios.get("/api/promo/");
+    const { data } = await response.data;
+    console.log(coupons);
+    setCoupon(data);
   };
 
   const getPromos = async () => {
@@ -19,19 +20,19 @@ export default function Promos() {
     const promotions = await data.data;
     setPromos(promotions);
   };
-  
+
   useEffect(() => {
     getcoupons();
     getPromos();
   }, []);
   return (
     <div className="wrapper wrapper-content">
-      <PromotionCard total={coupons && coupons.length}/>
+      <PromotionCard total={coupons && coupons.length} />
       <div className="row-lg m-b-sm ">
         <Table
           title="Coupons"
           data={coupons}
-          columns={couponColumns}
+          columns={bannerColumns}
           className="table-responsive table-sm"
         />
       </div>

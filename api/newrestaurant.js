@@ -123,6 +123,7 @@ router.route("/meal_type/:food").get(function (req, res) {
   );
 });
 // filter by veg non-veg
+
 router.route("/price/:order").get(function (req, res) {
   const order = req.params.order;
   NewRestaurant.find(function (err, restaurants) {
@@ -144,6 +145,7 @@ router.route("/price/:order").get(function (req, res) {
   });
 });
 // filter by price
+
 router.route("/").delete((req, res, next) => {
   NewRestaurant.deleteMany({}, (err, resp) => {
     res.json({ msg: "All Deleted" });
@@ -176,6 +178,7 @@ router.route("/push_promo").put(async (req, res) => {
   });
 });
 //
+
 router.route("/getorders/:restaurant_id").get(async (req, res) => {
   const response = await NewRestaurant.findOne({
     restaurant_id: req.params.restaurant_id,
@@ -192,4 +195,5 @@ router.route("/getorders/:restaurant_id").get(async (req, res) => {
     profile_pic: profile_pic,
   });
 });
+
 module.exports = router;

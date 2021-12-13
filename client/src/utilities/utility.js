@@ -298,14 +298,12 @@ export const couponColumns = [
   {
     name: "Value",
     selector: (row, index) =>
-      row.discount_type === "%"
-        ? row.discount + "%"
-        : "$" + row.discount,
+      row.discount_type === "%" ? row.discount + "%" : "$" + row.discount,
     sortable: true,
   },
   {
     name: "Discount ($)",
-    selector: (row,index)=>row.absolute_value,
+    selector: (row, index) => row.absolute_value,
     sortable: true,
   },
 
@@ -325,6 +323,51 @@ export const couponColumns = [
       </>
     ),
   },
+];
+export const bannerColumns = [
+  {
+    name: "ID",
+    selector: "promo_id",
+    sortable: true,
+  },
+  {
+    name: "Restaurant ID",
+    selector: "restaurant_id",
+    sortable: true,
+  },
+  {
+    name: "Plan",
+    selector: "plan_name",
+    sortable: true,
+  },
+  {
+    name: "Discount",
+    selector: (row, index) =>
+      row.discount_type === "%" ? row.discount + "%" : "$" + row.discount,
+    sortable: true,
+  },
+  {
+    name: "Rate per click",
+    selector: (row, index) => row.rpc,
+    sortable: true,
+  },
+
+  {
+    name: "Code",
+    selector: "promo_code",
+    sortable: true,
+  },
+  // {
+  //   name: "Actions",
+  //   center: true,
+  //   selector: (row) => (
+  //     <>
+  //       <a href={`/view_coupons/${row._id}`} className="p-1 ">
+  //         View Details
+  //       </a>
+  //     </>
+  //   ),
+  // },
 ];
 export const promoColumns = [
   {

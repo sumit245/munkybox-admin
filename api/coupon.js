@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Coupon = require("../models/coupons.model");
 const Promo = require("../models/promo.model");
+const Orders = require("../models/orders.model");
 
 router.route("/").get(function (req, res) {
   Coupon.find(function (err, coupons) {
@@ -14,11 +15,52 @@ router.route("/").get(function (req, res) {
 });
 //get all coupons
 
-router.route("/promo").get(function (req, res) {
-  Promo.find(function (err, promo) {
+router.route("/:id").get(function (req, res) {
+  let id = req.params.id;
+  Coupon.findById({ _id: id }, function (err, coupon) {
     if (!err) {
-      res.json({ status: 200, data: promo, msg: "Coupons Fetched" });
+      res.json(coupon);
     }
+  });
+});
+//get specific coupon
+
+router.route("/getcouponforchef/:restaurant").get(async (req, res) => {
+  const myCoupons = await Coupon.find({ restaurant_id: req.params.restaurant });
+  const myOrders = await Orders.find({ restaurant_id: req.params.restaurant });
+  let promoted_restaurants = [];
+  let revenue = 0;
+  let discount = 0;
+  for (let i = 0; i < myCoupons.length; i++) {
+    for (let j = 0; j < myOrders.length; j++) {
+      if (myCoupons[i].promo_code === myOrders[j].promo_code) {
+        promoted_restaurants.push(myOrders[j]);
+      }
+    }
+    revenue =
+      parseFloat(myCoupons[i].price) * parseFloat(promoted_restaurants.length);
+    discount =
+      parseFloat(myCoupons[i].discount) *
+      parseFloat(promoted_restaurants.length);
+  }
+  const userids = promoted_restaurants.map((item) => item.user_id);
+  let uniq = [...new Set(userids)];
+  res.json({
+    coupons: myCoupons,
+    promotedOrders: promoted_restaurants,
+    revenue: revenue,
+    unique: uniq,
+    discount: discount,
+  });
+});
+
+router.route("/getpromotedorders/:restaurant_id").get(async (req, res) => {
+  const myPromotedOrders = await Orders.find({
+    restaurant_id: req.params.restaurant_id,
+  });
+  res.json({
+    used_by: myPromotedOrders.length,
+    promotedOrders: myPromotedOrders,
   });
 });
 //get all promo
@@ -59,14 +101,6 @@ router.route("/").post(function (req, res) {
     });
 });
 //save a singe coupon to database
-
-router.route("/:id").get(function (req, res) {
-  let id = req.params.id;
-  Coupon.findById(id, function (err, coupon) {
-    res.json(coupon);
-  });
-});
-//get specific coupon
 
 router.route("/:id").delete((req, res, next) => {
   Coupon.findByIdAndDelete(req.params.id, (err, data) => {
