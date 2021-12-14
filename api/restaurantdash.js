@@ -93,18 +93,25 @@ router.route("/getchefbyidandrevenue/:restaurant").get(async (req, res) => {
     restaurant_id: req.params.restaurant,
   });
   const myOrders = await Orders.find({ promo_code: response.promo_code });
+
   let prices = myOrders.map((item) => item.base_price);
   const adder = (accumulator, curr) => accumulator + curr;
   let revenue = prices.reduce(adder);
+
+  let discounts = myOrders.map((item) => item.discount);
+  let discount = discounts.reduce(adder);
 
   const userids = myOrders.map((item) => item.user_id);
   let uniq = [...new Set(userids)];
 
   res.json({
     totalOrders: myOrders.length,
-    banners: response,
+    orders: myOrders,
+    banner: response,
+    due: response.due,
+    clicks: response.clicks,
+    discount: discount,
     revenue: revenue,
-    prices: prices,
     users: uniq.length,
   });
 });
