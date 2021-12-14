@@ -95,11 +95,12 @@ router.route("/getchefbyidandrevenue/:restaurant").get(async (req, res) => {
   const myOrders = await Orders.find({ promo_code: response.promo_code });
 
   let prices = myOrders.map((item) => item.base_price);
-  const adder = (accumulator, curr) => accumulator + curr;
-  let revenue = prices.reduce(adder,0);
+  const adder = (accumulator, curr) =>
+    parseFloat(accumulator) + parseFloat(curr);
+  let revenue = prices.reduce(adder, 0);
 
   let discounts = myOrders.map((item) => item.discount);
-  let discount = discounts.reduce(adder,0);
+  let discount = discounts.reduce(adder, 0);
 
   const userids = myOrders.map((item) => item.user_id);
   let uniq = [...new Set(userids)];
