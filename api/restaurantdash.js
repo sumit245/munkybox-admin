@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const NewRestaurant = require("../models/newrest.model");
 const Orders = require("../models/orders.model");
+const Banner = require("../models/banners.model");
 const Users = require("../models/users.model");
 const RestaurantDashboard = require("../models/restaurant_dashboard.model");
 
@@ -69,6 +70,22 @@ router.route("/:restaurant_name").get(async (req, res) => {
     }
   );
 });
+
+router
+  .route("/getchefbyidandupdatebannercount/:restaurant")
+  .get(async (req, res) => {
+    const response = await Banner.findOne({
+      restaurant_id: req.params.restaurant,
+    });
+    let { clicks, due, rpc } = response;
+    clicks += 1;
+    due += parseFloat(rpc);
+    const update = await Banner.findByIdAndUpdate(
+      { _id: response._id },
+      { clicks: clicks, due: due }
+    );
+    res.json(update);
+  });
 
 router
   .route("/getchefbynameandupdatemenucount/:restaurant")
