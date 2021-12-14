@@ -14,7 +14,7 @@ export default function BannerDetails() {
 
   const getCouponById = async (id) => {
     const response = await axios.get("/api/promo/getbannerdetails/" + id);
-    const coupons = await response.data.data;
+    const coupons = await response.data;
     console.log(coupons);
     setCoupon(coupons);
     const res = await axios.get(
