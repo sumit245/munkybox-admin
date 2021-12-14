@@ -357,17 +357,17 @@ export const bannerColumns = [
     selector: "promo_code",
     sortable: true,
   },
-  // {
-  //   name: "Actions",
-  //   center: true,
-  //   selector: (row) => (
-  //     <>
-  //       <a href={`/view_coupons/${row._id}`} className="p-1 ">
-  //         View Details
-  //       </a>
-  //     </>
-  //   ),
-  // },
+  {
+    name: "Actions",
+    center: true,
+    selector: (row) => (
+      <>
+        <a href={`/view_campaign/${row._id}`} className="p-1 ">
+          View Details
+        </a>
+      </>
+    ),
+  },
 ];
 export const promoColumns = [
   {

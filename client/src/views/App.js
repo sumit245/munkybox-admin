@@ -16,6 +16,7 @@ import DeleteAlert from "../utilities/DeleteAlert";
 import EditRestaurant from "./components/restaurant/edit/EditRestaurant";
 import Promos from "./screens/Promos";
 import CouponDetails from "./components/promotions/CouponDetails";
+import BannerDetails from "./components/promotions/BannerDetails";
 import { ViewOrders } from "./components/orders/ViewOrders";
 import ViewUser from "./components/users/viewuser/ViewUser";
 import Contacts from "./components/contacts/Contacts";
@@ -61,6 +62,11 @@ export default function App() {
                   exact
                   path="/view_coupons/:id"
                   component={CouponDetails}
+                />
+                <Route
+                  exact
+                  path="/view_campaign/:id"
+                  component={BannerDetails}
                 />
 
                 <Route exact path="/campaign" component={Banners} />

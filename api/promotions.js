@@ -27,6 +27,7 @@ router.route("/active").get(async (req, res) => {
 });
 //get banners for users
 
+
 router.route("/:restaurant_id").get(async (req, res) => {
   const banner = await Promo.find({ restaurant_id: req.params.restaurant_id });
   res.json(banner);
@@ -39,7 +40,7 @@ router.route("/").post(async (req, res) => {
 });
 //save a banner
 
-router.route("/:id").get(async (req, res) => {
+router.route("/getbannerdetails/:id").get(async (req, res) => {
   let { id } = req.params;
   const banner = await Promo.findById(id);
   res.json({ status: 200, data: banner, msg: "Promo Plan Fetched" });
