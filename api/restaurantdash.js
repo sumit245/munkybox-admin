@@ -4,6 +4,7 @@ const NewRestaurant = require("../models/newrest.model");
 const Orders = require("../models/orders.model");
 const Banner = require("../models/banners.model");
 const Users = require("../models/users.model");
+
 const RestaurantDashboard = require("../models/restaurant_dashboard.model");
 
 router.route("/getusertypesbyrestaurant/:restaurant").get(async (req, res) => {
@@ -87,6 +88,26 @@ router
     res.json(update);
   });
 
+router.route("/getchefbyidandrevenue/:restaurant").get(async (req, res) => {
+  const response = await Banner.findOne({
+    restaurant_id: req.params.restaurant,
+  });
+  const myOrders = await Orders.find({ promo_code: response.promo_code });
+  let prices = myOrders.map((item) => item.base_price);
+  const adder = (accumulator, curr) => accumulator + curr;
+  let revenue = prices.reduce(adder);
+
+  const userids = myOrders.map((item) => item.user_id);
+  let uniq = [...new Set(userids)];
+
+  res.json({
+    totalOrders: myOrders.length,
+    banners: response,
+    revenue: revenue,
+    prices: prices,
+    users: uniq.length,
+  });
+});
 router
   .route("/getchefbynameandupdatemenucount/:restaurant")
   .get(function (req, res) {
