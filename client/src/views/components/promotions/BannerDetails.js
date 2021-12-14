@@ -4,8 +4,11 @@ import { useParams } from "react-router";
 
 export default function BannerDetails() {
   const [coupon, setCoupon] = useState({});
-  const [track, setTrack] = useState([]);
   const [users, setUsers] = useState([]);
+  const [discount, setTotalDiscs] = useState("");
+  const [due, setTotalDue] = useState("");
+  const [clicks, setClicks] = useState("");
+
   const [usedby, setUsedBy] = useState("");
   const [loaded, setLoaded] = useState(false);
 
@@ -14,19 +17,23 @@ export default function BannerDetails() {
 
   const getCouponById = async (id) => {
     const response = await axios.get("/api/promo/getbannerdetails/" + id);
-    const coupons = await response.data;
-    console.log(coupons);
+    const coupons = response.data.data;
     setCoupon(coupons);
     const res = await axios.get(
       "/api/chefdashboard/getchefbyidandrevenue/" + coupons.restaurant_id
     );
     setCoupLoaded(true);
     const data = await res.data;
+    console.log(data);
+    setClicks(data.clicks);
+    setTotalDiscs(data.discount);
+    setTotalDue(data.due);
     setUsedBy(data.users);
     setUsers(data.orders);
     setLoaded(true);
   };
   useEffect(() => {
+    console.log(id);
     getCouponById(id);
   }, [id]);
   if (loaded && couponLoaded) {
@@ -57,7 +64,7 @@ export default function BannerDetails() {
               </div>
               <div className="col-lg-4">
                 <small className="stats-label">Category</small>
-                <h4>{coupon.category}</h4>
+                <h4>{coupon.meal_plan}</h4>
               </div>
             </div>
           </div>
@@ -68,8 +75,12 @@ export default function BannerDetails() {
                 <h4>{coupon.plan_name}</h4>
               </div>
               <div className="col-lg-4">
-                <small className="stats-label">Discount Type</small>
-                <h4>{coupon.discount_type}</h4>
+                <small className="stats-label">Discount</small>
+                <h4>
+                  {coupon.discount_type === "%"
+                    ? coupon.discount + "" + coupon.discount_type
+                    : coupon.discount_type + "" + coupon.discount}
+                </h4>
               </div>
               <div className="col-lg-4">
                 <small className="stats-label">Code</small>
@@ -80,16 +91,16 @@ export default function BannerDetails() {
           <div className="ibox-content">
             <div className="row">
               <div className="col-lg-4">
-                <small className="stats-label">Base Price</small>
-                <h4>{coupon.price}</h4>
+                <small className="stats-label">Total Clicks</small>
+                <h4>{clicks}</h4>
               </div>
               <div className="col-lg-4">
-                <small className="stats-label">Value</small>
-                <h4>{coupon.discount}</h4>
+                <small className="stats-label">Total Orders</small>
+                <h4>{users.length}</h4>
               </div>
               <div className="col-lg-4">
-                <small className="stats-label">Absolute Value</small>
-                <h4>{coupon.absolute_value}</h4>
+                <small className="stats-label">Total Due</small>
+                <h4>{due}</h4>
               </div>
             </div>
           </div>
@@ -98,7 +109,7 @@ export default function BannerDetails() {
             <div className="row">
               <div className="col-lg-4">
                 <small className="stats-label">Total Used</small>
-                <h4>{users.length}</h4>
+                <h4>{usedby}</h4>
               </div>
               <div className="col-lg-4">
                 <small className="stats-label">Start Date</small>
