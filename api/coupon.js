@@ -65,6 +65,13 @@ router.route("/getpromotedorders/:restaurant_id").get(async (req, res) => {
 });
 //get all promo
 
+router.route("/:id").put(async (req, res) => {
+  const { id } = req.params;
+  const data = req.body;
+  const response = await Coupon.findByIdAndUpdate(id, data);
+  res.json(response);
+});
+
 router.route("/promo/:promo_id").get(function (req, res) {
   Promo.find({ promo_id: req.params.promo_id }, function (err, promo) {
     if (!err) {
