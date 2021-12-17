@@ -20,18 +20,18 @@ export default function AddressDetails({ address }) {
       {address.map((row, key) => (
         <div className="row">
           <div className="col-lg-3">
-            <small className="stats-label">{row.address_type}</small>
+            <small className="stats-label">{row.address_type || ""}</small>
           </div>
           <div className="col-lg-3">
             <small className="stats-label">
-              {row.flat_num + ", " + row.locality}
+              {(row.flat_num || "") + ", " + (row.locality || "")}
             </small>
           </div>
           <div className="col-lg-3">
-            <small className="stats-label"> {row.city}</small>
+            <small className="stats-label"> {row.city || ""}</small>
           </div>
           <div className="col-lg-3">
-            <small className="stats-label">{row.postal_code}</small>
+            <small className="stats-label">{row.postal_code || ""}</small>
           </div>
         </div>
       ))}
