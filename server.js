@@ -13,6 +13,7 @@ const banner = require("./api/bannerPlan");
 const newrest = require("./api/newrestaurant");
 const coupon = require("./api/coupon");
 const promo = require("./api/promotions");
+const contacts = require("./api/contacts");
 const partner = require("./api/partnerrequest");
 const slot = require("./api/slots");
 const policies = require("./api/policies");
@@ -39,6 +40,7 @@ app.use("/api/policies", policies);
 app.use("/api/chefdashboard", chefdashboard);
 app.use("/api/partnerrequest", partner);
 app.use("/api/slots", slot);
+app.use("/api/contacts", contacts);
 
 if (process.env.NODE_ENV == "production") {
   app.use(express.static(path.join(__dirname, "./build/")));
