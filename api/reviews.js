@@ -1,0 +1,52 @@
+const express = require("express");
+const router = express.Router();
+const Review = require("../models/review.model");
+
+router.route("/").get(function (req, res) {
+  Review.find(function (err, review) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(review);
+    }
+  });
+});
+//get all orders
+
+router.route("/:id").get(function (req, res) {
+  let id = req.params.id;
+  Review.findById(id, function (err, review) {
+    res.json(review);
+  });
+});
+//get specific review
+
+router.route("/").post(function (req, res) {
+  let review = new Review(req.body);
+  review
+    .save()
+    .then((response) => {
+      res.json({ data: response, msg: "Review Placed!!!", status: 200 });
+    })
+    .catch((err) => {
+      res.status(400).send("Failed");
+    });
+});
+//save a review
+
+router.route("/:id").delete(async (req, res) => {
+  const response = await Review.findByIdAndDelete(req.params.id);
+  if (response !== null) {
+    res.json({ status: 200, msg: "Deleted", data: response });
+  }
+});
+//delete single review
+
+router.route("/").delete((req, res, next) => {
+  Review.deleteMany({}, (err, resp) => {
+    res.json({ msg: "All Deleted" });
+  });
+});
+//delete all
+
+module.exports = router;

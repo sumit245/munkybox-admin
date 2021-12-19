@@ -18,6 +18,7 @@ const partner = require("./api/partnerrequest");
 const slot = require("./api/slots");
 const policies = require("./api/policies");
 const chefdashboard = require("./api/restaurantdash");
+const review = require("./api/reviews");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -41,6 +42,7 @@ app.use("/api/chefdashboard", chefdashboard);
 app.use("/api/partnerrequest", partner);
 app.use("/api/slots", slot);
 app.use("/api/contacts", contacts);
+app.use("/api/review", review);
 
 if (process.env.NODE_ENV == "production") {
   app.use(express.static(path.join(__dirname, "./build/")));
