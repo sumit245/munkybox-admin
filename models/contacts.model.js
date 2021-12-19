@@ -6,6 +6,7 @@ let Contacts = new Schema({
   sender: String,
   receipient: String,
   subject: String,
+  body: String,
   restaurant_name: String,
   sender_name: String,
   phone: String,
