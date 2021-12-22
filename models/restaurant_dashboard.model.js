@@ -16,7 +16,7 @@ let RestaurantDashboard = new Schema({
   bannerDue: Number,
   bannerPaid: Number,
   commissionPaid: Number,
-  acceptedOrderCount:Number ,
+  acceptedOrderCount: Number,
   startedOrderCount: Number,
   completedOrdersCount: Number,
   cancelledOrderCount: Number,
@@ -26,6 +26,26 @@ let RestaurantDashboard = new Schema({
   totalOrders: Number,
   newUsers: Number,
   repeatUser: Number,
+  coupons: [
+    {
+      promo_id: { type: String },
+      category: { type: Array },
+      plan_name: { type: String },
+      discount_type: { type: String },
+      absolute_value: { type: String },
+      start_date: { type: String },
+      end_date: { type: String },
+      promo_code: { type: String },
+      price: { type: String },
+      discount: { type: String },
+      duration: { type: String },
+      status: { type: String, default: "Inactive" },
+      totalOrders: { type: String },
+      totalBaseIncome: { type: String },
+      totalDiscountPaid: { type: String },
+      totalUsed: { type: String },
+    },
+  ],
 });
 
 module.exports = mongoose.model("RestaurantDashboard", RestaurantDashboard);
