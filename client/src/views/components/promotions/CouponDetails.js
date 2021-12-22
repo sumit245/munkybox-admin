@@ -15,7 +15,10 @@ export default function CouponDetails() {
     const coupons = await response.data;
     setCoupon(coupons);
     const res = await axios.get(
-      "/api/coupon/getcouponforchef/" + coupons.restaurant_id
+      "/api/coupon/getcouponforchef/" +
+        coupons.restaurant_id +
+        "/" +
+        coupons.status
     );
     setCoupLoaded(true);
     const data = await res.data;
