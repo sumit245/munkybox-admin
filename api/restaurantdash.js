@@ -73,6 +73,12 @@ router.route("/:restaurant_name").get(async (req, res) => {
   );
 });
 
+router.route("/:restaurant_name/:id").put(async (req, res) => {
+  const { id } = req.params;
+  const data = req.body;
+  const response = await RestaurantDashboard.findByIdAndUpdate(id, data);
+  res.json(response);
+});
 router
   .route("/getchefbyidandupdatebannercount/:restaurant")
   .get(async (req, res) => {

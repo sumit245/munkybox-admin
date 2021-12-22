@@ -21,6 +21,7 @@ let Order = new Schema({
   delivery_fee: { type: String },
   taxes: { type: String },
   promo_code: { type: String },
+  promo_id: { type: String },
   discount: { type: String },
   total: { type: String },
   time: { type: String },
@@ -35,7 +36,6 @@ let Order = new Schema({
     type: String,
     default: "pending",
   },
-
   add_on: {
     type: Array,
     items: [
