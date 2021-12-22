@@ -43,7 +43,8 @@ router.route("/getcouponforchef/:restaurant/:status").get(async (req, res) => {
     revenue =
       parseFloat(myCoupons[i].price) * parseFloat(promoted_orders.length);
     discount =
-      parseFloat(myCoupons[i].discount) * parseFloat(promoted_orders.length);
+      parseFloat(myCoupons[i].absolute_value) *
+      parseFloat(promoted_orders.length);
   }
   const userids = promoted_orders.map((item) => item.user_id);
   let uniq = [...new Set(userids)];
