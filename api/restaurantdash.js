@@ -30,6 +30,7 @@ router.route("/getusertypesbyrestaurant/:restaurant").get(async (req, res) => {
     more: x,
   });
 });
+
 router.route("/").post(function (req, res) {
   let order = new RestaurantDashboard(req.body);
   order
@@ -59,14 +60,14 @@ router.route("/:restaurant_name").get(async (req, res) => {
   let rejectedCount = rejected.length;
   RestaurantDashboard.findOne(
     { restaurant_name: req.params.restaurant_name },
-    function (err, orders) {
+    function (err, dashboard) {
       res.json({
         totalOrders: totalorders,
         acceptedCount: acceptedCount,
         rejectedCount: rejectedCount,
         accptanceRate: (acceptedCount / totalorders) * 100,
         rectanceRate: (rejectedCount / totalorders) * 100,
-        orders,
+        dashboard,
       });
     }
   );
@@ -116,6 +117,7 @@ router.route("/getchefbyidandrevenue/:restaurant").get(async (req, res) => {
     users: uniq.length,
   });
 });
+
 router
   .route("/getchefbynameandupdatemenucount/:restaurant")
   .get(function (req, res) {

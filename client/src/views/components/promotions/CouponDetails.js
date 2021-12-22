@@ -20,7 +20,7 @@ export default function CouponDetails() {
     setCoupLoaded(true);
     const data = await res.data;
     setUsedBy(data.unique);
-    setUsers(data.promotedOrders)
+    setUsers(data.promotedOrders);
     setLoaded(true);
   };
   useEffect(() => {
@@ -124,7 +124,7 @@ export default function CouponDetails() {
                     <td>{data.user_id}</td>
                     <td>{data.order_id}</td>
                     <td>{data.meal_type}</td>
-                    <td>{ Date(data.order_time)}</td>
+                    <td>{Date(data.order_time)}</td>
                     <td>{"$" + data.discount}</td>
                   </tr>
                 ))}
