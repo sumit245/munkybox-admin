@@ -331,7 +331,7 @@ export const bannerColumns = [
     sortable: true,
   },
   {
-    name: "Restaurant ID",
+    name: "Rest ID",
     selector: "restaurant_id",
     sortable: true,
   },
@@ -341,14 +341,23 @@ export const bannerColumns = [
     sortable: true,
   },
   {
-    name: "Discount",
-    selector: (row, index) =>
-      row.discount_type === "%" ? row.discount + "%" : "$" + row.discount,
+    name: "Rate/click",
+    selector: (row, index) => "$" + row.rpc,
     sortable: true,
   },
   {
-    name: "Rate per click",
-    selector: (row, index) => row.rpc,
+    name: "Clicks",
+    selector: (row, index) => row.clicks,
+    sortable: true,
+  },
+  {
+    name: "Due",
+    selector: (row, index) => "$" + row.due,
+    sortable: true,
+  },
+  {
+    name: "Status",
+    selector: (row, index) => "N/A",
     sortable: true,
   },
 

@@ -8,7 +8,9 @@ export default function BannerDetails() {
   const [discount, setTotalDiscs] = useState("");
   const [due, setTotalDue] = useState("");
   const [clicks, setClicks] = useState("");
-
+  const [totalOrders, setTotalOrders] = useState(0);
+  const [paidDisc, setPaidDisc] = useState(0);
+  const [revenue, setRevenue] = useState(0);
   const [usedby, setUsedBy] = useState("");
   const [loaded, setLoaded] = useState(false);
 
@@ -24,13 +26,70 @@ export default function BannerDetails() {
     );
     setCoupLoaded(true);
     const data = await res.data;
-    console.log(data);
     setClicks(data.clicks);
     setTotalDiscs(data.discount);
     setTotalDue(data.due);
+    setRevenue(data.revenue);
     setUsedBy(data.users);
     setUsers(data.orders);
     setLoaded(true);
+  };
+  const deactivate = async () => {
+    const restaurant = await axios.get(
+      "/api/newrest/getchefbyId/" + coupon.restaurant_id
+    );
+    const { restaurant_name } = await restaurant.data[0];
+    // console.log(restaurant_name);
+    let {
+      promo_id,
+      restaurant_id,
+      plan_name,
+      rpc,
+      duration,
+      discount_type,
+      meal_plan,
+      promo_code,
+      start_date,
+      end_date,
+      clicks,
+      due,
+    } = coupon;
+    let banner = {
+      promo_id: promo_id,
+      restaurant_id: restaurant_id,
+      plan_name: plan_name,
+      rpc: rpc,
+      duration: duration,
+      status: "inactive",
+      discount_type: discount_type,
+      meal_plan: meal_plan,
+      discount: coupon.discount,
+      totalDiscount: discount,
+      promo_code: promo_code,
+      start_date: start_date,
+      end_date: end_date,
+      clicks: clicks,
+      due: due,
+      paid: 0,
+      users: usedby,
+      orders: users,
+      revenue: revenue,
+    };
+    const couponresponse = await axios.put("/api/promo/" + id, {
+      status: "inactive",
+    });
+    const dashboardResponse = await axios.get(
+      "/api/chefdashboard/" + restaurant_name
+    );
+    const { dashboard } = await dashboardResponse.data;
+    const { banners } = await dashboard;
+    let prevCoupons = [...banners];
+    prevCoupons.push(banner);
+    const updateDashboard = await axios.put(
+      "/api/chefdashboard/" + restaurant_name + "/" + dashboard._id,
+      { banners: prevCoupons }
+    );
+    alert("Updated");
   };
   useEffect(() => {
     console.log(id);
@@ -41,16 +100,25 @@ export default function BannerDetails() {
       <div className="wrapper wrapper-content">
         <div className="ibox">
           <div className="ibox-title">
-            <span
-              className={`${
-                coupon.status === "Active"
-                  ? "label float-right label-success"
-                  : "label float-right label-warning"
-              }`}
-            >
-              {coupon.status}
-            </span>
-            <h5>Promo Details</h5>
+            <h5>Campaign Details</h5>
+            <div className="ibox-tools">
+              <span
+                className={`${
+                  coupon.status === "active"
+                    ? "label mr-2 label-success"
+                    : "label mr-2 label-inactive"
+                }`}
+              >
+                {coupon.status}
+              </span>
+              <button
+                type="button"
+                className="btn btn-sm btn-danger"
+                onClick={deactivate}
+              >
+                Deactivate
+              </button>
+            </div>
           </div>
           <div className="ibox-content">
             <div className="row">
@@ -67,8 +135,7 @@ export default function BannerDetails() {
                 <h4>{coupon.meal_plan}</h4>
               </div>
             </div>
-          </div>
-          <div className="ibox-content">
+            <hr />
             <div className="row">
               <div className="col-lg-4">
                 <small className="stats-label">Plan Name</small>
@@ -87,28 +154,25 @@ export default function BannerDetails() {
                 <h4>{coupon.promo_code}</h4>
               </div>
             </div>
-          </div>
-          <div className="ibox-content">
+            <hr />
             <div className="row">
               <div className="col-lg-4">
                 <small className="stats-label">Total Clicks</small>
                 <h4>{clicks}</h4>
               </div>
               <div className="col-lg-4">
-                <small className="stats-label">Total Orders</small>
-                <h4>{users.length}</h4>
+                <small className="stats-label">Rate/Click</small>
+                <h4>{coupon.rpc}</h4>
               </div>
               <div className="col-lg-4">
                 <small className="stats-label">Total Due</small>
-                <h4>{due}</h4>
+                <h4>${due}</h4>
               </div>
             </div>
-          </div>
-
-          <div className="ibox-content">
+            <hr />
             <div className="row">
               <div className="col-lg-4">
-                <small className="stats-label">Total Used</small>
+                <small className="stats-label">Total Users</small>
                 <h4>{usedby}</h4>
               </div>
               <div className="col-lg-4">
@@ -118,6 +182,21 @@ export default function BannerDetails() {
               <div className="col-lg-4">
                 <small className="stats-label">End Date</small>
                 <h4>{coupon.end_date}</h4>
+              </div>
+            </div>
+            <hr />
+            <div className="row">
+              <div className="col-lg-4">
+                <small className="stats-label">Total Orders</small>
+                <h4>{users.length}</h4>
+              </div>
+              <div className="col-lg-4">
+                <small className="stats-label">Total Revenue</small>
+                <h4>${revenue}</h4>
+              </div>
+              <div className="col-lg-4">
+                <small className="stats-label">Discount Paid</small>
+                <h4>${discount}</h4>
               </div>
             </div>
           </div>
