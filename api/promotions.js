@@ -11,7 +11,7 @@ router.route("/").get(async (req, res) => {
 
 router.route("/active").get(async (req, res) => {
   let allRestaurants = await Restaurants.find();
-  let allBanners = await Promo.find();
+  let allBanners = await Promo.find({status:"active"});
   let promoted_restaurants = [];
   for (let i = 0; i < allRestaurants.length; i++) {
     for (let j = 0; j < allBanners.length; j++) {
