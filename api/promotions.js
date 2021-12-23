@@ -27,9 +27,16 @@ router.route("/active").get(async (req, res) => {
 });
 //get banners for users
 
-
 router.route("/:restaurant_id").get(async (req, res) => {
   const banner = await Promo.find({ restaurant_id: req.params.restaurant_id });
+  res.json(banner);
+});
+
+router.route("/getbannerslength/:restaurant_id").get(async (req, res) => {
+  const banner = await Promo.find({
+    restaurant_id: req.params.restaurant_id,
+    status: "active",
+  });
   res.json(banner);
 });
 
