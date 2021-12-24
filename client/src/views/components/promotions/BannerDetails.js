@@ -39,7 +39,6 @@ export default function BannerDetails() {
       "/api/newrest/getchefbyId/" + coupon.restaurant_id
     );
     const { restaurant_name } = await restaurant.data[0];
-    // console.log(restaurant_name);
     let {
       promo_id,
       restaurant_id,
@@ -51,8 +50,6 @@ export default function BannerDetails() {
       promo_code,
       start_date,
       end_date,
-      clicks,
-      due,
     } = coupon;
     let banner = {
       promo_id: promo_id,
@@ -75,24 +72,23 @@ export default function BannerDetails() {
       orders: users,
       revenue: revenue,
     };
-    const couponresponse = await axios.put("/api/promo/" + id, {
-      status: "inactive",
-    });
-    const dashboardResponse = await axios.get(
-      "/api/chefdashboard/" + restaurant_name
-    );
-    const { dashboard } = await dashboardResponse.data;
-    const { banners } = await dashboard;
-    let prevCoupons = [...banners];
-    prevCoupons.push(banner);
-    const updateDashboard = await axios.put(
-      "/api/chefdashboard/" + restaurant_name + "/" + dashboard._id,
-      { banners: prevCoupons }
-    );
-    alert("Updated");
+    // const couponresponse = await axios.put("/api/promo/" + id, {
+    //   status: "inactive",
+    // });
+    // const dashboardResponse = await axios.get(
+    //   "/api/chefdashboard/" + restaurant_name
+    // );
+    // const { dashboard } = await dashboardResponse.data;
+    // const { banners } = await dashboard;
+    // let prevCoupons = [...banners];
+    // prevCoupons.push(banner);
+    // const updateDashboard = await axios.put(
+    //   "/api/chefdashboard/" + restaurant_name + "/" + dashboard._id,
+    //   { banners: prevCoupons }
+    // );
+    // alert("Updated");
   };
   useEffect(() => {
-    console.log(id);
     getCouponById(id);
   }, [id]);
   if (loaded && couponLoaded) {

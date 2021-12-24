@@ -44,9 +44,9 @@ router.route("/").post(function (req, res) {
 });
 //create a dashboard
 
-router.route("/:restaurant_name").get(async (req, res) => {
+router.route("/:restaurant_id").get(async (req, res) => {
   let myorders = await Orders.find({
-    restaurant: req.params.restaurant_name,
+    restaurant: req.params.restaurant_id,
   });
   let totalorders = myorders.length;
   let accepted = myorders.filter(
@@ -59,7 +59,7 @@ router.route("/:restaurant_name").get(async (req, res) => {
   let acceptedCount = accepted.length;
   let rejectedCount = rejected.length;
   RestaurantDashboard.findOne(
-    { restaurant_name: req.params.restaurant_name },
+    { restaurant_id: req.params.restaurant_id },
     function (err, dashboard) {
       res.json({
         totalOrders: totalorders,
@@ -79,6 +79,7 @@ router.route("/:restaurant_name/:id").put(async (req, res) => {
   const response = await RestaurantDashboard.findByIdAndUpdate(id, data);
   res.json(response);
 });
+
 router
   .route("/getchefbyidandupdatebannercount/:restaurant")
   .get(async (req, res) => {
@@ -163,7 +164,7 @@ router
   .get(function (req, res) {
     RestaurantDashboard.findOne(
       {
-        restaurant_name: req.params.restaurant,
+        restaurant_id: req.params.restaurant,
       },
       function (err, response) {
         if (!err) {
@@ -179,7 +180,7 @@ router
             );
           } else {
             let dashboard = {
-              restaurant_name: req.params.restaurant,
+              restaurant_id: req.params.restaurant,
               cartVisit: 1,
             };
             let dash = new RestaurantDashboard(dashboard);
