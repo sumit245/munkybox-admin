@@ -130,7 +130,7 @@ router
   .get(function (req, res) {
     RestaurantDashboard.findOne(
       {
-        restaurant_name: req.params.restaurant,
+        restaurant_id: req.params.restaurant,
       },
       function (err, response) {
         if (!err) {
@@ -146,7 +146,7 @@ router
             );
           } else {
             let dashboard = {
-              restaurant_name: req.params.restaurant,
+              restaurant_id: req.params.restaurant,
               menuvisits: 1,
             };
             let dash = new RestaurantDashboard(dashboard);

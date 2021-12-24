@@ -22,7 +22,7 @@ let RestaurantDashboard = new Schema({
   cancelledOrderCount: Number,
   rejectedOrderCount: Number,
   menuvisits: Number,
-  cartVisit: Number,
+  cartVisit: { type: Number, default: 0 },
   totalOrders: Number,
   newUsers: Number,
   repeatUser: Number,
