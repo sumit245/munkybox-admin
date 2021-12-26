@@ -1,10 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import ShowCard from "../restaurant/view/ShowCard";
 
 export const ViewOrders = () => {
   const { id } = useParams();
   const [orderfetched, setOrderFetched] = useState(false);
+  const [cardview, toggleCardview] = useState(false);
   const [restaddress, setAddress] = useState({
     locality: "",
     city: "",
@@ -24,8 +26,6 @@ export const ViewOrders = () => {
       "/api/newrest/getchefbyId/" + order.restaurant_id
     );
     if (response.data !== null) {
-      const { locality, city, state, country, postal_code, phone } =
-        response.data;
       setAddress({ ...response.data });
     }
   };
@@ -36,7 +36,6 @@ export const ViewOrders = () => {
   useEffect(() => {
     if (orderfetched) {
       fetchRestaurant();
-      console.log(restaddress);
     }
   }, [orderfetched, fetchRestaurant]);
   const {
@@ -50,6 +49,7 @@ export const ViewOrders = () => {
     meal_type,
     notes,
     order_id,
+    card,
     phone,
     plan,
     price,
@@ -64,160 +64,178 @@ export const ViewOrders = () => {
     user_id,
     user_name,
   } = order;
-  let ordered_at = new Date(order_time);
-
-  return (
-    <>
-      <div className="row wrapper border-bottom white-bg page-heading">
-        <div className="col-lg-8">
-          <h2>Order Details</h2>
-        </div>
-        <div className="col-lg-4">
-          <div className="title-action">
-            <a href="/" className="btn btn-white">
-              <i className="fa fa-plus" /> Add ons{" "}
-            </a>
-            <a href="/" className="btn btn-white">
-              <i className="fa fa-credit-card" /> View Card{" "}
-            </a>
-            <a
-              href="invoice_print.html"
-              target="_blank"
-              className="btn btn-primary"
-            >
-              <i className="fa fa-print" /> Print Invoice{" "}
-            </a>
+  const closeHandler = (state) => {
+    toggleCardview(state);
+  };
+  const service_fee_in_dollar = price * service_fee * 0.01;
+  const taxesinDollar =
+    (parseFloat(price) +
+      parseFloat(service_fee_in_dollar) +
+      parseFloat(delivery_fee) -
+      parseFloat(discount) +
+      parseFloat(tip)) *
+    0.01 *
+    taxes;
+  if (!cardview) {
+    return (
+      <>
+        <div className="row wrapper border-bottom white-bg page-heading">
+          <div className="col-lg-8">
+            <h2>Order Details</h2>
           </div>
-        </div>
-      </div>
-      <div className="wrapper wrapper-content">
-        <div className="ibox-content p-xl">
-          <div className="row">
-            <div className="col-sm-6">
-              <h5>From:</h5>
-              <address>
-                <strong>{restaurant + "," + restaurant_id}</strong>
-                <br />
-                {restaddress.locality + ", " + restaddress.city}
-                <br />
-                {restaddress.state + " -" + restaddress.postal_code}
-                <br />
-                <abbr title="Phone">P:</abbr> {restaddress.phone}
-              </address>
-            </div>
-            <div className="col-sm-6 text-right">
-              <h4 className="text-navy">{"#" + order_id}</h4>
-              <span>To:</span>
-              <address>
-                <strong>{user_name + " (" + user_id + ")"}</strong>
-                <br />
-                {address &&
-                  address.address_type +
-                    ", " +
-                    address.flat_num +
-                    ", " +
-                    address.locality}
-                <br />
-                {address && address.city + ", " + address.postal_code}
-                <br />
-                <abbr title="Mobile">M:</abbr> {phone}
-                <br />
-                <abbr title="Email">E:</abbr> {email_id}
-              </address>
-              <p>
-                <span>
-                  <strong>Ordered at:</strong> {ordered_at.toUTCString()}
-                </span>
-              </p>
+          <div className="col-lg-4">
+            <div className="title-action">
+              <a href="/" className="btn btn-white">
+                <i className="fa fa-plus" /> Add ons{" "}
+              </a>
+              <button
+                type="button"
+                onClick={toggleCardview}
+                className="btn btn-white"
+              >
+                <i className="fa fa-credit-card" /> View Card{" "}
+              </button>
+              <a
+                href="invoice_print.html"
+                target="_blank"
+                className="btn btn-primary"
+              >
+                <i className="fa fa-print" /> Print Invoice{" "}
+              </a>
             </div>
           </div>
-          <div className="table-responsive m-t">
-            <table className="table invoice-table">
-              <thead>
-                <tr>
-                  <th>Plan</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>Base Price</th>
-                </tr>
-              </thead>
+        </div>
+        <div className="wrapper wrapper-content">
+          <div className="ibox-content p-xl">
+            <div className="row">
+              <div className="col-sm-6">
+                <h5>From:</h5>
+                <address>
+                  <strong>{restaurant + "," + restaurant_id}</strong>
+                  <br />
+                  {restaddress.locality + ", " + restaddress.city}
+                  <br />
+                  {restaddress.state + " -" + restaddress.postal_code}
+                  <br />
+                  <abbr title="Phone">P:</abbr> {restaddress.phone}
+                </address>
+              </div>
+              <div className="col-sm-6 text-right">
+                <h4 className="text-navy">{"#" + order_id}</h4>
+                <span>To:</span>
+                <address>
+                  <strong>{user_name + " (" + user_id + ")"}</strong>
+                  <br />
+                  {address &&
+                    address.address_type +
+                      ", " +
+                      address.flat_num +
+                      ", " +
+                      address.locality}
+                  <br />
+                  {address && address.city + ", " + address.postal_code}
+                  <br />
+                  <abbr title="Mobile">M:</abbr> {phone}
+                  <br />
+                  <abbr title="Email">E:</abbr> {email_id}
+                </address>
+                <p>
+                  <span>
+                    <strong>Ordered at:</strong> {Date(order_time)}
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div className="table-responsive m-t">
+              <table className="table invoice-table">
+                <thead>
+                  <tr>
+                    <th>Plan</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Customer Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div>
+                        <strong>
+                          {plan === "twoPlan"
+                            ? "2 Meals"
+                            : plan === "fifteenPlan"
+                            ? "15 Meals"
+                            : "30 Meals"}
+                        </strong>
+                      </div>
+                      <small>{meal_type + ", " + category + "-" + time}</small>
+                    </td>
+                    <td>{start_date}</td>
+                    <td>{end_date}</td>
+                    <td>{"$" + price}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            {/* /table-responsive */}
+            <table className="table invoice-total">
               <tbody>
                 <tr>
                   <td>
-                    <div>
-                      <strong>
-                        {plan === "twoPlan"
-                          ? "2 Meals"
-                          : plan === "fifteenPlan"
-                          ? "15 Meals"
-                          : "30 Meals"}
-                      </strong>
-                    </div>
-                    <small>{meal_type + ", " + category + "-" + time}</small>
+                    <strong>Sub Total :</strong>
                   </td>
-                  <td>{start_date}</td>
-                  <td>{end_date}</td>
-                  <td>{"$" + price}</td>
+                  <td>${price}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Delivery Fee :</strong>
+                  </td>
+                  <td>${delivery_fee}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Service Fee ({service_fee}%):</strong>
+                  </td>
+                  <td>${service_fee_in_dollar}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Tip :</strong>
+                  </td>
+                  <td>${tip}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Discount :</strong>
+                  </td>
+                  <td>${discount}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Taxes ({taxes}%):</strong>
+                  </td>
+                  <td>{taxesinDollar}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>TOTAL :</strong>
+                  </td>
+                  <td>${total}</td>
                 </tr>
               </tbody>
             </table>
+            <div className="well m-t">
+              <strong>Comments: </strong>
+              {notes}
+            </div>
           </div>
-          {/* /table-responsive */}
-          <table className="table invoice-total">
-            <tbody>
-              <tr>
-                <td>
-                  <strong>Sub Total :</strong>
-                </td>
-                <td>${price}</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Delivery Fee :</strong>
-                </td>
-                <td>${delivery_fee}</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Service Fee :</strong>
-                </td>
-                <td>{service_fee}%</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Tip :</strong>
-                </td>
-                <td>${tip}</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Discount :</strong>
-                </td>
-                <td>${discount}</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Taxes :</strong>
-                </td>
-                <td>{taxes}%</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>TOTAL :</strong>
-                </td>
-                <td>${total}</td>
-              </tr>
-            </tbody>
-          </table>
-          <div className="well m-t">
-            <strong>Comments: </strong>
-            {notes}
-          </div>
+          {/* </div> */}
         </div>
-        {/* </div> */}
-      </div>
-    </>
-  );
+      </>
+    );
+  } else {
+    return <ShowCard card={card} closeHandler={closeHandler} />;
+  }
 };
 
 // ReactDOM.render(<ViewOrders />, document.getElementById('root'));

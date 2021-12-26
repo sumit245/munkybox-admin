@@ -22,37 +22,55 @@ router.route("/:id").get(function (req, res) {
 //get specific order
 
 router.route("/accepted/:restaurant_name").get(async (req, res) => {
-  const activeorders = await Order.find({ status: "accepted",restaurant:req.params.restaurant_name });
+  const activeorders = await Order.find({
+    status: "accepted",
+    restaurant: req.params.restaurant_name,
+  });
   res.json({ activeorders: activeorders, count: activeorders.length });
 });
 //get active orders
 
 router.route("/active/:restaurant_name").get(async (req, res) => {
-  const activeorders = await Order.find({ status: "started",restaurant:req.params.restaurant_name });
+  const activeorders = await Order.find({
+    status: "started",
+    restaurant: req.params.restaurant_name,
+  });
   res.json({ activeorders: activeorders, count: activeorders.length });
 });
 //get active orders
 
 router.route("/pending/:restaurant_name").get(async (req, res) => {
-  const orders = await Order.find({ status: "pending",restaurant:req.params.restaurant_name });
+  const orders = await Order.find({
+    status: "pending",
+    restaurant: req.params.restaurant_name,
+  });
   res.json({ pendingorders: orders, count: orders.length });
 });
 //get pending orders
 
 router.route("/rejected/:restaurant_name").get(async (req, res) => {
-  const rejectedorders = await Order.find({ status: "rejected",restaurant:req.params.restaurant_name });
+  const rejectedorders = await Order.find({
+    status: "rejected",
+    restaurant: req.params.restaurant_name,
+  });
   res.json({ rejectedorders: rejectedorders, count: rejectedorders.length });
 });
 //get rejected orders
 
 router.route("/completed/:restaurant_name").get(async (req, res) => {
-  const completedorders = await Order.find({ status: "completed",restaurant:req.params.restaurant_name });
+  const completedorders = await Order.find({
+    status: "completed",
+    restaurant: req.params.restaurant_name,
+  });
   res.json({ completedorders: completedorders, count: completedorders.length });
 });
 //get completed orders
 
 router.route("/cancelled/:restaurant_name").get(async (req, res) => {
-  const cancelled = await Order.find({ status: "cancelled",restaurant:req.params.restaurant_name });
+  const cancelled = await Order.find({
+    status: "cancelled",
+    restaurant: req.params.restaurant_name,
+  });
   res.json({ cancelled: cancelled, count: cancelled.length });
 });
 //get cancelled orders
@@ -89,7 +107,12 @@ router.route("/dashboard/:restaurant_name").get(async (req, res) => {
   let restaurant = req.params.restaurant_name;
   const response = await Order.find({
     restaurant: restaurant,
-    $or: [{ status: "started" }, { status: "accepted" }, { status: "cancelled" },{status:"completed"}],
+    $or: [
+      { status: "started" },
+      { status: "accepted" },
+      { status: "cancelled" },
+      { status: "completed" },
+    ],
   });
 
   const twoOrders = await response.filter((item) => item.plan === "twoPlan");
@@ -102,22 +125,28 @@ router.route("/dashboard/:restaurant_name").get(async (req, res) => {
   const thirtyOrders = await response.filter(
     (item) => item.plan === "thirtyPlan"
   );
-  const sumTwo = twoOrders.map(item => item.base_price).reduce(add, 0)
+  const sumTwo = twoOrders.map((item) => item.base_price).reduce(add, 0);
   const discountTwo = twoOrders.map((item) => item.discount).reduce(add, 0);
-  const sumFifteen = fifteenOrders.map((item) => item.base_price).reduce(add, 0);
-  const discountFifteen = fifteenOrders.map((item) => item.discount).reduce(add, 0);
+  const sumFifteen = fifteenOrders
+    .map((item) => item.base_price)
+    .reduce(add, 0);
+  const discountFifteen = fifteenOrders
+    .map((item) => item.discount)
+    .reduce(add, 0);
   const sumThirty = thirtyOrders.map((item) => item.base_price).reduce(add, 0);
-  const discountThirty = thirtyOrders.map((item) => item.discount).reduce(add, 0);
-  let totalDiscount = discountTwo+discountFifteen+discountThirty;
+  const discountThirty = thirtyOrders
+    .map((item) => item.discount)
+    .reduce(add, 0);
+  let totalDiscount = discountTwo + discountFifteen + discountThirty;
   let totalRevenue = sumTwo + sumFifteen + sumThirty;
-  let grossRevenue=totalRevenue-totalDiscount
+  let grossRevenue = totalRevenue - totalDiscount;
   res.json({
     sumTwo: sumTwo,
     discountTwo: discountTwo,
     sumFifteen: sumFifteen,
     discountThirty: discountThirty,
-    discountFifteen:discountFifteen,
-    sumThirty:sumThirty,
+    discountFifteen: discountFifteen,
+    sumThirty: sumThirty,
     totalRevenue: totalRevenue,
     totalDiscount: totalDiscount,
     grossRevenue: grossRevenue,
