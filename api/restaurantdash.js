@@ -53,6 +53,7 @@ router.route("/:restaurant_id").get(async (req, res) => {
     (item) =>
       item.status !== "rejected" ||
       item.status !== "pending" ||
+      item.status !== "accepted" ||
       item.status !== "cancelled"
   );
   let rejected = myorders.filter((item) => item.status === "rejected");
