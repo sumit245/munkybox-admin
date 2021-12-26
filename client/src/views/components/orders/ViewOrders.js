@@ -4,15 +4,41 @@ import { useParams } from "react-router";
 
 export const ViewOrders = () => {
   const { id } = useParams();
+  const [orderfetched, setOrderFetched] = useState(false);
+  const [restaddress, setAddress] = useState({
+    locality: "",
+    city: "",
+    state: "",
+    country: "",
+    postal_code: "",
+    phone: "",
+  });
   const [order, setOrder] = useState({});
   const fetchOrder = async () => {
     const response = await axios.get("/api/orders/" + id);
     const data = await response.data;
     setOrder(data);
   };
+  const fetchRestaurant = async () => {
+    const response = await axios.get(
+      "/api/newrest/getchefbyId/" + order.restaurant_id
+    );
+    if (response.data !== null) {
+      const { locality, city, state, country, postal_code, phone } =
+        response.data;
+      setAddress({ ...response.data });
+    }
+  };
   useEffect(() => {
     fetchOrder();
+    setOrderFetched(true);
   }, []);
+  useEffect(() => {
+    if (orderfetched) {
+      fetchRestaurant();
+      console.log(restaddress);
+    }
+  }, [orderfetched, fetchRestaurant]);
   const {
     order_time,
     time,
@@ -38,6 +64,8 @@ export const ViewOrders = () => {
     user_id,
     user_name,
   } = order;
+  let ordered_at = new Date(order_time);
+
   return (
     <>
       <div className="row wrapper border-bottom white-bg page-heading">
@@ -68,13 +96,13 @@ export const ViewOrders = () => {
             <div className="col-sm-6">
               <h5>From:</h5>
               <address>
-                <strong>{restaurant+","+restaurant_id}</strong>
+                <strong>{restaurant + "," + restaurant_id}</strong>
                 <br />
-                106 Jorg Avenu, 600/10
+                {restaddress.locality + ", " + restaddress.city}
                 <br />
-                Chicago, VT 32456
+                {restaddress.state + " -" + restaddress.postal_code}
                 <br />
-                <abbr title="Phone">P:</abbr> (123) 601-4590
+                <abbr title="Phone">P:</abbr> {restaddress.phone}
               </address>
             </div>
             <div className="col-sm-6 text-right">
@@ -98,7 +126,7 @@ export const ViewOrders = () => {
               </address>
               <p>
                 <span>
-                  <strong>Ordered at:</strong> {order_time}
+                  <strong>Ordered at:</strong> {ordered_at.toUTCString()}
                 </span>
               </p>
             </div>

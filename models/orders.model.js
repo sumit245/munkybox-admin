@@ -30,7 +30,6 @@ let Order = new Schema({
   meal_type: { type: String },
   order_time: {
     type: String,
-    default: Date.now().toLocaleString(),
   },
   status: {
     type: String,

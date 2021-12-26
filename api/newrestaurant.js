@@ -84,7 +84,9 @@ router.route("/:id").get(function (req, res) {
 //get specific restaurant
 
 router.route("/getchefbyId/:id").get(async (req, res) => {
-  const restaurant = await NewRestaurant.find({ restaurant_id: req.params.id });
+  const restaurant = await NewRestaurant.findOne({
+    restaurant_id: req.params.id,
+  });
   res.json(restaurant);
 });
 //get specific restaurant
