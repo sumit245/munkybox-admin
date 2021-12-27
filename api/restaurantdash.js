@@ -46,7 +46,7 @@ router.route("/").post(function (req, res) {
 
 router.route("/:restaurant_id").get(async (req, res) => {
   let myorders = await Orders.find({
-    restaurant: req.params.restaurant_id,
+    restaurant_id: req.params.restaurant_id,
   });
   let totalorders = myorders.length;
   let accepted = myorders.filter(
