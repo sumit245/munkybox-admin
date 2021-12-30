@@ -19,6 +19,7 @@ const slot = require("./api/slots");
 const policies = require("./api/policies");
 const chefdashboard = require("./api/restaurantdash");
 const review = require("./api/reviews");
+const currentOrders = require("./api/currentorder");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -33,7 +34,7 @@ app.use("/api/orders", orders);
 app.use("/api/plans", plan);
 app.use("/api/cuisine", cuisine);
 app.use("/api/checkout", checkout);
-
+app.use("/api/getcurrentorder", currentOrders);
 app.use("/api/banner", banner);
 app.use("/api/coupon", coupon);
 app.use("/api/promo/", promo);
