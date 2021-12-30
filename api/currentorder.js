@@ -28,9 +28,9 @@ router.route("/").post(function (req, res) {
 });
 //save a order
 
-router.route("/getOrderDetails/:order_id").get(function (req, res) {
+router.route("/getOrderDetails/:order_id").get(function (req, res, next) {
   let id = req.params.order_id;
-  Order.findOne({ order_id: id }, function (err, order) {
+  currentOrders.findOne({ order_id: id }, function (err, order) {
     if (!err) {
       res.json(order);
     } else {
