@@ -30,7 +30,7 @@ router.route("/accepted/:restaurant_name").get(async (req, res) => {
 });
 //get active orders
 
-router.route("/active/:restaurant_name").get(async (req, res) => {
+router.route("/active/:restaurant_id").get(async (req, res) => {
   const activeorders = await Order.find({
     status: "accepted",
     restaurant_id: req.params.restaurant_id,
