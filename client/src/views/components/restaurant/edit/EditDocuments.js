@@ -290,6 +290,7 @@ export default function EditDocuments(props) {
           </div>
         ))}
       </div>
+      
       <div className="row mt-2">
         <div className="col-lg-12 justify-content-end">
           <button
