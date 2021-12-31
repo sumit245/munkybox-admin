@@ -5,11 +5,12 @@ const Review = new Schema({
   restaurant_id: String,
   role: String,
   order_id: String,
+  order_time:String,
   delivered_on: String,
   plan_name: String,
   base_price: String,
   rating: String,
-  issues: Array,
+  likes: Array,
   details: String,
   comments: [
     {
