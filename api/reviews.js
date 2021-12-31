@@ -21,6 +21,14 @@ router.route("/:id").get(function (req, res) {
 });
 //get specific review
 
+router.route("/getmyreview/:id").get(function (req, res) {
+  let id = req.params.id;
+  Review.find({ restaurant_id: id }, function (err, review) {
+    res.json(review);
+  });
+});
+//get specific review
+
 router.route("/").post(function (req, res) {
   let review = new Review(req.body);
   review
