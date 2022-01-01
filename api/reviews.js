@@ -29,6 +29,13 @@ router.route("/getmyreview/:id").get(function (req, res) {
 });
 //get specific review
 
+router.route("/:id").put(async (req, res) => {
+  const { id } = req.params;
+  const data = req.body;
+  const response = await Review.findByIdAndUpdate(id, data);
+  res.json(response);
+});
+
 router.route("/").post(function (req, res) {
   let review = new Review(req.body);
   review
