@@ -14,7 +14,58 @@ export default function BasicInfo(props) {
   };
 
   const handleContinue = (e) => {
-    console.log(chef);
+    if (!chef.restaurant_name) {
+      alert("Restaurant Name is required!!!");
+      return;
+    }
+    if (!chef.owner_name) {
+      alert("Owner Name is required!!!");
+      return;
+    }
+    if (!chef.state) {
+      alert("State is required!!!");
+      return;
+    }
+    if (!chef.cuisine_type) {
+      alert("Restaurant Name is required");
+      return;
+    }
+    if (!chef.phone) {
+      alert("Phone is required");
+      return;
+    }
+    if (!chef.locality) {
+      alert("Street address is required");
+      return;
+    }
+    if (!chef.country) {
+      alert("Country is required");
+      return;
+    }
+    if (!chef.commission) {
+      alert("Commission is required");
+      return;
+    }
+    if (!chef.about) {
+      alert("About is required");
+      return;
+    }
+    if (!chef.email) {
+      alert("Email ID is required");
+      return;
+    }
+    if (!chef.city) {
+      alert("City is required");
+      return;
+    }
+    if (!chef.postal_code) {
+      alert("Postal Code is required");
+      return;
+    }
+    if (!chef.meal_type) {
+      alert("Meal Type is required");
+      return;
+    }
     dispatch({ type: BASIC_INFO, payload: chef });
     props.goToStep(2);
   };
@@ -68,6 +119,7 @@ export default function BasicInfo(props) {
               onChange={(e) => onChangeText(e)}
               type="text"
               className="form-control required"
+              required
             />
           </div>
           <div className="form-group">
