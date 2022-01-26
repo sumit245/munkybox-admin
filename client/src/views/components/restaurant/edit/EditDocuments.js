@@ -37,7 +37,15 @@ export default function EditDocuments(props) {
     props.goToStep(1);
   };
   const handleContinue = (e) => {
-    dispatch(editDocuments([profile,banner], [...papers]));
+    if (!profile) {
+      alert("Profile picture is required");
+      return;
+    }
+    if (!banner) {
+      alert("Banner image is required");
+      return;
+    }
+    dispatch(editDocuments([profile, banner], [...papers]));
     props.goToStep(3);
   };
   const handleImage = () => {
@@ -47,13 +55,25 @@ export default function EditDocuments(props) {
     };
     setPapers([...papers, image]);
   };
-  const imageUpdater = ({ target }) => {
+  const imageUpdater = ({ target }, key) => {
+    let paper = [...papers];
     let file = target.files[0];
     imageUploader(file, (result) => {
-      setTemp(result);
+      try {
+        paper[key].image = result;
+        setPapers(paper);
+      } catch (error) {
+        setTemp(result);
+      }
     });
     setImageName(file.name);
   };
+  const deletePaper = (key) => {
+    let paper = [...papers];
+    paper.splice(key, 1);
+    setPapers(paper);
+  };
+
   const profileUpdate = (e) => {
     let file = e.target.files[0];
     imageUploader(file, (result) => {
@@ -222,6 +242,7 @@ export default function EditDocuments(props) {
           </div>
         </div>
       </div>
+
       <div className="row mt-2">
         {papers.map((image, key) => (
           <div className="col-lg-4" key={key}>
@@ -234,7 +255,7 @@ export default function EditDocuments(props) {
                 <div className="ibox-tools">
                   <span className="btn btn-white mr-1">
                     <label
-                      htmlFor="file-upload"
+                      htmlFor="paper-upload"
                       style={{
                         border: 1,
                         display: "inline-block",
@@ -250,15 +271,18 @@ export default function EditDocuments(props) {
                       ></i>
                     </label>
                     <input
-                      id="file-upload"
+                      id="paper-upload"
                       type="file"
                       name={image.image_name}
                       style={{ display: "none" }}
-                      onChange={profileUpdate}
+                      onChange={(e) => imageUpdater(e, key)}
                     />
                   </span>
 
-                  <span className="btn btn-danger">
+                  <span
+                    className="btn btn-danger"
+                    onClick={() => deletePaper(key)}
+                  >
                     <i className="fa fa-trash-o" />
                   </span>
                 </div>
@@ -274,6 +298,7 @@ export default function EditDocuments(props) {
           </div>
         ))}
       </div>
+
       <div className="row mt-2">
         <div className="col-lg-12 justify-content-end">
           <button

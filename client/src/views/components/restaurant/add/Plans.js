@@ -11,6 +11,18 @@ export default function Plans(props) {
   const restaurant = useSelector((state) => state.restaurant);
   const dispatch = useDispatch();
   const handleContinue = (e) => {
+    if (!customer2price) {
+      alert("Base price for two meals required");
+      return;
+    }
+    if (!customer15price) {
+      alert("Base price for fifteen meals required");
+      return;
+    }
+    if (!customer30price) {
+      alert("Base price for thirty meals required");
+      return;
+    }
     const plans = {
       ...restaurant,
       ...inputPlan,
@@ -75,6 +87,7 @@ export default function Plans(props) {
               type="currency"
               name="customer2price"
               defaultValue={customer2price}
+              disabled
             />
           </div>
         </div>
@@ -104,6 +117,7 @@ export default function Plans(props) {
               type="currency"
               name="customer15price"
               defaultValue={customer15price}
+              disabled
             />
           </div>
         </div>
@@ -133,6 +147,7 @@ export default function Plans(props) {
               type="currency"
               name="customer30price"
               defaultValue={customer30price}
+              disabled
             />
           </div>
         </div>

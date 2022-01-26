@@ -25,6 +25,14 @@ export default function Documents(props) {
   };
 
   const handleContinue = (e) => {
+    if (!restaurant_image) {
+      alert("Profile picture is required");
+      return;
+    }
+    if (!banner_image) {
+      alert("Banner image is required");
+      return;
+    }
     const data = {
       ...selector,
       documents: [...images],
@@ -88,7 +96,6 @@ export default function Documents(props) {
               </label>
             </div>
           </div>
-     
         </div>
       </div>
       <div className="row mt-2">

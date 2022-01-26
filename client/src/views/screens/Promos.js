@@ -19,24 +19,21 @@ export default function Promos() {
     const promotions = await data.data;
     setPromos(promotions);
   };
-  
+
   useEffect(() => {
     getcoupons();
     getPromos();
   }, []);
   return (
     <div className="wrapper wrapper-content">
-      <PromotionCard total={coupons && coupons.length}/>
-      <div className="row-lg m-b-sm ">
+      <PromotionCard total={coupons && coupons.length} />
+      <div className="row-lg">
         <Table
           title="Coupons"
           data={coupons}
           columns={couponColumns}
           className="table-responsive table-sm"
         />
-      </div>
-      <div className="row-lg">
-        <Table title="Statistics" data={promos} columns={promoColumns} />
       </div>
     </div>
   );

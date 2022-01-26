@@ -1,18 +1,13 @@
 import axios from "axios";
 import React, { useState, useEffect, 
-  // useCallback  
 } from "react";
-import { useDispatch,
-  //  useSelector 
+import { useDispatch
   } from "react-redux";
 import {
   editBasicInfo,
-  // editRestaurant,
 } from "../../../../actions/restaurantAction";
-// import { BASIC_INFO } from "../../../../utilities/constants";   
 
 export default function EditBasicInfo(props) {
-  // const restaurant = useSelector((state) => state.restaurant);
   const [cuisine, setCuisine] = useState([]);
   const [state, setState] = useState({});
   const fetchData = async () => {
@@ -45,6 +40,58 @@ export default function EditBasicInfo(props) {
   };
 
   const handleContinue = (e) => {
+    if (!state.restaurant_name) {
+      alert("Restaurant Name is required!!!");
+      return;
+    }
+    if (!state.owner_name) {
+      alert("Owner Name is required!!!");
+      return;
+    }
+    if (!state.state) {
+      alert("State is required!!!");
+      return;
+    }
+    if (!state.cuisine_type) {
+      alert("Restaurant Name is required");
+      return;
+    }
+    if (!state.phone) {
+      alert("Phone is required");
+      return;
+    }
+    if (!state.locality) {
+      alert("Street address is required");
+      return;
+    }
+    if (!state.country) {
+      alert("Country is required");
+      return;
+    }
+    if (!state.commission) {
+      alert("Commission is required");
+      return;
+    }
+    if (!state.about) {
+      alert("About is required");
+      return;
+    }
+    if (!state.email) {
+      alert("Email ID is required");
+      return;
+    }
+    if (!state.city) {
+      alert("City is required");
+      return;
+    }
+    if (!state.postal_code) {
+      alert("Postal Code is required");
+      return;
+    }
+    if (!state.meal_type) {
+      alert("Meal Type is required");
+      return;
+    }
     dispatch(editBasicInfo(state));
     props.goToStep(2);
   };

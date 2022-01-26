@@ -2,7 +2,9 @@ const express = require("express");
 const router = express.Router();
 const NewRestaurant = require("../models/newrest.model");
 const Orders = require("../models/orders.model");
+const Banner = require("../models/banners.model");
 const Users = require("../models/users.model");
+
 const RestaurantDashboard = require("../models/restaurant_dashboard.model");
 
 router.route("/getusertypesbyrestaurant/:restaurant").get(async (req, res) => {
@@ -28,6 +30,7 @@ router.route("/getusertypesbyrestaurant/:restaurant").get(async (req, res) => {
     more: x,
   });
 });
+
 router.route("/").post(function (req, res) {
   let order = new RestaurantDashboard(req.body);
   order
@@ -41,33 +44,86 @@ router.route("/").post(function (req, res) {
 });
 //create a dashboard
 
-router.route("/:restaurant_name").get(async (req, res) => {
+router.route("/:restaurant_id").get(async (req, res) => {
   let myorders = await Orders.find({
-    restaurant: req.params.restaurant_name,
+    restaurant_id: req.params.restaurant_id,
   });
   let totalorders = myorders.length;
   let accepted = myorders.filter(
     (item) =>
       item.status !== "rejected" ||
       item.status !== "pending" ||
+      item.status !== "accepted" ||
       item.status !== "cancelled"
   );
   let rejected = myorders.filter((item) => item.status === "rejected");
   let acceptedCount = accepted.length;
   let rejectedCount = rejected.length;
   RestaurantDashboard.findOne(
-    { restaurant_name: req.params.restaurant_name },
-    function (err, orders) {
+    { restaurant_id: req.params.restaurant_id },
+    function (err, dashboard) {
       res.json({
         totalOrders: totalorders,
         acceptedCount: acceptedCount,
         rejectedCount: rejectedCount,
         accptanceRate: (acceptedCount / totalorders) * 100,
         rectanceRate: (rejectedCount / totalorders) * 100,
-        orders,
+        dashboard,
       });
     }
   );
+});
+
+router.route("/:restaurant_name/:id").put(async (req, res) => {
+  const { id } = req.params;
+  const data = req.body;
+  const response = await RestaurantDashboard.findByIdAndUpdate(id, data);
+  res.json(response);
+});
+
+router
+  .route("/getchefbyidandupdatebannercount/:restaurant")
+  .get(async (req, res) => {
+    const response = await Banner.findOne({
+      restaurant_id: req.params.restaurant,
+    });
+    let { clicks, due, rpc } = response;
+    clicks += 1;
+    due += parseFloat(rpc);
+    const update = await Banner.findByIdAndUpdate(
+      { _id: response._id },
+      { clicks: clicks, due: due }
+    );
+    res.json(update);
+  });
+
+router.route("/getchefbyidandrevenue/:restaurant").get(async (req, res) => {
+  const response = await Banner.findOne({
+    restaurant_id: req.params.restaurant,
+  });
+  const myOrders = await Orders.find({ promo_code: response.promo_code });
+
+  let prices = myOrders.map((item) => item.base_price);
+  const adder = (accumulator, curr) =>
+    parseFloat(accumulator) + parseFloat(curr);
+  let revenue = prices.reduce(adder, 0);
+
+  let discounts = myOrders.map((item) => item.discount);
+  let discount = discounts.reduce(adder, 0);
+
+  const userids = myOrders.map((item) => item.user_id);
+  let uniq = [...new Set(userids)];
+
+  res.json({
+    totalOrders: myOrders.length,
+    orders: myOrders,
+    banner: response,
+    due: response.due,
+    clicks: response.clicks,
+    discount: discount,
+    revenue: revenue,
+    users: uniq.length,
+  });
 });
 
 router
@@ -75,7 +131,7 @@ router
   .get(function (req, res) {
     RestaurantDashboard.findOne(
       {
-        restaurant_name: req.params.restaurant,
+        restaurant_id: req.params.restaurant,
       },
       function (err, response) {
         if (!err) {
@@ -91,7 +147,7 @@ router
             );
           } else {
             let dashboard = {
-              restaurant_name: req.params.restaurant,
+              restaurant_id: req.params.restaurant,
               menuvisits: 1,
             };
             let dash = new RestaurantDashboard(dashboard);
@@ -109,7 +165,7 @@ router
   .get(function (req, res) {
     RestaurantDashboard.findOne(
       {
-        restaurant_name: req.params.restaurant,
+        restaurant_id: req.params.restaurant,
       },
       function (err, response) {
         if (!err) {
@@ -125,7 +181,7 @@ router
             );
           } else {
             let dashboard = {
-              restaurant_name: req.params.restaurant,
+              restaurant_id: req.params.restaurant,
               cartVisit: 1,
             };
             let dash = new RestaurantDashboard(dashboard);

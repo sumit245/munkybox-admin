@@ -30,14 +30,11 @@ export default function Promos() {
       <PromotionCard total={coupons && coupons.length} />
       <div className="row-lg m-b-sm ">
         <Table
-          title="Coupons"
+          title="Campaigns"
           data={coupons}
           columns={bannerColumns}
           className="table-responsive table-sm"
         />
-      </div>
-      <div className="row-lg">
-        <Table title="Statistics" data={promos} columns={promoColumns} />
       </div>
     </div>
   );

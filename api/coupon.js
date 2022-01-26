@@ -25,29 +25,32 @@ router.route("/:id").get(function (req, res) {
 });
 //get specific coupon
 
-router.route("/getcouponforchef/:restaurant").get(async (req, res) => {
-  const myCoupons = await Coupon.find({ restaurant_id: req.params.restaurant });
+router.route("/getcouponforchef/:restaurant/:status").get(async (req, res) => {
+  const myCoupons = await Coupon.find({
+    restaurant_id: req.params.restaurant,
+    status: req.params.status,
+  });
   const myOrders = await Orders.find({ restaurant_id: req.params.restaurant });
-  let promoted_restaurants = [];
+  let promoted_orders = [];
   let revenue = 0;
   let discount = 0;
   for (let i = 0; i < myCoupons.length; i++) {
     for (let j = 0; j < myOrders.length; j++) {
       if (myCoupons[i].promo_code === myOrders[j].promo_code) {
-        promoted_restaurants.push(myOrders[j]);
+        promoted_orders.push(myOrders[j]);
       }
     }
     revenue =
-      parseFloat(myCoupons[i].price) * parseFloat(promoted_restaurants.length);
+      parseFloat(myCoupons[i].price) * parseFloat(promoted_orders.length);
     discount =
-      parseFloat(myCoupons[i].discount) *
-      parseFloat(promoted_restaurants.length);
+      parseFloat(myCoupons[i].absolute_value) *
+      parseFloat(promoted_orders.length);
   }
-  const userids = promoted_restaurants.map((item) => item.user_id);
+  const userids = promoted_orders.map((item) => item.user_id);
   let uniq = [...new Set(userids)];
   res.json({
     coupons: myCoupons,
-    promotedOrders: promoted_restaurants,
+    promotedOrders: promoted_orders,
     revenue: revenue,
     unique: uniq,
     discount: discount,
@@ -64,6 +67,13 @@ router.route("/getpromotedorders/:restaurant_id").get(async (req, res) => {
   });
 });
 //get all promo
+
+router.route("/:id").put(async (req, res) => {
+  const { id } = req.params;
+  const data = req.body;
+  const response = await Coupon.findByIdAndUpdate(id, data);
+  res.json(response);
+});
 
 router.route("/promo/:promo_id").get(function (req, res) {
   Promo.find({ promo_id: req.params.promo_id }, function (err, promo) {

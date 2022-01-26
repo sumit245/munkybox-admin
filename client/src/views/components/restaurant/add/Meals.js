@@ -10,6 +10,7 @@ export default function Meals(props) {
   const state = useSelector((state) => state.restaurant);
   const dispatch = useDispatch();
   const handleContinue = (e) => {
+    
     const data = {
       ...state,
       meals: [...meals],
