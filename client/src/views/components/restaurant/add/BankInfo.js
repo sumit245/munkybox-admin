@@ -4,10 +4,33 @@ import { useSelector, useDispatch } from "react-redux";
 
 export default function BankInfo(props) {
   const [bankInfo, setBankInfo] = useState({});
-
   const state = useSelector((state) => state.restaurant);
   const dispatch = useDispatch();
   const done = (e) => {
+    if (!bankInfo.account_name) {
+      alert("Please provide a beneficiary");
+      return;
+    }
+    if (!bankInfo.account_number) {
+      alert("Please provide an account number");
+      return;
+    }
+    if (!bankInfo.confirm_account_number) {
+      alert("Confirm account doesnot match!!!");
+      return;
+    }
+    if (!bankInfo.bank_name) {
+      alert("Bank name is missing");
+      return;
+    }
+    if (!bankInfo.branch_number) {
+      alert("Branch is required");
+      return;
+    }
+    if (!bankInfo.institution_number) {
+      alert("Institution number required");
+      return;
+    }
     const data = {
       ...state,
       ...bankInfo,

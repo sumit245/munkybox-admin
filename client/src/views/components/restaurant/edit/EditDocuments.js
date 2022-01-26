@@ -37,6 +37,14 @@ export default function EditDocuments(props) {
     props.goToStep(1);
   };
   const handleContinue = (e) => {
+    if (!profile) {
+      alert("Profile picture is required");
+      return;
+    }
+    if (!banner) {
+      alert("Banner image is required");
+      return;
+    }
     dispatch(editDocuments([profile, banner], [...papers]));
     props.goToStep(3);
   };
@@ -290,7 +298,7 @@ export default function EditDocuments(props) {
           </div>
         ))}
       </div>
-      
+
       <div className="row mt-2">
         <div className="col-lg-12 justify-content-end">
           <button

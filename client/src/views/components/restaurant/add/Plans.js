@@ -19,7 +19,7 @@ export default function Plans(props) {
       alert("Base price for fifteen meals required");
       return;
     }
-    if (customer30price) {
+    if (!customer30price) {
       alert("Base price for thirty meals required");
       return;
     }

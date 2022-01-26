@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { SET_PLANS } from "../../../../utilities/constants";
@@ -9,6 +8,18 @@ export default function EditPlans({ plan, restaurant, goToStep }) {
   const { twoPlan, fifteenPlan, thirtyPlan } = plan;
 
   const handleContinue = (e) => {
+    if (!base_2price) {
+      alert("Base price for two meals required");
+      return;
+    }
+    if (!base_15price) {
+      alert("Base price for fifteen meals required");
+      return;
+    }
+    if (!base_30price) {
+      alert("Base price for thirty meals required");
+      return;
+    }
     dispatch({
       type: SET_PLANS,
       payload: price,
