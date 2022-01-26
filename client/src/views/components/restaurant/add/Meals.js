@@ -10,7 +10,10 @@ export default function Meals(props) {
   const state = useSelector((state) => state.restaurant);
   const dispatch = useDispatch();
   const handleContinue = (e) => {
-    
+    if (meals.length < 1) {
+      alert("Provide atleast one meal");
+      return;
+    }
     const data = {
       ...state,
       meals: [...meals],
