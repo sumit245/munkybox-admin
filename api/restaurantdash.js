@@ -66,8 +66,8 @@ router.route("/:restaurant_id").get(async (req, res) => {
         totalOrders: totalorders,
         acceptedCount: acceptedCount,
         rejectedCount: rejectedCount,
-        accptanceRate: (acceptedCount / totalorders) * 100,
-        rectanceRate: (rejectedCount / totalorders) * 100,
+        accptanceRate: (acceptedCount / (acceptedCount + rejectedCount)) * 100,
+        rectanceRate: (rejectedCount / (acceptedCount + rejectedCount)) * 100,
         dashboard,
       });
     }
