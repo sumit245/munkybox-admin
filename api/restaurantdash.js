@@ -49,12 +49,7 @@ router.route("/:restaurant_id").get(async (req, res) => {
     restaurant_id: req.params.restaurant_id,
   });
   let totalorders = myorders.length;
-  let accepted = myorders.filter(
-    (item) =>
-      item.status !== "accepted" ||
-      item.status !== "pending" ||
-      item.status !== "cancelled"
-  );
+  let accepted = myorders.filter((item) => item.status === "accepted");
   let rejected = myorders.filter((item) => item.status === "rejected");
   let acceptedCount = accepted.length;
   let rejectedCount = rejected.length;
@@ -65,8 +60,8 @@ router.route("/:restaurant_id").get(async (req, res) => {
         totalOrders: totalorders,
         acceptedCount: acceptedCount,
         rejectedCount: rejectedCount,
-        accptanceRate: (acceptedCount / (acceptedCount + rejectedCount)) * 100,
-        rectanceRate: (rejectedCount / (acceptedCount + rejectedCount)) * 100,
+        accptanceRate: (acceptedCount / totalorders) * 100,
+        rectanceRate: (rejectedCount / totalorders) * 100,
         dashboard,
       });
     }
