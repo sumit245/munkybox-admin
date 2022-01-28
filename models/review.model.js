@@ -10,6 +10,8 @@ const Review = new Schema({
   delivered_on: String,
   plan_name: String,
   base_price: String,
+  start_date: String,
+  end_date:String,
   rating: String,
   likes: Array,
   details: String,
