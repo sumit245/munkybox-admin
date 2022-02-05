@@ -87,6 +87,95 @@ export const customStyles = {
     },
   },
 };
+
+export const payOutStyles = {
+  headRow: {
+    style: {
+      borderTopStyle: "solid",
+      borderTopWidth: "1px",
+      borderTopColor: defaultThemes.default.divider.default,
+    },
+  },
+  headCells: {
+    style: {
+      fontSize: 14,
+      fontWeight: "bold",
+      color: "#268bdf",
+      "&:not(:last-of-type)": {
+        borderRightStyle: "solid",
+        borderRightWidth: "1px",
+        padding: 4,
+        borderRightColor: defaultThemes.default.divider.default,
+      },
+    },
+  },
+
+  cells: {
+    style: {
+      textAlign: "center",
+      "&:not(:last-of-type)": {
+        borderRightStyle: "solid",
+        borderRightWidth: "1px",
+        padding: 2,
+        borderRightColor: defaultThemes.default.divider.default,
+      },
+      width:"fit-content"
+    },
+  },
+  pagination: {
+    style: {
+      color: defaultThemes.default.text.secondary,
+      fontSize: "13px",
+      minHeight: "56px",
+      backgroundColor: defaultThemes.default.background.default,
+      borderTopStyle: "solid",
+      borderTopWidth: "1px",
+      borderTopColor: defaultThemes.default.divider.default,
+    },
+    pageButtonsStyle: {
+      borderRadius: "50%",
+      height: "40px",
+      width: "40px",
+      padding: "8px",
+      margin: "px",
+      cursor: "pointer",
+      transition: "0.4s",
+      color: defaultThemes.default.button.default,
+      fill: defaultThemes.default.button.default,
+      backgroundColor: "transparent",
+      "&:disabled": {
+        cursor: "unset",
+        color: defaultThemes.default.button.disabled,
+        fill: defaultThemes.default.button.disabled,
+      },
+      "&:hover:not(:disabled)": {
+        backgroundColor: defaultThemes.default.button.hover,
+      },
+      "&:focus": {
+        outline: "none",
+        backgroundColor: defaultThemes.default.button.focus,
+      },
+    },
+  },
+  noData: {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      color: defaultThemes.default.text.primary,
+      backgroundColor: defaultThemes.default.background.default,
+    },
+  },
+  progress: {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      color: defaultThemes.default.text.primary,
+      backgroundColor: defaultThemes.default.background.default,
+    },
+  },
+};
 export const userColumns = [
   {
     name: "ID",
@@ -406,3 +495,46 @@ export const promoColumns = [
     ),
   },
 ];
+export const payColumns = [
+  {
+    name: "S No.",
+    selector: "sid",
+  },
+  {
+    name: " ID",
+    selector: "restaurant_id",
+    sortable: true,
+  },
+  {
+    name: "Restaurant Email",
+    selector: "email",
+    sortable: true,
+  },
+  {
+    name: "Restaurant Name",
+    selector: "restaurant_name",
+    sortable: true,
+  },
+  {
+    name: "Total Chef Amount",
+    selector: "amount",
+    sortable: true,
+  },
+  {
+    name: "Total Commission Amount",
+    selector: "commission",
+    sortable: true,
+  },
+  {
+    name: "Total Cancel Amount",
+    selector: "cancel",
+    sortable: true,
+  },
+  {
+    name: "Amount paid to chef ",
+    selector: "commission",
+    sortable: true,
+  },
+  
+  
+]

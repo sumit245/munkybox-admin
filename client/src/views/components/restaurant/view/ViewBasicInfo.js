@@ -11,7 +11,6 @@ export default function BasicInfo(props) {
     phone,
     locality,
     country,
-    commission,
     email,
     state,
     postal_code,
@@ -77,8 +76,8 @@ export default function BasicInfo(props) {
               <tr>
                 <td>COMMISSION</td>
                 <td>
-                  {"$"}
-                  {commission}
+                  15
+                  {"%"}
                 </td>
               </tr>
               <tr>
