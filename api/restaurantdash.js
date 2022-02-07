@@ -49,13 +49,7 @@ router.route("/:restaurant_id").get(async (req, res) => {
     restaurant_id: req.params.restaurant_id,
   });
   let totalorders = myorders.length;
-  let accepted = myorders.filter(
-    (item) =>
-      item.status !== "rejected" ||
-      item.status !== "pending" ||
-      item.status !== "accepted" ||
-      item.status !== "cancelled"
-  );
+  let accepted = myorders.filter((item) => item.status === "accepted");
   let rejected = myorders.filter((item) => item.status === "rejected");
   let acceptedCount = accepted.length;
   let rejectedCount = rejected.length;
