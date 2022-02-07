@@ -4,14 +4,15 @@ import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { payOutStyles } from "../../../utilities/utility";
 import { AiOutlinePlusSquare } from "react-icons/ai";
-import "./styles.css"
+import "./styles.css";
 
 export default function Table({ title, data, columns, flag }) {
   const tableData = {
     columns,
     data,
   };
-  const expandableIcon =() =><AiOutlinePlusSquare />;
+  const expandableIcon = () => <AiOutlinePlusSquare />;
+
   return (
     <div className="ibox-content">
       <DataTableExtensions filterPlaceholder="Search..." {...tableData}>
