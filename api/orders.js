@@ -32,7 +32,7 @@ router.route("/accepted/:restaurant_name").get(async (req, res) => {
 
 router.route("/active/:restaurant_id").get(async (req, res) => {
   const activeorders = await Order.find({
-    status: "accepted",
+    status: "started",
     restaurant_id: req.params.restaurant_id,
   });
   res.json({ activeorders: activeorders, count: activeorders.length });
