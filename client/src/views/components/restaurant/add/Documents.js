@@ -7,9 +7,14 @@ export default function Documents(props) {
   const [images, setImages] = useState([]);
   const [restaurant_image, setRestaurantImage] = useState("");
   const [banner_image, setBannerImage] = useState("");
+  const [papers, setPapers] = useState([]);
+  const [temp, setTemp] = useState("");
+  const [imageName, setImageName] = useState("");
+
   const [dynamicImageField, setDynamicImageField] = useState([
     {
       image_name: "",
+
     },
   ]);
   const selector = useSelector((state) => state.restaurant);
@@ -36,17 +41,32 @@ export default function Documents(props) {
     const data = {
       ...selector,
       documents: [...images],
+      papers:[...papers]
     };
-    dispatch({
-      type: SET_DOCUMENTS,
-      payload: data,
-    });
-    props.goToStep(3);
+    
+    // dispatch({
+    //   type: SET_DOCUMENTS,
+    //   payload: data,
+    // });
+    // props.goToStep(3);
   };
   const handleChangeInput = (index, event) => {
     const value = [...dynamicImageField];
     value[index][event.target.name] = event.target.value;
     setDynamicImageField(value);
+  };
+  const imageUpdater = ({ target }, key) => {
+    let paper = [...papers];
+    let file = target.files[0];
+    imageUploader(file, (result) => {
+      try {
+        paper[key].image = result;
+        setPapers(paper);
+      } catch (error) {
+        setTemp(result);
+      }
+    });
+    setImageName(file.name);
   };
   const handleDynamicFiles = (index, event) => {
     const value = [...dynamicImageField];

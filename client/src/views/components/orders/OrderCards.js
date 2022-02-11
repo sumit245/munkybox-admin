@@ -1,6 +1,13 @@
 import React from "react";
 
-export default function OrderCards({ total,pending,started,completed,rejected,cancelled }) {
+export default function OrderCards({
+  total,
+  pending,
+  started,
+  completed,
+  rejected,
+  cancelled,
+}) {
   return (
     <div className="row">
       <div className="col-lg-3">
@@ -18,22 +25,21 @@ export default function OrderCards({ total,pending,started,completed,rejected,ca
           </div>
         </div>
       </div>
+
       <div className="col-lg-3">
         <div className="ibox">
           <div className="ibox-title">
             <span className="label label-warning float-right">Monthly</span>
-            <h5>Pending</h5>
+            <h5>Accepted</h5>
           </div>
           <div className="ibox-content">
             <h1 className="no-margins">{pending}</h1>
             <div className="stat-percent font-bold text-warning">
               0% <i className="fa fa-level-down" />
             </div>
-            <small>Orders placed by user but not accepted</small>
+            <small>Orders placed by user but not started</small>
           </div>
         </div>
-      
-      
       </div>
 
       <div className="col-lg-3">
@@ -82,8 +88,6 @@ export default function OrderCards({ total,pending,started,completed,rejected,ca
             <small>Orders cancelled by user</small>
           </div>
         </div>
-      
-      
       </div>
       <div className="col-lg-3">
         <div className="ibox">
@@ -99,10 +103,7 @@ export default function OrderCards({ total,pending,started,completed,rejected,ca
             <small>Orders rejected by chef</small>
           </div>
         </div>
-      
-      
       </div>
-      
     </div>
   );
 }

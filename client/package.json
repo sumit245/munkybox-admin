@@ -2,7 +2,6 @@
   "name": "munky-box",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000/",
   "dependencies": {
     "@popperjs/core": "^2.10.2",
     "@react-pdf/renderer": "^1.6.17",
@@ -14,6 +13,7 @@
     "date-fns": "^2.16.1",
     "jquery": "3.5.1",
     "jquery-steps": "^1.1.0",
+    "moment": "^2.29.1",
     "mongo-image-converter": "^1.0.2",
     "popper.js": "1.16.1",
     "react": "^17.0.1",

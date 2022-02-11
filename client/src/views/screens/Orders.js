@@ -11,6 +11,7 @@ export default function Orders() {
   const [pending, setPending] = useState(0);
   const [started, setstarted] = useState(0);
   const [cancelled, setCancelled] = useState(0);
+  
   const setOrderCounts = async () => {
     const response = await axios.get("/api/orders");
     const order = await response.data;
@@ -26,9 +27,11 @@ export default function Orders() {
     setCancelled(cancelledorders.length);
     setCompleted(completedorders.length)
   };
+
   useEffect(() => {
     setOrderCounts();
   }, []);
+
   return (
     <div className="wrapper wrapper-content">
       <OrderCards

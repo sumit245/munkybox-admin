@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import ShowCard from "../restaurant/view/ShowCard";
+import moment from "moment";
 
 export const ViewOrders = () => {
   const { id } = useParams();
@@ -15,12 +16,14 @@ export const ViewOrders = () => {
     postal_code: "",
     phone: "",
   });
+  
   const [order, setOrder] = useState({});
   const fetchOrder = async () => {
     const response = await axios.get("/api/orders/" + id);
     const data = await response.data;
     setOrder(data);
   };
+
   const fetchRestaurant = async () => {
     const response = await axios.get(
       "/api/newrest/getchefbyId/" + order.restaurant_id
@@ -29,15 +32,18 @@ export const ViewOrders = () => {
       setAddress({ ...response.data });
     }
   };
+
   useEffect(() => {
     fetchOrder();
     setOrderFetched(true);
   }, []);
+
   useEffect(() => {
     if (orderfetched) {
       fetchRestaurant();
     }
-  }, [orderfetched, fetchRestaurant]);
+  }, [orderfetched,fetchRestaurant]);
+
   const {
     order_time,
     time,
@@ -64,10 +70,13 @@ export const ViewOrders = () => {
     user_id,
     user_name,
   } = order;
+
   const closeHandler = (state) => {
     toggleCardview(state);
   };
+
   const service_fee_in_dollar = price * service_fee * 0.01;
+
   const taxesinDollar =
     (parseFloat(price) +
       parseFloat(service_fee_in_dollar) +
@@ -85,16 +94,6 @@ export const ViewOrders = () => {
           </div>
           <div className="col-lg-4">
             <div className="title-action">
-              <a href="/" className="btn btn-white">
-                <i className="fa fa-plus" /> Add ons{" "}
-              </a>
-              <button
-                type="button"
-                onClick={toggleCardview}
-                className="btn btn-white"
-              >
-                <i className="fa fa-credit-card" /> View Card{" "}
-              </button>
               <a
                 href="invoice_print.html"
                 target="_blank"
@@ -113,7 +112,9 @@ export const ViewOrders = () => {
                 <address>
                   <strong>{restaurant + "," + restaurant_id}</strong>
                   <br />
-                  {restaddress.locality + ", " + restaddress.city}
+                  {(restaddress.locality || "") +
+                    ", " +
+                    (restaddress.city || "")}
                   <br />
                   {restaddress.state + " -" + restaddress.postal_code}
                   <br />
@@ -131,7 +132,7 @@ export const ViewOrders = () => {
                       ", " +
                       address.flat_num +
                       ", " +
-                      address.locality}
+                      (address.locality || "")}
                   <br />
                   {address && address.city + ", " + address.postal_code}
                   <br />
@@ -141,7 +142,7 @@ export const ViewOrders = () => {
                 </address>
                 <p>
                   <span>
-                    <strong>Ordered at:</strong> {Date(order_time)}
+                    <strong>Ordered at:</strong> {moment(order_time).format("DD-MMM-YYYY HH:mm:ss")}
                   </span>
                 </p>
               </div>
@@ -196,7 +197,7 @@ export const ViewOrders = () => {
                   <td>
                     <strong>Service Fee ({service_fee}%):</strong>
                   </td>
-                  <td>${service_fee_in_dollar}</td>
+                  <td>${parseFloat(service_fee_in_dollar).toFixed(2)}</td>
                 </tr>
                 <tr>
                   <td>
@@ -212,9 +213,9 @@ export const ViewOrders = () => {
                 </tr>
                 <tr>
                   <td>
-                    <strong>Taxes ({taxes}%):</strong>
+                    <strong>Taxes ({parseFloat(taxes).toFixed(2)}%):</strong>
                   </td>
-                  <td>{taxesinDollar}</td>
+                  <td>${parseFloat(taxesinDollar).toFixed(2)}</td>
                 </tr>
                 <tr>
                   <td>
