@@ -39,6 +39,16 @@ router.route("/active/:restaurant_id").get(async (req, res) => {
 });
 //get active orders
 
+router.route("/forchefhome/:restaurant_id").get(async (req, res) => {
+  const activeorders = await Order.find({
+    restaurant_id: req.params.restaurant_id,
+    $or: [{ status: "accepted" },{status:"started"}]
+  });
+  res.json({ activeorders: activeorders, count: activeorders.length });
+});
+//get active orders
+
+
 router.route("/pending/:restaurant_name").get(async (req, res) => {
   const orders = await Order.find({
     status: "pending",
