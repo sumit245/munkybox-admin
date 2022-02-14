@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SET_DOCUMENTS } from "../../../../utilities/constants";
+import { EDIT_PAPERS, SET_DOCUMENTS } from "../../../../utilities/constants";
 import { imageUploader } from "../../../../utilities/fileHandlers";
 
 export default function Documents(props) {
@@ -14,7 +14,6 @@ export default function Documents(props) {
   const [dynamicImageField, setDynamicImageField] = useState([
     {
       image_name: "",
-
     },
   ]);
   const selector = useSelector((state) => state.restaurant);
@@ -41,14 +40,14 @@ export default function Documents(props) {
     const data = {
       ...selector,
       documents: [...images],
-      papers:[...papers]
+      papers: [...papers],
     };
-    
-    // dispatch({
-    //   type: SET_DOCUMENTS,
-    //   payload: data,
-    // });
-    // props.goToStep(3);
+    dispatch({
+      type: EDIT_PAPERS,
+      payload: data,
+    });
+    console.log(data);
+    props.goToStep(3);
   };
   const handleChangeInput = (index, event) => {
     const value = [...dynamicImageField];
@@ -73,9 +72,10 @@ export default function Documents(props) {
     let file = event.target.files[0];
     imageUploader(file, (result) => {
       value[index][event.target.name] = result;
+      console.log(value);
       setDynamicImageField(value);
     });
-    setImages([...images, dynamicImageField]);
+    setPapers([...papers, dynamicImageField]);
   };
   const handleBack = (e) => {
     e.preventDefault();
