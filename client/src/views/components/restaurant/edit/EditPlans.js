@@ -149,7 +149,7 @@ export default function EditPlans({ plan, restaurant, goToStep }) {
               name="base_30price"
               defaultValue={price.base_30price}
               onChange={(e) => onBasePriceChange(e)}
-              disabled
+              // disabled
             />
           </div>
         </div>
@@ -161,7 +161,7 @@ export default function EditPlans({ plan, restaurant, goToStep }) {
               type="currency"
               name="customer30price"
               defaultValue={price.customer30price}
-              // disabled
+               disabled
             />
           </div>
         </div>
