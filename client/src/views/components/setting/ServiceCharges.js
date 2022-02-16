@@ -5,12 +5,16 @@ import Loading from "../../../utilities/Loading";
 export default function ServiceCharges() {
   const [charges, setCharges] = useState({
     _id: "",
-    delivery_fee: "",
+    delivery_2_fee: "",
+    delivery_15_fee: "",
+    delivery_30_fee: "",
     service_fee: "",
     commission: "",
     charges: "",
   });
+
   const [loading, setLoading] = useState(false);
+  
   useEffect(() => {
     let componentMounted = true;
     const fetchdata = async () => {
@@ -26,10 +30,12 @@ export default function ServiceCharges() {
       componentMounted = false;
     };
   }, []);
+  
   const onChangeText = ({ target }) => {
     const { name, value } = target;
     setCharges((prevState) => ({ ...prevState, [name]: value }));
   };
+
   const done = async () => {
     setLoading(true);
     const response = await axios.put(
@@ -41,6 +47,7 @@ export default function ServiceCharges() {
       alert("Charges updated");
     }
   };
+
   return !loading ? (
     <div className="ibox-content">
       <div className="row">
@@ -67,12 +74,14 @@ export default function ServiceCharges() {
           </div>
         </div>
       </div>
+      {/* Commission */}
 
       <div className="row">
         <div className="col-lg-12">
           <div className="form-group">
             <label>
-              Delivery Charges <strong className="text-danger">*</strong>
+              Delivery Charges (2 Meals){" "}
+              <strong className="text-danger">*</strong>
             </label>
             <div className="input-group m-b">
               <div className="input-group-prepend">
@@ -81,9 +90,9 @@ export default function ServiceCharges() {
               <input
                 type="text"
                 className="form-control"
-                name="delivery_fee"
+                name="delivery_2_fee"
                 onChange={(e) => onChangeText(e)}
-                defaultValue={charges.delivery_fee}
+                defaultValue={charges.delivery_2_fee}
               />
               <div className="input-group-append">
                 <span className="input-group-addon">.00</span>
@@ -92,6 +101,61 @@ export default function ServiceCharges() {
           </div>
         </div>
       </div>
+      {/* Delivery 2 Meals */}
+
+      <div className="row">
+        <div className="col-lg-12">
+          <div className="form-group">
+            <label>
+              Delivery Charges (15 Meals){" "}
+              <strong className="text-danger">*</strong>
+            </label>
+            <div className="input-group m-b">
+              <div className="input-group-prepend">
+                <span className="input-group-addon">$</span>
+              </div>
+              <input
+                type="text"
+                className="form-control"
+                name="delivery_15_fee"
+                onChange={(e) => onChangeText(e)}
+                defaultValue={charges.delivery_15_fee}
+              />
+              <div className="input-group-append">
+                <span className="input-group-addon">.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Delivery 15 Meals */}
+
+      <div className="row">
+        <div className="col-lg-12">
+          <div className="form-group">
+            <label>
+              Delivery Charges (30 Meals){" "}
+              <strong className="text-danger">*</strong>
+            </label>
+            <div className="input-group m-b">
+              <div className="input-group-prepend">
+                <span className="input-group-addon">$</span>
+              </div>
+              <input
+                type="text"
+                className="form-control"
+                name="delivery_30_fee"
+                onChange={(e) => onChangeText(e)}
+                defaultValue={charges.delivery_30_fee}
+              />
+              <div className="input-group-append">
+                <span className="input-group-addon">.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Delivery 30 Meals */}
 
       <div className="row">
         <div className="col-lg-12">
