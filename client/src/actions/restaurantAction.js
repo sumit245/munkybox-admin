@@ -8,7 +8,8 @@ import {
 } from "../utilities/constants";
 import { restaurant } from "../models/model";
 import axios from "axios";
-
+const httpClient = axios.create();
+httpClient.defaults.timeout = 90000;
 export const createChef = () => async (dispatch) => {
   dispatch({ type: SET_RESTAURANT, payload: restaurant });
 };
@@ -16,12 +17,12 @@ export const setMeals = (index) => async (dispatch) => {
   dispatch({ type: SET_MEALS, payload: restaurant.meals[index] });
 };
 export const getRestaurant = (id) => async (dispatch) => {
-  const response = await axios.get("/api/newrest/" + id);
+  const response = await httpClient.get("/api/newrest/" + id);
   const data = await response.data;
   dispatch({ type: SET_RESTAURANT, payload: data });
 };
 export const getAllRestaurant = () => async (dispatch) => {
-  const response = await axios.get("/api/newrest/");
+  const response = await httpClient.get("/api/newrest/");
   const restaurant = await response.data;
   dispatch({
     type: GET_RESTAURANT,
@@ -38,7 +39,7 @@ export const editMealsInfo = (data) => {
   return { type: EDIT_MEALS, payload: { meals: data } };
 };
 // export const editRestaurant = (id, data) => async (dispatch) => {
-//   // const response = await axios.put("/api/newrest/" + id, data);
+//   // const response = await httpClient.put("/api/newrest/" + id, data);
 //   // const restaurant = await response.data;
 //   dispatch({
 //     type: SET_RESTAURANT,

@@ -4,10 +4,13 @@ import { restaurantColumns } from "../../utilities/utility";
 import axios from "axios";
 import RestaurantCards from "../components/restaurant/RestaurantCards";
 
+const httpClient = axios.create();
+httpClient.defaults.timeout = 90000;
+
 export default function Restaurant() {
   const [restaurant, setRestaurant] = useState([]);
   useEffect(() => {
-    axios
+    httpClient
       .get("/api/newrest/")
       .then((res) => {
         setRestaurant(res.data);
