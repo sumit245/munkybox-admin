@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
+const timeout = require("connect-timeout");
 require("./database/database");
 
 const orders = require("./api/orders");
@@ -29,7 +30,11 @@ app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
 
 app.use(cors());
 app.use("/api/users", users);
+
+app.use(timeout("90s"));
 app.use("/api/newrest", newrest);
+app.use(haltOnTimedout);
+
 app.use("/api/orders", orders);
 app.use("/api/plans", plan);
 app.use("/api/cuisine", cuisine);
@@ -50,6 +55,10 @@ if (process.env.NODE_ENV == "production") {
   app.get("/**", (req, res) => {
     res.sendFile(path.join(__dirname, "./build/"));
   });
+}
+
+function haltOnTimedout(req, res, next) {
+  if (!req.timedout) next();
 }
 
 app.listen(port, () => {
