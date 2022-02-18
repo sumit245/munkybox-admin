@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
+import moment from "moment";
 
 export default function BannerDetails() {
   const [coupon, setCoupon] = useState({});
@@ -34,6 +35,7 @@ export default function BannerDetails() {
     setUsers(data.orders);
     setLoaded(true);
   };
+
   const deactivate = async () => {
     const restaurant = await axios.get(
       "/api/newrest/getchefbyId/" + coupon.restaurant_id
@@ -72,21 +74,21 @@ export default function BannerDetails() {
       orders: users,
       revenue: revenue,
     };
-    // const couponresponse = await axios.put("/api/promo/" + id, {
-    //   status: "inactive",
-    // });
-    // const dashboardResponse = await axios.get(
-    //   "/api/chefdashboard/" + restaurant_name
-    // );
-    // const { dashboard } = await dashboardResponse.data;
-    // const { banners } = await dashboard;
-    // let prevCoupons = [...banners];
-    // prevCoupons.push(banner);
-    // const updateDashboard = await axios.put(
-    //   "/api/chefdashboard/" + restaurant_name + "/" + dashboard._id,
-    //   { banners: prevCoupons }
-    // );
-    // alert("Updated");
+    const couponresponse = await axios.put("/api/promo/" + id, {
+      status: "inactive",
+    });
+    const dashboardResponse = await axios.get(
+      "/api/chefdashboard/" + restaurant_name
+    );
+    const { dashboard } = await dashboardResponse.data;
+    const { banners } = await dashboard;
+    let prevCoupons = [...banners];
+    prevCoupons.push(banner);
+    const updateDashboard = await axios.put(
+      "/api/chefdashboard/" + restaurant_name + "/" + dashboard._id,
+      { banners: prevCoupons }
+    );
+    alert("Updated");
   };
   useEffect(() => {
     getCouponById(id);
@@ -213,7 +215,7 @@ export default function BannerDetails() {
                     <td>{data.user_id}</td>
                     <td>{data.order_id}</td>
                     <td>{data.meal_type}</td>
-                    <td>{Date(data.order_time)}</td>
+                    <td>{moment(data.order_time).format("DD-MMM-YYYY hh:mm:ss")}</td>
                     <td>{"$" + data.discount}</td>
                   </tr>
                 ))}

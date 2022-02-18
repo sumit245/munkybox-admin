@@ -95,8 +95,18 @@ router.route("/getchefbyidandrevenue/:restaurant").get(async (req, res) => {
   const response = await Banner.findOne({
     restaurant_id: req.params.restaurant,
   });
-  const myOrders = await Orders.find({ promo_code: response.promo_code });
-
+  const myOrders = await Orders.find({
+    $and: [
+      { promo_id: response.promo_id },
+      {
+        $or: [
+          { status: "accepted" },
+          { status: "started" },
+          { status: "completed" },
+        ],
+      },
+    ],
+  });
   let prices = myOrders.map((item) => item.base_price);
   const adder = (accumulator, curr) =>
     parseFloat(accumulator) + parseFloat(curr);
