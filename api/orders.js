@@ -21,10 +21,9 @@ router.route("/:id").get(function (req, res) {
 });
 //get specific order
 
-router.route("/accepted/:restaurant_name").get(async (req, res) => {
+router.route("/accepted/:restaurant_id").get(async (req, res) => {
   const activeorders = await Order.find({
-    status: "accepted",
-    restaurant: req.params.restaurant_name,
+    $and: [{ status: "accepted" }, { restaurant_id: req.params.restaurant_id }],
   });
   res.json({ activeorders: activeorders, count: activeorders.length });
 });
