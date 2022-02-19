@@ -21,6 +21,16 @@ router.route("/:id").get(function (req, res) {
 });
 //get specific order
 
+router.route("/getOrderbyID/:id").get(function (req, res) {
+  let id = req.params.id;
+  Order.findOne({ order_id: id }, function (err, order) {
+    if (!err) {
+      res.json(order);
+    }
+  });
+});
+//get specific order
+
 router.route("/rejected/:restaurant_id").get(async (req, res) => {
   const rejectedorders = await Order.find({
     $and: [{ status: "rejected" }, { restaurant_id: req.params.restaurant_id }],
@@ -55,7 +65,10 @@ router.route("/active/:restaurant_id").get(async (req, res) => {
 
 router.route("/completed/:restaurant_id").get(async (req, res) => {
   const completedorders = await Order.find({
-    $and: [{ status: "completed" }, { restaurant_id: req.params.restaurant_id }],
+    $and: [
+      { status: "completed" },
+      { restaurant_id: req.params.restaurant_id },
+    ],
   });
   res.json({ completedorders: completedorders, count: completedorders.length });
 });
@@ -63,7 +76,10 @@ router.route("/completed/:restaurant_id").get(async (req, res) => {
 
 router.route("/cancelled/:restaurant_id").get(async (req, res) => {
   const cancelled = await Order.find({
-    $and: [{ status: "cancelled" }, { restaurant_id: req.params.restaurant_id }],
+    $and: [
+      { status: "cancelled" },
+      { restaurant_id: req.params.restaurant_id },
+    ],
   });
   res.json({ cancelled: cancelled, count: cancelled.length });
 });
