@@ -50,8 +50,14 @@ router.route("/:restaurant_id").get(async (req, res) => {
   });
   let totalorders = myorders.length;
   let accepted = myorders.filter((item) => item.status === "accepted");
+  let started = myorders.filter((item) => item.status === "started");
+  let completed = myorders.filter((item) => item.status === "completed");
+  let cancelled = myorders.filter((item) => item.status === "cancelled");
   let rejected = myorders.filter((item) => item.status === "rejected");
   let acceptedCount = accepted.length;
+  let startedCount = started.length;
+  let completedCount = completed.length;
+  let cancelledCount = cancelled.length;
   let rejectedCount = rejected.length;
   RestaurantDashboard.findOne(
     { restaurant_id: req.params.restaurant_id },
@@ -60,7 +66,10 @@ router.route("/:restaurant_id").get(async (req, res) => {
         totalOrders: totalorders,
         acceptedCount: acceptedCount,
         rejectedCount: rejectedCount,
-        accptanceRate: (acceptedCount / totalorders) * 100,
+        accptanceRate:
+          ((acceptedCount + startedCount + completedCount + cancelledCount) /
+            totalorders) *
+          100,
         rectanceRate: (rejectedCount / totalorders) * 100,
         dashboard,
       });
