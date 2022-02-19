@@ -21,6 +21,22 @@ router.route("/:id").get(function (req, res) {
 });
 //get specific order
 
+router.route("/rejected/:restaurant_id").get(async (req, res) => {
+  const rejectedorders = await Order.find({
+    $and: [{ status: "rejected" }, { restaurant_id: req.params.restaurant_id }],
+  });
+  res.json({ rejectedorders: rejectedorders, count: rejectedorders.length });
+});
+//get rejected orders
+
+router.route("/pending/:restaurant_id").get(async (req, res) => {
+  const orders = await Order.find({
+    $and: [{ status: "pending", restaurant_id: req.params.restaurant_id }],
+  });
+  res.json({ pendingorders: orders, count: orders.length });
+});
+//get pending orders
+
 router.route("/accepted/:restaurant_id").get(async (req, res) => {
   const activeorders = await Order.find({
     $and: [{ status: "accepted" }, { restaurant_id: req.params.restaurant_id }],
@@ -37,6 +53,22 @@ router.route("/active/:restaurant_id").get(async (req, res) => {
 });
 //get active orders
 
+router.route("/completed/:restaurant_id").get(async (req, res) => {
+  const completedorders = await Order.find({
+    $and: [{ status: "completed" }, { restaurant_id: req.params.restaurant_id }],
+  });
+  res.json({ completedorders: completedorders, count: completedorders.length });
+});
+//get completed orders
+
+router.route("/cancelled/:restaurant_id").get(async (req, res) => {
+  const cancelled = await Order.find({
+    $and: [{ status: "cancelled" }, { restaurant_id: req.params.restaurant_id }],
+  });
+  res.json({ cancelled: cancelled, count: cancelled.length });
+});
+//get cancelled orders
+
 router.route("/forchefhome/:restaurant_id").get(async (req, res) => {
   const activeorders = await Order.find({
     restaurant_id: req.params.restaurant_id,
@@ -45,42 +77,6 @@ router.route("/forchefhome/:restaurant_id").get(async (req, res) => {
   res.json({ activeorders: activeorders, count: activeorders.length });
 });
 //get active orders
-
-router.route("/pending/:restaurant_name").get(async (req, res) => {
-  const orders = await Order.find({
-    status: "pending",
-    restaurant: req.params.restaurant_name,
-  });
-  res.json({ pendingorders: orders, count: orders.length });
-});
-//get pending orders
-
-router.route("/rejected/:restaurant_name").get(async (req, res) => {
-  const rejectedorders = await Order.find({
-    status: "rejected",
-    restaurant: req.params.restaurant_name,
-  });
-  res.json({ rejectedorders: rejectedorders, count: rejectedorders.length });
-});
-//get rejected orders
-
-router.route("/completed/:restaurant_name").get(async (req, res) => {
-  const completedorders = await Order.find({
-    status: "completed",
-    restaurant: req.params.restaurant_name,
-  });
-  res.json({ completedorders: completedorders, count: completedorders.length });
-});
-//get completed orders
-
-router.route("/cancelled/:restaurant_name").get(async (req, res) => {
-  const cancelled = await Order.find({
-    status: "cancelled",
-    restaurant: req.params.restaurant_name,
-  });
-  res.json({ cancelled: cancelled, count: cancelled.length });
-});
-//get cancelled orders
 
 router.route("/:id").delete(async (req, res) => {
   const response = await Order.findByIdAndDelete(req.params.id);
