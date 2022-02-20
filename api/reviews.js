@@ -29,6 +29,18 @@ router.route("/getmyreview/:id").get(function (req, res) {
 });
 //get specific review
 
+router.route("/getreviewByUser/:id").get(function (req, res) {
+  let id = req.params.id;
+  Review.find({ user_id: id }, function (err, review) {
+    if (review !== null) {
+      res.json(review);
+    } else {
+      res.json(review);
+    }
+  });
+});
+//get specific review
+
 router.route("/:id").put(async (req, res) => {
   const { id } = req.params;
   const data = req.body;
