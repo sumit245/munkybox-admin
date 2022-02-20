@@ -6,8 +6,8 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
-    socketTimeoutMS: 90000,
-    serverSelectionTimeoutMS: 45000,
+    socketTimeoutMS: 45000,
+    serverSelectionTimeoutMS: 30000,
   })
   .then(() => console.warn("Database Connected Successfully"))
   .catch((err) => console.error(err));
