@@ -84,21 +84,19 @@ router.route("/:restaurant_name/:id").put(async (req, res) => {
   res.json(response);
 });
 
-router
-  .route("/getchefbyidandupdatebannercount/:id")
-  .get(async (req, res) => {
-    const response = await Banner.findOne({
-      promo_id: req.params.id,
-    });
-    let { clicks, due, rpc } = response;
-    clicks += 1;
-    due += parseFloat(rpc);
-    const update = await Banner.findByIdAndUpdate(
-      { _id: response._id },
-      { clicks: clicks, due: due }
-    );
-    res.json(update);
+router.route("/getchefbyidandupdatebannercount/:id").get(async (req, res) => {
+  const response = await Banner.findOne({
+    promo_id: req.params.id,
   });
+  let { clicks, due, rpc } = response;
+  clicks += 1;
+  due += parseFloat(rpc);
+  const update = await Banner.findByIdAndUpdate(
+    { _id: response._id },
+    { clicks: clicks, due: due }
+  );
+  res.json(update);
+});
 
 router.route("/getchefbyidandrevenue/:id").get(async (req, res) => {
   const response = await Banner.findOne({
