@@ -29,13 +29,23 @@ router.route("/getmyreview/:id").get(function (req, res) {
 });
 //get specific review
 
-router.route("/getreviewByUser/:id").get(function (req, res) {
+router.route("/getreviewByUser/:id/:order_id").get(function (req, res) {
   let id = req.params.id;
-  Review.find({ user_id: id }, function (err, review) {
+  let order_id=req.params.order_id
+  Review.find(
+    {
+      $and: [
+        { user_id: id },
+        {
+          order_id: order_id
+        }
+      ]
+    },
+    function (err, review) {
     if (review !== null) {
-      res.json(review);
+      res.json({ hasReview: true });
     } else {
-      res.json(review);
+      res.json({hasReview: false});
     }
   });
 });
