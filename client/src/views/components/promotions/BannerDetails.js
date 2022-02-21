@@ -24,7 +24,7 @@ export default function BannerDetails() {
     const coupons = response.data.data;
     setCoupon(coupons);
     const res = await axios.get(
-      "/api/chefdashboard/getchefbyidandrevenue/" + coupons.restaurant_id
+      "/api/chefdashboard/getchefbyidandrevenue/" + coupons.promo_id
     );
     setCoupLoaded(true);
     const data = await res.data;
