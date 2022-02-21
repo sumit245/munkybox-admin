@@ -31,23 +31,24 @@ router.route("/getmyreview/:id").get(function (req, res) {
 
 router.route("/getreviewByUser/:id/:order_id").get(function (req, res) {
   let id = req.params.id;
-  let order_id=req.params.order_id
+  let order_id = req.params.order_id;
   Review.find(
     {
       $and: [
         { user_id: id },
         {
-          order_id: order_id
-        }
-      ]
+          order_id: order_id,
+        },
+      ],
     },
     function (err, review) {
-    if (review !== null) {
-      res.json({ hasReview: true });
-    } else {
-      res.json({hasReview: false});
+      if (review.length!==0) {
+        res.json({ hasReview: true, review: review });
+      } else {
+        res.json({ hasReview: false, review: review });
+      }
     }
-  });
+  );
 });
 //get specific review
 
