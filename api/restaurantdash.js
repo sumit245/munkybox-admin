@@ -100,13 +100,13 @@ router
     res.json(update);
   });
 
-router.route("/getchefbyidandrevenue/:restaurant").get(async (req, res) => {
+router.route("/getchefbyidandrevenue/:id").get(async (req, res) => {
   const response = await Banner.findOne({
-    restaurant_id: req.params.restaurant,
+    promo_id: req.params.id,
   });
   const myOrders = await Orders.find({
     $and: [
-      { promo_id: response.promo_id },
+      { promo_id: req.params.id },
       {
         $or: [
           { status: "accepted" },

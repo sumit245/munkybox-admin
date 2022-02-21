@@ -67,6 +67,7 @@ let RestaurantDashboard = new Schema({
       orders: Array,
       totalDiscount: Number,
       revenue: { type: Number, default: 0 },
+      deactivation_date: { type: String },
     },
   ],
 });
