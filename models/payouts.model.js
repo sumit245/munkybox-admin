@@ -12,5 +12,6 @@ const Payout = new Schema({
   totalCommissionAmt: String,
   totalCancelAmt: String,
   orders: Array,
+  totalOrders: Number,
 });
 module.exports = mongoose.model("Payout", Payout);

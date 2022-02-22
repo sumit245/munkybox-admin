@@ -80,6 +80,7 @@ router.route("/getchefpayout/:rest_id").get(async (req, res) => {
     totalBaseIncome: totalBaseIncome,
     totalDiscount: totalDiscount,
     orders: myorders,
+    numOrders: myorders.length,
   });
 });
 //delete single payout
