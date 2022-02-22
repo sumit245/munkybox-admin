@@ -122,10 +122,10 @@ router.route("/getorderbyuser/:user_id").get(async function (req, res) {
 });
 //get specific order by user
 
-router.route("/dashboard/:restaurant_name").get(async (req, res) => {
-  let restaurant = req.params.restaurant_name;
+router.route("/dashboard/:restaurant_id").get(async (req, res) => {
+  let restaurant_id = req.params.restaurant_id;
   const response = await Order.find({
-    restaurant: restaurant,
+    restaurant_id: restaurant_id,
     $or: [
       { status: "started" },
       { status: "accepted" },
