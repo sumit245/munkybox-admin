@@ -125,12 +125,16 @@ router.route("/getorderbyuser/:user_id").get(async function (req, res) {
 router.route("/dashboard/:restaurant_id").get(async (req, res) => {
   let restaurant_id = req.params.restaurant_id;
   const response = await Order.find({
-    restaurant_id: restaurant_id,
-    $or: [
-      { status: "started" },
-      { status: "accepted" },
-      { status: "cancelled" },
-      { status: "completed" },
+    $and: [
+      { restaurant_id: restaurant_id },
+      {
+        $or: [
+          { status: "started" },
+          { status: "accepted" },
+          { status: "cancelled" },
+          { status: "completed" },
+        ],
+      },
     ],
   });
 
