@@ -375,7 +375,7 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
   text-align: center;
   font-size: 18px;
   font-weight: 600;
-  color: white;
+  color: orangered;
   display: none;
   padding: 18px 0;
 }
@@ -4936,10 +4936,11 @@ body.mini-navbar.fixed-sidebar .logo-element {
   padding: 100px 20px 20px 20px;
 }
 .logo-name {
-  color: #e6e6e6;
-  font-size: 180px;
+  color: orangered;
+  margin-left: 2px;
+  font-size: 32px;
   font-weight: 800;
-  letter-spacing: -10px;
+  letter-spacing: -5px;
   margin-bottom: 0;
 }
 .middle-box h1 {

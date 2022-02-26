@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { imageUploader } from "../../../../utilities/fileHandlers";
-import Loading from "../../../../utilities/Loading";
 
 export default function DynamicMeal({ day, index, addMeal }) {
   const [addOns, setaddOns] = useState([
@@ -34,8 +33,16 @@ export default function DynamicMeal({ day, index, addMeal }) {
   };
   const handleChangeInput = (index, event) => {
     const add_on = [...addOns];
-    add_on[index][event.target.name] = event.target.value;
-    setaddOns(add_on);
+    if (event.target.type === "file") {
+      let file = event.target.files[0];
+      imageUploader(file, (result) => {
+        add_on[index].add_on_image = result;
+      });
+    } else {
+      add_on[index][event.target.name] = event.target.value;
+      setaddOns(add_on);
+      console.log(add_on);
+    }
   };
   const addInputFields = () => {
     setaddOns([...addOns, { add_on: "", add_on_price: "", add_on_image: "" }]);
@@ -191,7 +198,7 @@ export default function DynamicMeal({ day, index, addMeal }) {
                 <input
                   id="logo"
                   type="file"
-                  value={inputfield.add_on_image}
+                  // value={inputfield.add_on_image}
                   className="custom-file-input"
                   name="add_on_image"
                   onChange={(event) => handleChangeInput(index, event)}

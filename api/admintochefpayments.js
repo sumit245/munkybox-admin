@@ -51,6 +51,7 @@ router.route("/getchefpayout/:rest_id").get(async (req, res) => {
   const restaurant = await NewRestaurant.findOne({
     restaurant_id: req.params.rest_id,
   });
+  
   const { restaurant_id, restaurant_name, owner_name, email } = restaurant;
 
   const myorders = await Orders.find({

@@ -77,7 +77,6 @@ export default function EditMeals(props) {
     setCurrentpos(key);
   };
   const addMeal = (data) => {
-    
     setMeals([...meals, data]);
     setaddsomemeal(false);
   };

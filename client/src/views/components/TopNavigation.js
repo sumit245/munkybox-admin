@@ -28,8 +28,8 @@ export default function TopNavigation() {
   const [request, setRequest] = useState([]);
   useEffect(() => {
     axios.get("/api/partnerrequest").then((res) => {
-      let requests=res.data.data;
-      let pending=requests.filter(item=>item.status==="Pending")
+      let requests = res.data.data;
+      let pending = requests.filter((item) => item.status === "Pending");
       let numOfRequests = pending.length;
       document.getElementById("partnerRequest").innerHTML = numOfRequests;
       res.data.data.length = 5;
@@ -40,31 +40,13 @@ export default function TopNavigation() {
   return (
     <nav className="navbar navbar-static-top white-bg">
       <div className="navbar-header">
-        <a
-          className="navbar-minimalize minimalize-styl-2 btn btn-primary"
-          href="/"
-        >
-          <i className="fa fa-bars" />
-        </a>
-        <form role="search" className="navbar-form-custom">
-          <div className="form-group">
-            <input
-              type="text"
-              placeholder="Search for something..."
-              className="form-control"
-              name="top-search"
-              id="top-search"
-            />
-          </div>
-        </form>
+      <span className="logo-name">
+            Feasti
+          </span>
       </div>
 
       <ul className="nav navbar-top-links navbar-right">
-        <li>
-          <span className="m-r-sm text-muted welcome-message">
-            Welcome to MunkyBox
-          </span>
-        </li>
+        
         <li>
           <NavDropdown
             title={envelope}
