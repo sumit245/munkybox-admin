@@ -61,7 +61,7 @@ router.route("/getchefpayout/:rest_id").get(async (req, res) => {
         $or: [
           { status: "accepted" },
           { status: "started" },
-          { started: "completed" },
+          { status: "completed" },
         ],
       },
     ],
