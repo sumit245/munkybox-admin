@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { editDocuments } from "../../../../actions/restaurantAction";
 import { EDIT_PAPERS, SET_DOCUMENTS } from "../../../../utilities/constants";
 import { imageUploader } from "../../../../utilities/fileHandlers";
 
@@ -14,6 +15,7 @@ export default function Documents(props) {
   const [dynamicImageField, setDynamicImageField] = useState([
     {
       image_name: "",
+      image:""
     },
   ]);
   const selector = useSelector((state) => state.restaurant);
@@ -42,10 +44,11 @@ export default function Documents(props) {
       documents: [...images],
       papers: [...papers],
     };
-    dispatch({
-      type: EDIT_PAPERS,
-      payload: data,
-    });
+    dispatch(editDocuments(images, papers));
+    // dispatch({
+    //   type: EDIT_PAPERS,
+    //   payload: data,
+    // });
     console.log(data);
     props.goToStep(3);
   };
@@ -54,25 +57,12 @@ export default function Documents(props) {
     value[index][event.target.name] = event.target.value;
     setDynamicImageField(value);
   };
-  const imageUpdater = ({ target }, key) => {
-    let paper = [...papers];
-    let file = target.files[0];
-    imageUploader(file, (result) => {
-      try {
-        paper[key].image = result;
-        setPapers(paper);
-      } catch (error) {
-        setTemp(result);
-      }
-    });
-    setImageName(file.name);
-  };
+
   const handleDynamicFiles = (index, event) => {
     const value = [...dynamicImageField];
     let file = event.target.files[0];
     imageUploader(file, (result) => {
       value[index][event.target.name] = result;
-      console.log(value);
       setDynamicImageField(value);
     });
     setPapers([...papers, dynamicImageField]);

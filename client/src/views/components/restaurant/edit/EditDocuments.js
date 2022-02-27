@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-import {
-  editBasicInfo,
-  editDocuments,
-} from "../../../../actions/restaurantAction";
+import { editDocuments } from "../../../../actions/restaurantAction";
 import { imageUploader } from "../../../../utilities/fileHandlers";
 export default function EditDocuments(props) {
   const dispatch = useDispatch();

@@ -31,6 +31,7 @@ export default function Plans(props) {
       type: SET_PLANS,
       payload: plans,
     });
+
     props.goToStep(5);
   };
   const handleBack = (e) => {
