@@ -10,6 +10,7 @@ import { restaurant } from "../models/model";
 import axios from "axios";
 const httpClient = axios.create();
 httpClient.defaults.timeout = 90000;
+
 export const createChef = () => async (dispatch) => {
   dispatch({ type: SET_RESTAURANT, payload: restaurant });
 };
@@ -38,11 +39,4 @@ export const editDocuments = (docs, papers) => {
 export const editMealsInfo = (data) => {
   return { type: EDIT_MEALS, payload: { meals: data } };
 };
-// export const editRestaurant = (id, data) => async (dispatch) => {
-//   // const response = await httpClient.put("/api/newrest/" + id, data);
-//   // const restaurant = await response.data;
-//   dispatch({
-//     type: SET_RESTAURANT,
-//     payload: restaurant,
-//   });
-// };
+

@@ -14,6 +14,7 @@ import Loading from "../../../../utilities/Loading";
 export default function AddRestaurant(props) {
   const restaurant = useSelector((state) => state.restaurant);
   const [loaded, setLoaded] = useState(true);
+
   const dispatch = useDispatch();
   const onRadioSelected = (e) => {
     const rest = {
@@ -23,6 +24,7 @@ export default function AddRestaurant(props) {
   };
   const onSubmit = async (e) => {
     setLoaded(false);
+    console.log(restaurant);
     e.preventDefault();
     const response = await axios.post("/api/newrest/", restaurant);
     const { msg } = await response.data;

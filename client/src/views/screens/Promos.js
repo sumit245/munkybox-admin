@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Table from "../../utilities/Table";
 import axios from "axios";
-import { couponColumns, promoColumns } from "../../utilities/utility";
+import { couponColumns } from "../../utilities/utility";
 import PromotionCard from "../components/promotions/PromotionCard";
 
 export default function Promos() {

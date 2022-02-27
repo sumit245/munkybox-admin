@@ -30,18 +30,8 @@ export const restaurant = {
       ],
     },
   ],
-  documents: [
-    {
-      restaurant_image: "",
-      banner_image: "",
-      image: [
-        {
-          image_name: "",
-          image: "",
-        },
-      ],
-    },
-  ],
+  documents: [{ restaurant_image: "" }, { banner_image: "" }],
+  papers: [],
   account_name: "",
   account_number: "",
   bank_name: "",

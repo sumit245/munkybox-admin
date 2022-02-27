@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { SET_BANK_INFO } from "../../../../utilities/constants";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export default function EditBankInfo(props) {
   const [bankInfo, setBankInfo] = useState({});

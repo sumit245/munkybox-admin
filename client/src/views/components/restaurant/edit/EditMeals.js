@@ -52,6 +52,11 @@ export default function EditMeals(props) {
     setContentEditable(!contentEditable);
     setCurrentpos(key);
   };
+  const deleteMeal = (index) => {
+    let localmeals = [...meals];
+    localmeals.splice(index, 1);
+    setMeals(localmeals);
+  };
   const onChangeExtras = (index, event) => {
     let addOnImage = event.target.files[0];
     imageUploader(addOnImage, (result) => {
@@ -67,9 +72,23 @@ export default function EditMeals(props) {
     let updatedMeal = { ...meals[index] };
     let addons = [...meals[index].add_on];
     addons.push(localaddons);
-    console.log(addons);
     updatedMeal.add_on = addons;
     localmeals[index] = updatedMeal;
+    setMeals(localmeals);
+  };
+  function arrayRemove(arr, value) {
+    return arr.filter(function (ele) {
+      return ele !== value;
+    });
+  }
+  const deleteExtra = (mealindex, addOnIndex) => {
+    setmoreAddons(false);
+    let localmeals = [...meals];
+    let updatedMeal = { ...meals[mealindex] };
+    let addons = [...meals[mealindex].add_on];
+    let updatedExtras = arrayRemove(addons, addons[addOnIndex]);
+    updatedMeal.add_on = updatedExtras;
+    localmeals[mealindex] = updatedMeal;
     setMeals(localmeals);
   };
   const addMoreExtras = (key) => {
@@ -121,7 +140,10 @@ export default function EditMeals(props) {
                         }`}
                       />
                     </span>
-                    <span className="btn btn-outline-danger">
+                    <span
+                      className="btn btn-outline-danger"
+                      onClick={() => deleteMeal(key)}
+                    >
                       <i className="fa fa-trash" />
                     </span>
                   </div>
@@ -303,7 +325,10 @@ export default function EditMeals(props) {
                               <td
                                 style={{ width: "10%", flexDirection: "row" }}
                               >
-                                <span className="btn btn-outline-danger">
+                                <span
+                                  className="btn btn-outline-danger"
+                                  onClick={() => deleteExtra(key, rowIndex)}
+                                >
                                   <i className="fa fa-trash-o" />
                                 </span>
                               </td>
