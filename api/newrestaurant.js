@@ -4,11 +4,11 @@ const NewRestaurant = require("../models/newrest.model");
 const Orders = require("../models/orders.model");
 
 router.route("/").get(function (req, res) {
-  NewRestaurant.find(function (err, factories) {
+  NewRestaurant.find(function (err, restaurants) {
     if (err) {
       res.json(err);
     } else {
-      res.json(factories);
+      res.json(restaurants);
     }
   });
 });

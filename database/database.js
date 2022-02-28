@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
-const connection = process.env.FEASTI_COMPASS;
+const connection = process.env.FEASTI_URL;
 mongoose
   .connect(connection, {
     useNewUrlParser: true,
