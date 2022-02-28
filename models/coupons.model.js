@@ -9,6 +9,7 @@ let Coupon = new Schema({
   discount_type: { type: String },
   absolute_value: { type: String },
   start_date: { type: String },
+  deactivation_date: { type: String },
   end_date: { type: String },
   promo_code: { type: String },
   price: { type: String },

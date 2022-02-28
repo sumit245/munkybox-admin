@@ -86,7 +86,7 @@ router.route("/:restaurant_name/:id").put(async (req, res) => {
 
 router.route("/getchefbyidandupdatebannercount/:id").get(async (req, res) => {
   const response = await Banner.findOne({
-    promo_id: req.params.id,
+    restaurant_id: req.params.id,
   });
   let { clicks, due, rpc } = response;
   clicks += 1;
