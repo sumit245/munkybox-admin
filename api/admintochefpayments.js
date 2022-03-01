@@ -51,11 +51,7 @@ router.route("/getchefpayout/:rest_id").get(async (req, res) => {
   function add(accumulator, a) {
     return parseFloat(accumulator) + parseFloat(a);
   }
-  const restaurant = await NewRestaurant.findOne({
-    restaurant_id: req.params.rest_id,
-  });
 
-  const { restaurant_id, restaurant_name, owner_name, email } = restaurant;
   const payoutcycle = await Payoutcycle.findOne({ status: "current" });
   const { start_date, end_date } = payoutcycle;
   const myorders = await Orders.find({
@@ -94,15 +90,14 @@ router.route("/getchefpayout/:rest_id").get(async (req, res) => {
   let dueAmt = dues.reduce(add, 0);
 
   res.json({
-    restID: restaurant_id,
-    restEmail: email,
-    restName: restaurant_name,
-    chef: owner_name,
+    restID: req.params.restaurant_id,
     totalBaseIncome: totalBaseIncome,
     totalDiscount: totalDiscount,
     numOrders: updatedorders.length,
     due: dueAmt,
     orders: updatedorders,
+    payout_start_date: start_date,
+    payout_end_date: end_date,
   });
 });
 //get current payout for all chef
