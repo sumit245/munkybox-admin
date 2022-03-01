@@ -3,6 +3,7 @@ const router = express.Router();
 const NewRestaurant = require("../models/newrest.model");
 const Orders = require("../models/orders.model");
 const Payout = require("../models/payouts.model");
+const RestaurantDashboard = require("../models/restaurant_dashboard.model");
 
 router.route("/").get(function (req, res) {
   Payout.find(function (err, payouts) {
@@ -51,7 +52,7 @@ router.route("/getchefpayout/:rest_id").get(async (req, res) => {
   const restaurant = await NewRestaurant.findOne({
     restaurant_id: req.params.rest_id,
   });
-  
+
   const { restaurant_id, restaurant_name, owner_name, email } = restaurant;
 
   const myorders = await Orders.find({
@@ -73,6 +74,13 @@ router.route("/getchefpayout/:rest_id").get(async (req, res) => {
   const discounts = myorders.map((order) => order.discount);
   let totalDiscount = discounts.reduce(add, 0);
 
+  const dashboard = await RestaurantDashboard.findOne({
+    restaurant_id: req.params.rest_id,
+  });
+  const { banners } = dashboard;
+  let dues = banners.map((item) => item.due);
+  let dueAmt = dues.reduce(add, 0);
+
   res.json({
     restID: restaurant_id,
     restEmail: email,
@@ -82,6 +90,7 @@ router.route("/getchefpayout/:rest_id").get(async (req, res) => {
     totalDiscount: totalDiscount,
     orders: myorders,
     numOrders: myorders.length,
+    due: dueAmt,
   });
 });
 //delete single payout
