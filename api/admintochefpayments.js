@@ -1,9 +1,11 @@
 const express = require("express");
+const moment = require("moment");
 const router = express.Router();
 const NewRestaurant = require("../models/newrest.model");
 const Orders = require("../models/orders.model");
 const Payout = require("../models/payouts.model");
 const RestaurantDashboard = require("../models/restaurant_dashboard.model");
+const Payoutcycle = require("../models/payoutcylce.model");
 
 router.route("/").get(function (req, res) {
   Payout.find(function (err, payouts) {
@@ -54,7 +56,8 @@ router.route("/getchefpayout/:rest_id").get(async (req, res) => {
   });
 
   const { restaurant_id, restaurant_name, owner_name, email } = restaurant;
-
+  const payoutcycle = await Payoutcycle.findOne({ status: "current" });
+  const { start_date, end_date } = payoutcycle;
   const myorders = await Orders.find({
     $and: [
       { restaurant_id: req.params.rest_id },
@@ -68,16 +71,25 @@ router.route("/getchefpayout/:rest_id").get(async (req, res) => {
     ],
   });
 
-  const basePrices = myorders.map((order) => order.base_price);
+  let updatedorders = myorders.filter((item) =>
+    moment(item.order_time).isBetween(
+      moment(start_date),
+      moment(end_date),
+      null,
+      "[]"
+    )
+  );
+
+  const basePrices = updatedorders.map((order) => order.base_price);
   let totalBaseIncome = basePrices.reduce(add, 0);
 
-  const discounts = myorders.map((order) => order.discount);
+  const discounts = updatedorders.map((order) => order.discount);
   let totalDiscount = discounts.reduce(add, 0);
 
   const dashboard = await RestaurantDashboard.findOne({
     restaurant_id: req.params.rest_id,
   });
-  const { banners } = dashboard;
+  let { banners } = dashboard;
   let dues = banners.map((item) => item.due);
   let dueAmt = dues.reduce(add, 0);
 
@@ -88,9 +100,9 @@ router.route("/getchefpayout/:rest_id").get(async (req, res) => {
     chef: owner_name,
     totalBaseIncome: totalBaseIncome,
     totalDiscount: totalDiscount,
-    orders: myorders,
-    numOrders: myorders.length,
+    numOrders: updatedorders.length,
     due: dueAmt,
+    orders: updatedorders,
   });
 });
 //delete single payout
