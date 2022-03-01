@@ -119,61 +119,52 @@ router.route("/getpastpayout/:rest_id").get(async (req, res) => {
   function add(accumulator, a) {
     return parseFloat(accumulator) + parseFloat(a);
   }
-  const restaurant = await NewRestaurant.findOne({
+
+  const payoutcycle = await Payoutcycle.find({ status: "expired" });
+  let pastpayouts = payoutcycle.map((item) => ({
+    start_date: item.start_date,
+    end_date: item.end_date,
+  }));
+  const myorders = await Orders.find({
+    $and: [
+      { restaurant_id: req.params.rest_id },
+      {
+        $or: [
+          { status: "accepted" },
+          { status: "started" },
+          { status: "completed" },
+        ],
+      },
+    ],
+  });
+  const dashboard = await RestaurantDashboard.findOne({
     restaurant_id: req.params.rest_id,
   });
-
-  const { restaurant_id, restaurant_name, owner_name, email } = restaurant;
-  const payoutcycle = await Payoutcycle.find({ status: "expired" });
-  let pastpayouts = payoutcycle.map((item) => {
-    const { start_date, end_date } = item;
-    //   const myorders = await Orders.find({
-    //     $and: [
-    //       { restaurant_id: req.params.rest_id },
-    //       {
-    //         $or: [
-    //           { status: "accepted" },
-    //           { status: "started" },
-    //           { status: "completed" },
-    //         ],
-    //       },
-    //     ],
-    //   });
-
-    //   let updatedorders = myorders.filter((item) =>
-    //     moment(item.order_time).isBetween(
-    //       moment(start_date),
-    //       moment(end_date),
-    //       null,
-    //       "[]"
-    //     )
-    //   );
-
-    //   const basePrices = updatedorders.map((order) => order.base_price);
-    //   let totalBaseIncome = basePrices.reduce(add, 0);
-
-    //   const discounts = updatedorders.map((order) => order.discount);
-    //   let totalDiscount = discounts.reduce(add, 0);
-
-    //   const dashboard = await RestaurantDashboard.findOne({
-    //     restaurant_id: req.params.rest_id,
-    //   });
-    //   let { banners } = dashboard;
-    //   let dues = banners.map((item) => item.due);
-    //   let dueAmt = dues.reduce(add, 0);
-    // res.json({
-    //   restID: restaurant_id,
-    //   restEmail: email,
-    //   restName: restaurant_name,
-    //   chef: owner_name,
-    //   totalBaseIncome: totalBaseIncome,
-    //   totalDiscount: totalDiscount,
-    //   numOrders: updatedorders.length,
-    //   due: dueAmt,
-    //   orders: updatedorders,
-    // });
+  let pp = pastpayouts.map((item) => {
+    let sd = item.start_date;
+    let nd = item.end_date;
+    let updatedorders = myorders.filter((item) =>
+      moment(item.order_time).isBetween(moment(sd), moment(nd), null, "[]")
+    );
+    const basePrices = updatedorders.map((order) => order.base_price);
+    let totalBaseIncome = basePrices.reduce(add, 0);
+    const discounts = updatedorders.map((order) => order.discount);
+    let totalDiscount = discounts.reduce(add, 0);
+    let { banners } = dashboard;
+    let dues = banners.map((item) => item.due);
+    let dueAmt = dues.reduce(add, 0);
+    return {
+      restID: req.params.id,
+      orders: updatedorders,
+      numOrders: updatedorders.length,
+      totalBaseIncome: totalBaseIncome,
+      totalDiscount: totalDiscount,
+      due: dueAmt,
+      payout_end_date: nd,
+      payout_start_date: sd,
+    };
   });
-  res.json(pastpayouts);
+  res.json(pp);
 });
 //get past payout for all chef
 
