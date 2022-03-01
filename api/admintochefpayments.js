@@ -147,6 +147,14 @@ router.route("/getpastpayout/:rest_id").get(async (req, res) => {
       moment(item.order_time).isBetween(moment(sd), moment(nd), null, "[]")
     );
     const basePrices = updatedorders.map((order) => order.base_price);
+    const addOns = updatedorders.map((el) => el.add_on);
+    let quantities = addOns.map((extras) => extras.map((item) => item.qty));
+    let subtotal = quantities.map((item) => item.reduce(add, 0));
+    let totalCount = subtotal.reduce(add, 0);
+
+    let prices = addOns.map((extras) => extras.map((item) => item.subtotal));
+    let subtotalPrice = prices.map((item) => item.reduce(add, 0));
+    let totalPrice = subtotalPrice.reduce(add, 0);
     let totalBaseIncome = basePrices.reduce(add, 0);
     const discounts = updatedorders.map((order) => order.discount);
     let totalDiscount = discounts.reduce(add, 0);
@@ -162,6 +170,8 @@ router.route("/getpastpayout/:rest_id").get(async (req, res) => {
       due: dueAmt,
       payout_end_date: nd,
       payout_start_date: sd,
+      totalAddOns: totalCount,
+      totalAddOnRevenue: totalPrice,
     };
   });
   res.json(pp);
