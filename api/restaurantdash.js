@@ -48,6 +48,7 @@ router.route("/:restaurant_id").get(async (req, res) => {
   let myorders = await Orders.find({
     restaurant_id: req.params.restaurant_id,
   });
+  const add = (accumulator, curr) => parseFloat(accumulator) + parseFloat(curr);
   let totalorders = myorders.length;
   let accepted = myorders.filter((item) => item.status === "accepted");
   let started = myorders.filter((item) => item.status === "started");
@@ -59,9 +60,12 @@ router.route("/:restaurant_id").get(async (req, res) => {
   let completedCount = completed.length;
   let cancelledCount = cancelled.length;
   let rejectedCount = rejected.length;
-  RestaurantDashboard.findOne(
+  await RestaurantDashboard.findOne(
     { restaurant_id: req.params.restaurant_id },
     function (err, dashboard) {
+      let { banners } = dashboard;
+      let dues = banners.map((item) => item.due);
+      let dueAmt = dues.reduce(add, 0);
       res.json({
         totalOrders: totalorders,
         acceptedCount: acceptedCount,
@@ -71,7 +75,8 @@ router.route("/:restaurant_id").get(async (req, res) => {
             totalorders) *
           100,
         rectanceRate: (rejectedCount / totalorders) * 100,
-        dashboard,
+        dashboard: dashboard,
+        due: dueAmt,
       });
     }
   );
