@@ -120,7 +120,9 @@ router.route("/getpastpayout/:rest_id").get(async (req, res) => {
     return parseFloat(accumulator) + parseFloat(a);
   }
 
-  const payoutcycle = await Payoutcycle.find({ status: "expired" });
+  const payoutcycle = await Payoutcycle.find({ status: "expired" }, null, {
+    sort: { start_date: -1 },
+  });
   let pastpayouts = payoutcycle.map((item) => ({
     start_date: item.start_date,
     end_date: item.end_date,
