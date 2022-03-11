@@ -4,9 +4,7 @@ const Order = require("../models/orders.model");
 
 router.route("/").get(function (req, res) {
   Order.find(function (err, order) {
-    if (err) {
-      console.log(err);
-    } else {
+    if (!err) {
       res.json(order);
     }
   });

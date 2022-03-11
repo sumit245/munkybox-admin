@@ -23,13 +23,13 @@ export default function AddRestaurant(props) {
     dispatch({ type: BASIC_INFO, payload: rest });
   };
   const onSubmit = async (e) => {
-    setLoaded(false);
-    console.log(restaurant);
+    // setLoaded(false);
     e.preventDefault();
-    const response = await axios.post("/api/newrest/", restaurant);
-    const { msg } = await response.data;
-    alert(msg);
-    setLoaded(true);
+    console.log(restaurant);
+    // const response = await axios.post("/api/newrest/", restaurant);
+    // const { msg } = await response.data;
+    // alert(msg);
+    // setLoaded(true);
   };
   if (loaded) {
     return (

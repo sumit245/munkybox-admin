@@ -3,7 +3,7 @@ const router = express.Router();
 const Payout = require("../models/payoutcylce.model");
 
 router.route("/").get(function (req, res) {
-  Payout.find(function (err, payouts) {
+  Payout.find({}, null, {sort: {start_date: -1}},function (err, payouts) {
     if (!err) {
       res.json(payouts);
     }

@@ -16,7 +16,7 @@ export default function DynamicMeal({ day, index, addMeal }) {
     type: "",
     description: "",
     image: "",
-    add_on: [...addOns],
+    add_on: addOns,
   });
   const [mealImage, setMealImage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -40,12 +40,11 @@ export default function DynamicMeal({ day, index, addMeal }) {
       });
     } else {
       add_on[index][event.target.name] = event.target.value;
-      setaddOns(add_on);
-      console.log(add_on);
     }
+    setaddOns(add_on);
   };
   const addInputFields = () => {
-    setaddOns([...addOns, { add_on: "", add_on_price: "", add_on_image: "" }]);
+    setaddOns([...addOns, { add_on: "", add_on_price: "", add_on_image: "" }]); 
   };
   const handleRemoveClicked = (index) => {
     const values = [...addOns];
@@ -53,6 +52,7 @@ export default function DynamicMeal({ day, index, addMeal }) {
     setaddOns(values);
   };
   const done = () => {
+    console.log(meal);
     if (!meal.meal_name) {
       alert("Meal name is  required");
       return;
@@ -198,7 +198,6 @@ export default function DynamicMeal({ day, index, addMeal }) {
                 <input
                   id="logo"
                   type="file"
-                  // value={inputfield.add_on_image}
                   className="custom-file-input"
                   name="add_on_image"
                   onChange={(event) => handleChangeInput(index, event)}
