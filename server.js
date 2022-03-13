@@ -38,8 +38,8 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
 
 app.post("/create-payment-intent", async (req, res) => {
   const params = {
-    amount: 1000,
-    currency: "cad",
+    amount: req.body.amount,
+    currency: req.body.currency,
   };
 
   try {
