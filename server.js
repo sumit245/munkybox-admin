@@ -23,38 +23,10 @@ const review = require("./api/reviews");
 const currentOrders = require("./api/currentorder");
 const payout = require("./api/admintochefpayments");
 const payoutcycle = require("./api/payoutcycle");
+const stripeintent=require("./api/stripe")
 
 const app = express();
 const port = process.env.PORT || 5000;
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: "2020-08-27",
-  appInfo: {
-    // For sample support and debugging, not required for production:
-    name: "feasti dash inc",
-    version: "0.0.2",
-    url: "https://github.com/stripe-samples",
-  },
-});
-
-app.post("/create-payment-intent", async (req, res) => {
-  const params = {
-    amount: req.body.amount,
-    currency: req.body.currency,
-  };
-
-  try {
-    const paymentIntent = await stripe.paymentIntents.create(params);
-    res.send({
-      clientSecret: paymentIntent.client_secret,
-    });
-  } catch (e) {
-    return res.status(400).send({
-      error: {
-        message: e.message,
-      },
-    });
-  }
-});
 
 app.use(bodyParser.json({ limit: "100mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
@@ -82,6 +54,7 @@ app.use("/api/contacts", contacts);
 app.use("/api/admintochefpayments", payout);
 app.use("/api/payoutcycle", payoutcycle);
 app.use("/api/review", review);
+app.use("/api/stripe",stripeintent)
 
 if (process.env.NODE_ENV == "production") {
   app.use(express.static(path.join(__dirname, "./build/")));
