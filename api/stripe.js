@@ -11,16 +11,38 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
 });
 
 router.route("/create-payment-intent").post(async (req, res) => {
+  const {
+    paymentMethodId,
+    paymentIntentId,
+    items,
+    currency,
+    useStripeSdk,
+    amount,
+  } = req.body;
+
+  let customer = await stripe.customers.create();
+  const ephemeralKey = await stripe.ephemeralKeys.create(
+    { customer: customer.id },
+    { apiVersion: "2020-08-27" }
+  );
   const params = {
-    amount: req.body.amount,
-    currency: req.body.currency,
+    amount: amount,
+    currency: currency,
+    payment_method: paymentMethodId,
     payment_method_types: ["card"],
+    customer: customer.id,
+    confirmation_method: "manual",
+    confirm: true,
+    use_stripe_sdk: useStripeSdk,
   };
   try {
-    const paymentIntent = await stripe.paymentIntents.create(params);
-    res.send({
-      clientSecret: paymentIntent.client_secret,
-    });
+    let paymentIntent;
+    if (paymentMethodId) {
+      paymentIntent = await stripe.paymentIntents.create(params);
+    } else if (paymentIntentId) {
+      paymentIntent = await stripe.paymentIntents.confirm(paymentIntentId);
+    }
+    res.send(generateResponse(paymentIntent));
   } catch (e) {
     return res.status(400).send({
       error: {
@@ -29,5 +51,23 @@ router.route("/create-payment-intent").post(async (req, res) => {
     });
   }
 });
-
+const generateResponse = (intent) => {
+  switch (intent.status) {
+    case "requires_action":
+    case "requires_source_action":
+      return {
+        requiresAction: true,
+        clientSecret: intent.client_secret,
+      };
+    case "requires_payment_method":
+    case "requires_source":
+      // Card was not properly authenticated, suggest a new payment method
+      return {
+        error: "Your card was denied, please provide a new payment method",
+      };
+    case "succeeded":
+      console.log("💰 Payment received!");
+      return { clientSecret: intent.client_secret };
+  }
+};
 module.exports = router;
