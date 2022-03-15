@@ -52,11 +52,11 @@ router.route("/create-payment-intent").post(async (req, res) => {
   }
 });
 router.route("/charge").post(async (req, res) => {
-  const { token, amount } = req.body;
+  const { token, amount,user_id } = req.body;
   const charge = await stripe.charges.create({
     amount: amount*100,
     currency: "cad",
-    description: "Example charge",
+    description: `Wallet Recharge for ${user_id}`,
     source: token,
   });
   res.send(charge);
