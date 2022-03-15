@@ -51,6 +51,16 @@ router.route("/create-payment-intent").post(async (req, res) => {
     });
   }
 });
+router.route("/charge").post(async (req, res) => {
+  const { token, amount } = req.body;
+  const charge = await stripe.charges.create({
+    amount: amount,
+    currency: "usd",
+    description: "Example charge",
+    source: token,
+  });
+  res.send(charge);
+});
 const generateResponse = (intent) => {
   switch (intent.status) {
     case "requires_action":
