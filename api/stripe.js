@@ -54,8 +54,8 @@ router.route("/create-payment-intent").post(async (req, res) => {
 router.route("/charge").post(async (req, res) => {
   const { token, amount } = req.body;
   const charge = await stripe.charges.create({
-    amount: amount,
-    currency: "usd",
+    amount: amount*100,
+    currency: "cad",
     description: "Example charge",
     source: token,
   });
