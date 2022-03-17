@@ -51,6 +51,7 @@ router.route("/create-payment-intent").post(async (req, res) => {
     });
   }
 });
+
 router.route("/charge").post(async (req, res) => {
   const { token, amount,user_id } = req.body;
   const charge = await stripe.charges.create({
@@ -61,6 +62,23 @@ router.route("/charge").post(async (req, res) => {
   });
   res.send(charge);
 });
+
+router.route("/pay").post(async (req, res) => {
+  const { token, amount, user_id,restaurant_id,order_id,plan_name } = req.body;
+  const charge = await stripe.charges.create({
+    amount: amount * 100,
+    currency: "cad",
+    description: `Amount of ${amount} has been received for ${plan_name} with order id ${order_id} from ${user_id} `,
+    source: token,
+    user_id: user_id,
+    restaurant_id: restaurant_id,
+    order_id: order_id,
+    plan_name: plan_name,
+    
+  });
+  res.send(charge);
+});
+
 const generateResponse = (intent) => {
   switch (intent.status) {
     case "requires_action":
