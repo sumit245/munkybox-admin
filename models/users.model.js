@@ -40,7 +40,7 @@ let Users = new Schema({
   favorite: {
     type: Array,
   },
-  wallet_balance:{type:String}
+  wallet_balance:{type:String,default:0}
 });
 
 module.exports = mongoose.model("Users", Users);

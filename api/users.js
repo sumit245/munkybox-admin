@@ -71,7 +71,6 @@ router.put("/:id", function (req, res, next) {
   let id = req.params.id;
   Users.findByIdAndUpdate(id, req.body, (err, response) => {
     if (err) {
-      console.log(err);
       res.json({ status: 403, msg: "Bad Request" });
     } else {
       Users.findById(id, function (error, user) {
