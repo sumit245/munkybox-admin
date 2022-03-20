@@ -68,12 +68,12 @@ router.route("/pay").post(async (req, res) => {
   const charge = await stripe.charges.create({
     amount: amount * 100,
     currency: "cad",
-    description: `Amount of ${amount} has been received for ${plan_name} from ${user_id} `,
+    description: `Amount of $${amount} has been received for ${plan_name} from ${user_id} `,
     source: token,
     metadata: {
-      'user_id': user_id,
-      'restaurant_id': restaurant_id,
-      'plan_name': plan_name,
+      user_id: user_id,
+      restaurant_id: restaurant_id,
+      plan_name: plan_name,
     },
   });
   res.send(charge);
