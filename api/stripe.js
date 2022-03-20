@@ -70,9 +70,11 @@ router.route("/pay").post(async (req, res) => {
     currency: "cad",
     description: `Amount of ${amount} has been received for ${plan_name} from ${user_id} `,
     source: token,
-    user_id: user_id,
-    restaurant_id: restaurant_id,
-    plan_name: plan_name,
+    metadata: {
+      'user_id': user_id,
+      'restaurant_id': restaurant_id,
+      'plan_name': plan_name,
+    },
   });
   res.send(charge);
 });
