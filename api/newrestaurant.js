@@ -15,11 +15,11 @@ router.route("/").get(function (req, res) {
 // get all restaurant for admin
 
 router.route("/active").get(function (req, res) {
-  NewRestaurant.find({ status: "Active" }, function (err, factories) {
+  NewRestaurant.find({ status: "Active" }, function (err, restaurant) {
     if (err) {
       res.json(err);
     } else {
-      res.json(factories);
+      res.json(restaurant);
     }
   });
 });
