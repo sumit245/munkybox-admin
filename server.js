@@ -23,15 +23,13 @@ const review = require("./api/reviews");
 const currentOrders = require("./api/currentorder");
 const payout = require("./api/admintochefpayments");
 const payoutcycle = require("./api/payoutcycle");
-const stripeintent=require("./api/stripe")
+const stripeintent = require("./api/stripe")
 
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(bodyParser.json({ limit: "100mb", extended: true }));
-app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
-app.use(express.json({ limit: '100mb' }));
-app.use(express.urlencoded({ limit: '100mb' }));
+app.use(bodyParser.json({ limit: "10mb" }));
+app.use(bodyParser.urlencoded({ limit: "10mb", extended: false }));
 
 app.use(cors());
 app.use("/api/users", users);
@@ -56,7 +54,7 @@ app.use("/api/contacts", contacts);
 app.use("/api/admintochefpayments", payout);
 app.use("/api/payoutcycle", payoutcycle);
 app.use("/api/review", review);
-app.use("/api/stripe",stripeintent)
+app.use("/api/stripe", stripeintent)
 
 if (process.env.NODE_ENV == "production") {
   app.use(express.static(path.join(__dirname, "./build/")));
