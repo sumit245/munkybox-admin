@@ -56,12 +56,10 @@ app.use("/api/payoutcycle", payoutcycle);
 app.use("/api/review", review);
 app.use("/api/stripe", stripeintent)
 
-if (process.env.NODE_ENV == "production") {
-  app.use(express.static(path.join(__dirname, "./build/")));
-  app.get("/**", (req, res) => {
-    res.sendFile(path.join(__dirname, "./build/"));
-  });
-}
+app.use(express.static(path.join(__dirname, "./build/")));
+app.get("/**", (req, res) => {
+  res.sendFile(path.join(__dirname, "./build/"));
+});
 
 function haltOnTimedout(req, res, next) {
   if (!req.timedout) next();
