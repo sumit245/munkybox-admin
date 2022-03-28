@@ -65,18 +65,22 @@ router.route("/charge").post(async (req, res) => {
 
 router.route("/pay").post(async (req, res) => {
   const { token, amount, user_id, restaurant_id, plan_name } = req.body;
-  const charge = await stripe.charges.create({
-    amount: parseFloat(amount * 100).toFixed(2),
-    currency: "cad",
-    description: `Amount of $${amount} has been received for ${plan_name} from ${user_id} `,
-    source: token,
-    metadata: {
-      user_id: user_id,
-      restaurant_id: restaurant_id,
-      plan_name: plan_name,
-    },
-  });
-  res.send(charge);
+  try {
+    const charge = await stripe.charges.create({
+      amount: amount * 100,
+      currency: "cad",
+      description: `Amount of $${amount} has been received for ${plan_name} from ${user_id} `,
+      source: token,
+      metadata: {
+        user_id: user_id,
+        restaurant_id: restaurant_id,
+        plan_name: plan_name,
+      },
+    });
+    res.send(charge);
+  } catch (err) {
+    res.send(err)
+  }
 });
 
 const generateResponse = (intent) => {
