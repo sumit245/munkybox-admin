@@ -2,6 +2,7 @@
   "name": "munky-box",
   "version": "0.1.0",
   "private": true,
+  "proxy":"http://18.117.221.34:5000",
   "dependencies": {
     "@popperjs/core": "^2.10.2",
     "@react-pdf/renderer": "^1.6.17",
@@ -46,7 +47,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "webpack --mode production",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
