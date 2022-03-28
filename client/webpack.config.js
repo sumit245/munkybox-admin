@@ -20,14 +20,14 @@ module.exports = {
     ]
   },
   plugins: [new HtmlWebpackPlugin({
-    template: './src/index.html'
+    template: './public/index.html'
   })],
   devServer: {
     historyApiFallback: true
   },
   externals: {
     config: JSON.stringify({
-      apiUrl: 'http://localhost:5000/'
+      apiUrl: 'http://localhost:5000'
     })
   }
 }
