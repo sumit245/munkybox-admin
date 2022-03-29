@@ -23,7 +23,8 @@ module.exports = {
     template: './public/index.html'
   })],
   devServer: {
-    historyApiFallback: true
+    historyApiFallback: true,
+    allowedHosts: 'auto' | 'all' | Array[string]
   },
   externals: {
     config: JSON.stringify({
