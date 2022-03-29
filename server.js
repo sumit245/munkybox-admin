@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cookieSession = require("cookie-session")
 const cors = require("cors");
 const path = require("path");
 const timeout = require("connect-timeout");
@@ -55,6 +56,11 @@ app.use("/api/admintochefpayments", payout);
 app.use("/api/payoutcycle", payoutcycle);
 app.use("/api/review", review);
 app.use("/api/stripe", stripeintent)
+app.use(
+  cookieSession({
+    secret: "mysecret"
+  })
+)
 
 app.use(express.static(path.join(__dirname, "./build/")));
 app.get("/*", (req, res) => {
