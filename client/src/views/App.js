@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Router, Route, Switch } from "react-router-dom";
 import history from "../history";
 import SideNav from "./components/SideNav";
@@ -21,69 +21,83 @@ import { ViewOrders } from "./components/orders/ViewOrders";
 import ViewUser from "./components/users/viewuser/ViewUser";
 import Contacts from "./components/contacts/Contacts";
 import Banners from "./screens/Banners";
+import Login from "./screens/Login";
 
 
 export default function App() {
+  const [isUser, setisUser] = useState(false)
+  useEffect(() => {
+    const storedData = JSON.parse(localStorage.getItem('logged_in_token'))
+    let isLoggedIn = storedData.logged_in
+    isLoggedIn ? setisUser(isLoggedIn) : setisUser(false)
+  }, [])
+
   return (
     <React.Fragment>
       <Router history={history}>
-        <React.Fragment>
-          <div id="wrapper">
-            <SideNav />
-            <div id="page-wrapper" className="gray-bg">
-              <div className="row border-bottom">
-                <TopNavigation />
+        {
+          isUser ? (
+            <React.Fragment>
+              <div id="wrapper">
+                <SideNav />
+                <div id="page-wrapper" className="gray-bg">
+                  <div className="row border-bottom">
+                    <TopNavigation setLoggedIn={setisUser} />
+                  </div>
+
+                  <Switch>
+                    <Route exact path="/" render={() => <Dashboard />} />
+
+                    {/* User Routes  */}
+                    <Route exact path="/users" component={Users} />
+                    <Route exact path="/view_user/:id" component={ViewUser} />
+                    <Route exact path="/users/:id" component={DeleteAlert} />
+
+                    {/* Restaurant Routes */}
+                    <Route exact path="/restaurant" render={() => <Restaurant />} />
+                    <Route exact path="/add_restaurant" component={AddRestaurant} />
+                    <Route
+                      exact
+                      path="/edit_restaurant/:id"
+                      component={EditRestaurant}
+                    />
+
+                    {/* Orders Routes */}
+                    <Route exact path="/orders" component={Orders} />
+                    <Route exact path="/view_order/:id" component={ViewOrders} />
+                    <Route exact path="/orders/:id" component={DeleteAlert} />
+
+                    {/* Promotions Routes */}
+                    <Route exact path="/coupons" component={Promos} />
+                    <Route
+                      exact
+                      path="/view_coupons/:id"
+                      component={CouponDetails}
+                    />
+                    <Route
+                      exact
+                      path="/view_campaign/:id"
+                      component={BannerDetails}
+                    />
+
+                    <Route exact path="/campaign" component={Banners} />
+                    <Route exact path="/payments" component={Payouts} />
+                    <Route exact path="/setting" component={Settings} />
+                    <Route exact path="/contacts" component={Contacts} />
+                    <Route path="/newrequest/:id" component={Requests} />
+                    <Route path="/view_restaurant/:id" component={ViewRestaurant} />
+                    <Route path="/newrest/:id" component={DeleteAlert} />
+                    <Route path="/cuisine/:id" component={DeleteAlert} />
+                    <Route path="/banner/:id" component={DeleteAlert} />
+                    <Route path="/policies/:id" component={DeleteAlert} />
+                  </Switch>
+                </div>
               </div>
-
-              <Switch>
-                <Route exact path="/" render={() => <Dashboard />} />
-
-                {/* User Routes  */}
-                <Route exact path="/users" component={Users} />
-                <Route exact path="/view_user/:id" component={ViewUser} />
-                <Route exact path="/users/:id" component={DeleteAlert} />
-
-                {/* Restaurant Routes */}
-                <Route exact path="/restaurant" render={() => <Restaurant />} />
-                <Route exact path="/add_restaurant" component={AddRestaurant} />
-                <Route
-                  exact
-                  path="/edit_restaurant/:id"
-                  component={EditRestaurant}
-                />
-
-                {/* Orders Routes */}
-                <Route exact path="/orders" component={Orders} />
-                <Route exact path="/view_order/:id" component={ViewOrders} />
-                <Route exact path="/orders/:id" component={DeleteAlert} />
-
-                {/* Promotions Routes */}
-                <Route exact path="/coupons" component={Promos} />
-                <Route
-                  exact
-                  path="/view_coupons/:id"
-                  component={CouponDetails}
-                />
-                <Route
-                  exact
-                  path="/view_campaign/:id"
-                  component={BannerDetails}
-                />
-
-                <Route exact path="/campaign" component={Banners} />
-                <Route exact path="/payments" component={Payouts} />
-                <Route exact path="/setting" component={Settings} />
-                <Route exact path="/contacts" component={Contacts} />
-                <Route path="/newrequest/:id" component={Requests} />
-                <Route path="/view_restaurant/:id" component={ViewRestaurant} />
-                <Route path="/newrest/:id" component={DeleteAlert} />
-                <Route path="/cuisine/:id" component={DeleteAlert} />
-                <Route path="/banner/:id" component={DeleteAlert} />
-                <Route path="/policies/:id" component={DeleteAlert} />
-              </Switch>
-            </div>
-          </div>
-        </React.Fragment>
+            </React.Fragment>
+          ) : (
+            <Login setLoggedin={setisUser} />
+          )
+        }
       </Router>
     </React.Fragment>
   );

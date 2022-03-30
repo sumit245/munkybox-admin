@@ -5,8 +5,10 @@ const cors = require("cors");
 const path = require("path");
 const timeout = require("connect-timeout");
 require("./database/database");
+// const header_middleware = require("./middlewares/header")
 
 const orders = require("./api/orders");
+const adminLogin = require("./api/admin-login")
 const users = require("./api/users");
 const plan = require("./api/plan");
 const cuisine = require("./api/cuisine");
@@ -56,6 +58,7 @@ app.use("/api/admintochefpayments", payout);
 app.use("/api/payoutcycle", payoutcycle);
 app.use("/api/review", review);
 app.use("/api/stripe", stripeintent)
+app.use("/api/admin-login", adminLogin)
 app.use(
   cookieSession({
     secret: "mysecret"

@@ -24,7 +24,7 @@ const notifications = (
     </span>
   </>
 );
-export default function TopNavigation() {
+export default function TopNavigation({ setLoggedIn }) {
   const [request, setRequest] = useState([]);
   useEffect(() => {
     axios.get("/api/partnerrequest").then((res) => {
@@ -36,17 +36,26 @@ export default function TopNavigation() {
       setRequest(res.data.data);
     });
   }, []);
+  const logout = () => {
+    setLoggedIn(false)
+    localStorage.setItem(
+      "logged_in_token",
+      JSON.stringify({
+        logged_in: false
+      })
+    )
+  }
 
   return (
     <nav className="navbar navbar-static-top white-bg">
       <div className="navbar-header">
-      <span className="logo-name">
-            Feasti
-          </span>
+        <span className="logo-name">
+          Feasti
+        </span>
       </div>
 
       <ul className="nav navbar-top-links navbar-right">
-        
+
         <li>
           <NavDropdown
             title={envelope}
@@ -95,7 +104,7 @@ export default function TopNavigation() {
         </li>
 
         <li>
-          <a href="login.html">
+          <a href="/" onClick={logout} >
             <i className="fa fa-sign-out" /> Log out
           </a>
         </li>

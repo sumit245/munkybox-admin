@@ -5,7 +5,6 @@ mongoose
   .connect(connection, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useFindAndModify: false,
     socketTimeoutMS: 90000,
     serverSelectionTimeoutMS: 90000,
   })

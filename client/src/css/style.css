@@ -6257,3 +6257,21 @@ body.body-small .vote-icon {
 [contenteditable] {
   outline: 0px solid transparent;
 }
+
+.gradient-custom-2 {
+  background: #fccb90;
+  background: -webkit-linear-gradient(to bottom right, #ff9900, #ff6600);
+  background: linear-gradient(to bottom right, #ff9900, #ff6600);
+}
+
+@media (min-width: 768px) {
+  .gradient-form {
+    height: 100vh !important;
+  }
+}
+@media (min-width: 769px) {
+  .gradient-custom-2 {
+    border-top-right-radius: .3rem;
+    border-bottom-right-radius: .3rem;
+  }
+}
