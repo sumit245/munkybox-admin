@@ -2,6 +2,7 @@
   "name": "munky-box",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://feasti.com",
   "proxy": "http://54.146.133.108:5000",
   "dependencies": {
     "@popperjs/core": "^2.10.2",
