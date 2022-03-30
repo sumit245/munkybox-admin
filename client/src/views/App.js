@@ -28,8 +28,12 @@ export default function App() {
   const [isUser, setisUser] = useState(false)
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem('logged_in_token'))
-    let isLoggedIn = storedData.logged_in
-    isLoggedIn ? setisUser(isLoggedIn) : setisUser(false)
+    try {
+      let isLoggedIn = storedData.logged_in
+      isLoggedIn ? setisUser(isLoggedIn) : setisUser(false)
+    } catch (err) {
+      setisUser(false)
+    }
   }, [])
 
   return (
