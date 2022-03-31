@@ -30,7 +30,13 @@ router.route("/getcouponforchef/:restaurant/:status").get(async (req, res) => {
     restaurant_id: req.params.restaurant,
     status: req.params.status,
   });
-  const myOrders = await Orders.find({ restaurant_id: req.params.restaurant,status:"accepted" });
+  const myOrders = await Orders.find({
+    restaurant_id: req.params.restaurant,
+    $or: [{ status: "accepted" },
+    { status: "started" },
+    { status: "completed" }
+    ]
+  });
   let promoted_orders = [];
   let revenue = 0;
   let discount = 0;
