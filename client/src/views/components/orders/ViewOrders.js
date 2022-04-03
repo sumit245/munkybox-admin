@@ -16,7 +16,7 @@ export const ViewOrders = () => {
     postal_code: "",
     phone: "",
   });
-  
+
   const [order, setOrder] = useState({});
   const fetchOrder = async () => {
     const response = await axios.get("/api/orders/" + id);
@@ -42,10 +42,11 @@ export const ViewOrders = () => {
     if (orderfetched) {
       fetchRestaurant();
     }
-  }, [orderfetched,fetchRestaurant]);
+  }, [orderfetched, fetchRestaurant]);
 
   const {
     order_time,
+    add_on,
     time,
     address,
     category,
@@ -76,7 +77,6 @@ export const ViewOrders = () => {
   };
 
   const service_fee_in_dollar = price * service_fee * 0.01;
-
   const taxesinDollar =
     (parseFloat(price) +
       parseFloat(service_fee_in_dollar) +
@@ -129,10 +129,10 @@ export const ViewOrders = () => {
                   <br />
                   {address &&
                     address.address_type +
-                      ", " +
-                      address.flat_num +
-                      ", " +
-                      (address.locality || "")}
+                    ", " +
+                    address.flat_num +
+                    ", " +
+                    (address.locality || "")}
                   <br />
                   {address && address.city + ", " + address.postal_code}
                   <br />
@@ -165,8 +165,8 @@ export const ViewOrders = () => {
                           {plan === "twoPlan"
                             ? "2 Meals"
                             : plan === "fifteenPlan"
-                            ? "15 Meals"
-                            : "30 Meals"}
+                              ? "15 Meals"
+                              : "30 Meals"}
                         </strong>
                       </div>
                       <small>{meal_type + ", " + category + "-" + time}</small>
@@ -228,6 +228,39 @@ export const ViewOrders = () => {
             <div className="well m-t">
               <strong>Comments: </strong>
               {notes}
+            </div>
+            <div className="well m-t">
+              <table className="table table-bordered table-sm">
+                <thead className="thead-primary">
+                  <tr>
+                    <th scope="col">Item</th>
+                    <th scope="col">Rate</th>
+                    <th scope="col">Qty</th>
+                    <th scope="col">Order Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    Array.isArray(add_on) && add_on.length !== 0 ?
+                      add_on.map((item, key) => (
+                        <tr key={key}>
+                          <td className="td">{item.item}</td>
+                          <td>{item.rate}</td>
+                          <td>{item.qty}</td>
+                          <td>{item.order_date}</td>
+                        </tr>
+                      ))
+                      : (
+                        <tr className="text-center">
+                          <td colSpan={4}>
+
+                            No add-on for this user
+                          </td>
+                        </tr>
+                      )
+                  }
+                </tbody>
+              </table>
             </div>
           </div>
           {/* </div> */}

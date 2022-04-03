@@ -1,4 +1,5 @@
 import { defaultThemes } from "react-data-table-component-with-filter";
+import moment from "moment";
 
 export const customStyles = {
   headRow: {
@@ -119,7 +120,7 @@ export const payOutStyles = {
         padding: 2,
         borderRightColor: defaultThemes.default.divider.default,
       },
-      width:"fit-content"
+      width: "fit-content"
     },
   },
   pagination: {
@@ -291,10 +292,10 @@ export const orderColumns = [
       row.plan === "twoPlan"
         ? "2 Meals"
         : row.plan === "fifteenPlan"
-        ? "15 Meals"
-        : row.plan === "thirtyPlan"
-        ? "30 Meals"
-        : null,
+          ? "15 Meals"
+          : row.plan === "thirtyPlan"
+            ? "30 Meals"
+            : null,
     sortable: true,
   },
   {
@@ -535,6 +536,58 @@ export const payColumns = [
     selector: "commission",
     sortable: true,
   },
-  
-  
-]
+
+
+];
+export const reviewColumns = [
+  {
+    name: "User ID",
+    selector: (row, index) => row.user_id,
+    width: 100,
+    sortable: true,
+  },
+  {
+    name: "Restaurant ID",
+    selector: (row, index) => row.restaurant_id,
+    width: 140,
+    sortable: true,
+  },
+  {
+    name: "Order ID",
+    selector: (row, index) => row.order_id,
+    width: 120,
+    sortable: true,
+  },
+  {
+    name: "Order Time",
+    selector: (row, index) => moment(row.order_time).format("DD-MMM-YYYY"),
+    width: 120,
+    sortable: true,
+  },
+  {
+    name: "Review",
+    selector: (row, index) => (
+      <div className="text-justify">
+        <h6 className="text-warning"><span> {row.rating} <i className="fa fa-star" /> </span> </h6>
+        <p className="crop" id="test" >
+          {row.details}
+        </p>
+      </div >),
+    width: 360,
+    sortable: true,
+  },
+  {
+    name: "Actions",
+    center: true,
+    selector: (row) => (
+      <>
+        <a href={`/view_review/${row._id}`} className="p-1 ">
+          <i className="fa fa-eye text-navy" />
+        </a>
+        <a href={`/review/${row._id}`} className="p-1">
+          <i className="fa fa-trash text-danger tx-118-f " />
+        </a>
+      </>
+    ),
+  },
+];

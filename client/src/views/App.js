@@ -22,6 +22,7 @@ import ViewUser from "./components/users/viewuser/ViewUser";
 import Contacts from "./components/contacts/Contacts";
 import Banners from "./screens/Banners";
 import Login from "./screens/Login";
+import Review from "./components/review/Review";
 
 
 export default function App() {
@@ -88,6 +89,7 @@ export default function App() {
                     <Route exact path="/payments" component={Payouts} />
                     <Route exact path="/setting" component={Settings} />
                     <Route exact path="/contacts" component={Contacts} />
+                    <Route exact path="/review/" component={Review}/>
                     <Route path="/newrequest/:id" component={Requests} />
                     <Route path="/view_restaurant/:id" component={ViewRestaurant} />
                     <Route path="/newrest/:id" component={DeleteAlert} />

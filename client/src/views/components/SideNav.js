@@ -104,7 +104,7 @@ export default function SideNav() {
           {/* Support */}
 
           <Nav.Item className="ml-0" as="li">
-            <Nav.Link href="/contacts" className="text-white-50 nav-label">
+            <Nav.Link href="/review" className="text-white-50 nav-label">
               <i className="fa fa-life-buoy" />{" "}
               <span className="nav-label text-white-50">Reviews</span>
             </Nav.Link>
