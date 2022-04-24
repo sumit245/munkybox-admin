@@ -3,7 +3,7 @@ import { GET_REQUESTS } from "../utilities/constants";
 
 export const getRequests = () => async (dispatch) => {
   const response = await axios.get(
-    "/api/partnerrequest/"
+    "partnerrequest/"
   );
   const requests = await response.data.data;
   dispatch({

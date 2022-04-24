@@ -27,6 +27,7 @@ const currentOrders = require("./api/currentorder");
 const payout = require("./api/admintochefpayments");
 const payoutcycle = require("./api/payoutcycle");
 const stripeintent = require("./api/stripe")
+const admincoupon = require('./api/admin-coupon')
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -59,6 +60,7 @@ app.use("/api/payoutcycle", payoutcycle);
 app.use("/api/review", review);
 app.use("/api/stripe", stripeintent)
 app.use("/api/admin-login", adminLogin)
+app.use("/api/admin-coupon", admincoupon)
 app.use(
   cookieSession({
     secret: "mysecret"

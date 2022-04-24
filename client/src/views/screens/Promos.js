@@ -2,11 +2,17 @@ import React, { useEffect, useState } from "react";
 import Table from "../../utilities/Table";
 import axios from "axios";
 import { couponColumns } from "../../utilities/utility";
-import PromotionCard from "../components/promotions/PromotionCard";
+import AdminCoupon from "../components/coupons/AdminCoupon";
+import { Modal, Button } from "react-bootstrap";
 
 export default function Promos() {
   const [coupons, setCoupon] = useState([]);
   const [promos, setPromos] = useState([]);
+  const [show, setShow] = useState(false);
+  const [state, setState] = useState({})
+
+  const handleClose = () => setShow(false);
+  const showModal = (state) => setShow(state);
   const getcoupons = async () => {
     const response = await axios.get("/api/coupon/");
     const coupons = await response.data;
@@ -24,9 +30,25 @@ export default function Promos() {
     getcoupons();
     getPromos();
   }, []);
+
+  const onChangeText = ({ target }) => {
+    setState((prevState) => ({ ...prevState, [target.name]: target.value }));
+  };
+
+  const saveAdminCoupon = async () => {
+
+    const response = await axios.post('/api/admin-coupon/', state)
+    const { status, data, msg } = response.data
+    if (status == 200) {
+      setShow(false)
+      alert(msg)
+    }
+  }
+
   return (
     <div className="wrapper wrapper-content">
-      <PromotionCard total={coupons && coupons.length} />
+      <AdminCoupon showModal={showModal} />
+
       <div className="row-lg">
         <Table
           title="Coupons"
@@ -35,6 +57,45 @@ export default function Promos() {
           className="table-responsive table-sm"
         />
       </div>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Generate Coupon</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+
+          <div className="form-group">
+            <label>
+              Promo Code <strong className="text-danger">*</strong>
+            </label>
+            <input
+              name="promo_code"
+              onChange={(e) => onChangeText(e)}
+              type="text"
+              className="form-control required"
+            />
+          </div>
+          <div className="form-group">
+            <label>
+              Discount(%) <strong className="text-danger">*</strong>
+            </label>
+            <input
+              name="discount"
+              onChange={(e) => onChangeText(e)}
+              type="text"
+              className="form-control required"
+            />
+          </div>
+
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={saveAdminCoupon}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
