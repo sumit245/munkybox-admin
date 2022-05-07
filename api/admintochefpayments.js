@@ -85,17 +85,18 @@ router.route("/getchefpayout/:rest_id").get(async (req, res) => {
   let x = updatedorders.map((order) => order.add_on);
 
   const addOns = updatedorders.map((el) => el.add_on);
-  let quantities = addOns.map((extras) => extras.map((item) => item.qty));
+  let quantities = addOns.map(add_on=>add_on.map((extras) => extras.map((item) => item.qty)));
   let subtotal = quantities.map((item) => item.reduce(add, 0));
   let totalCount = subtotal.reduce(add, 0);
 
-  let prices = addOns.map((extras) => extras.map((item) => item.subtotal));
+  let prices = addOns.map(item=>item.map((extras) => extras.map((item) => item.subtotal)));
   let subtotalPrice = prices.map((item) => item.reduce(add, 0));
   let totalPrice = subtotalPrice.reduce(add, 0);
 
   const dashboard = await RestaurantDashboard.findOne({
     restaurant_id: req.params.rest_id,
   });
+  
   let { banners } = dashboard;
   let dues = banners.map((item) => item.due);
   let dueAmt = dues.reduce(add, 0);
