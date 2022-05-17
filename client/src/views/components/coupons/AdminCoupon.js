@@ -22,8 +22,16 @@ export default function AdminCoupon({ showModal }) {
 
   return (
     <div className="ibox">
-      <div className='ibox-content'>
+      <div className='ibox-title'>
         <h3>Admin Coupon</h3>
+        <div className='ibox-tools'>
+          <button className='btn btn-primary' type='button' onClick={() => showModal(true)}>
+            <i className='fa fa-plus'></i>
+          </button>
+        </div>
+      </div>
+      <div className='ibox-content'>
+
         <table className='table table-bordered table-sm'>
           <thead>
             <tr>
@@ -43,7 +51,6 @@ export default function AdminCoupon({ showModal }) {
                   <td>{data.orders}</td>
                   <td>
                     <button className='btn btn-danger mx-2' onClick={() => deleteCoupon(data._id)}>Delete</button>
-                    <button className='btn btn-primary' onClick={() => showModal(true)} >Generate</button>
                   </td>
                 </tr>
               ))

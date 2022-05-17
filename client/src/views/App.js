@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Router, Route, Switch } from "react-router-dom";
+import { Router, Route, Switch, useHistory, useParams, useLocation } from "react-router-dom";
 import history from "../history";
 import SideNav from "./components/SideNav";
 import TopNavigation from "./components/TopNavigation";
@@ -23,7 +23,8 @@ import Contacts from "./components/contacts/Contacts";
 import Banners from "./screens/Banners";
 import Login from "./screens/Login";
 import Review from "./components/review/Review";
-
+import TransactionDetails from "./components/payments/TransactionDetails";
+import Deposit from "./components/payments/Deposit"
 
 export default function App() {
   const [isUser, setisUser] = useState(false)
@@ -36,6 +37,8 @@ export default function App() {
       setisUser(false)
     }
   }, [])
+
+
 
   return (
     <React.Fragment>
@@ -89,13 +92,15 @@ export default function App() {
                     <Route exact path="/payments" component={Payouts} />
                     <Route exact path="/setting" component={Settings} />
                     <Route exact path="/contacts" component={Contacts} />
-                    <Route exact path="/review/" component={Review}/>
+                    <Route exact path="/review/" component={Review} />
                     <Route path="/newrequest/:id" component={Requests} />
                     <Route path="/view_restaurant/:id" component={ViewRestaurant} />
                     <Route path="/newrest/:id" component={DeleteAlert} />
                     <Route path="/cuisine/:id" component={DeleteAlert} />
                     <Route path="/banner/:id" component={DeleteAlert} />
                     <Route path="/policies/:id" component={DeleteAlert} />
+                    <Route path="/view_transaction/:id" component={TransactionDetails} />
+                    <Route path="/deposit_money/:id" children={<Deposit />} />
                   </Switch>
                 </div>
               </div>

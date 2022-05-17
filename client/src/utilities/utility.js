@@ -26,6 +26,7 @@ export const customStyles = {
   cells: {
     style: {
       textAlign: "center",
+
       "&:not(:last-of-type)": {
         borderRightStyle: "solid",
         borderRightWidth: "1px",
@@ -99,13 +100,13 @@ export const payOutStyles = {
   },
   headCells: {
     style: {
-      fontSize: 14,
+      fontSize: 12,
       fontWeight: "bold",
       color: "#268bdf",
       "&:not(:last-of-type)": {
         borderRightStyle: "solid",
         borderRightWidth: "1px",
-        padding: 4,
+        padding: 2,
         borderRightColor: defaultThemes.default.divider.default,
       },
     },
@@ -114,13 +115,101 @@ export const payOutStyles = {
   cells: {
     style: {
       textAlign: "center",
+      fontSize: "12px",
       "&:not(:last-of-type)": {
         borderRightStyle: "solid",
         borderRightWidth: "1px",
         padding: 2,
         borderRightColor: defaultThemes.default.divider.default,
       },
-      width: "fit-content"
+    },
+  },
+  pagination: {
+    style: {
+      color: defaultThemes.default.text.secondary,
+      fontSize: "13px",
+      minHeight: "56px",
+      backgroundColor: defaultThemes.default.background.default,
+      borderTopStyle: "solid",
+      borderTopWidth: "1px",
+      borderTopColor: defaultThemes.default.divider.default,
+    },
+    pageButtonsStyle: {
+      borderRadius: "50%",
+      height: "40px",
+      width: "40px",
+      padding: "8px",
+      margin: "px",
+      cursor: "pointer",
+      transition: "0.4s",
+      color: defaultThemes.default.button.default,
+      fill: defaultThemes.default.button.default,
+      backgroundColor: "transparent",
+      "&:disabled": {
+        cursor: "unset",
+        color: defaultThemes.default.button.disabled,
+        fill: defaultThemes.default.button.disabled,
+      },
+      "&:hover:not(:disabled)": {
+        backgroundColor: defaultThemes.default.button.hover,
+      },
+      "&:focus": {
+        outline: "none",
+        backgroundColor: defaultThemes.default.button.focus,
+      },
+    },
+  },
+  noData: {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      color: defaultThemes.default.text.primary,
+      backgroundColor: defaultThemes.default.background.default,
+    },
+  },
+  progress: {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      color: defaultThemes.default.text.primary,
+      backgroundColor: defaultThemes.default.background.default,
+    },
+  },
+};
+export const transactionStyles = {
+  headRow: {
+    style: {
+      borderTopStyle: "solid",
+      borderTopWidth: "1px",
+      borderTopColor: defaultThemes.default.divider.default,
+    },
+  },
+  headCells: {
+    style: {
+      fontSize: 12,
+      fontWeight: "bold",
+      color: "#268bdf",
+      "&:not(:last-of-type)": {
+        borderRightStyle: "solid",
+        borderRightWidth: "1px",
+        padding: 2,
+        borderRightColor: defaultThemes.default.divider.default,
+      },
+    },
+  },
+
+  cells: {
+    style: {
+      textAlign: "center",
+      fontSize: "12px",
+      "&:not(:last-of-type)": {
+        borderRightStyle: "solid",
+        borderRightWidth: "1px",
+        padding: 2,
+        borderRightColor: defaultThemes.default.divider.default,
+      },
     },
   },
   pagination: {
@@ -499,45 +588,96 @@ export const promoColumns = [
 export const payColumns = [
   {
     name: "S No.",
-    selector: "sid",
+    width: "64px",
+    selector: row => row.sid,
   },
   {
     name: " ID",
-    selector: "restaurant_id",
+    selector: row => row.restaurant_id,
     sortable: true,
+    width: "86px"
   },
   {
     name: "Restaurant Email",
-    selector: "email",
+    selector: (row) => row.email,
+    width: "178px",
     sortable: true,
   },
   {
     name: "Restaurant Name",
-    selector: "restaurant_name",
+    selector: (row) => row.restaurant_name,
+    width: "178px",
     sortable: true,
   },
   {
-    name: "Total Chef Amount",
-    selector: "amount",
+    name: "Chef Amount",
+    selector: (row) => "$" + (parseFloat(row.order_amt) + parseFloat(row.add_on_amt) - parseFloat(row.discount)).toFixed(2),
+    width: "114px",
     sortable: true,
   },
   {
-    name: "Total Commission Amount",
-    selector: "commission",
+    name: "Commission",
+    selector: (row) => "$" + (parseFloat(row.commission) + parseFloat(row.add_on_commission)).toFixed(2),
+    width: "114px",
     sortable: true,
   },
   {
-    name: "Total Cancel Amount",
-    selector: "cancel",
+    name: "Cancel Amount",
+    selector: (row) => "$" + parseFloat(row.cancel),
     sortable: true,
+    width: "114px",
   },
   {
-    name: "Amount paid to chef ",
-    selector: "commission",
+    name: "Payable",
+    selector: (row) => "$" + ((parseFloat(row.order_amt) + parseFloat(row.add_on_amt) - parseFloat(row.discount) - (parseFloat(row.commission) + parseFloat(row.add_on_commission)))).toFixed(2),
     sortable: true,
+    width: "114px",
   },
 
 
+];
+export const transactionColumns = [
+  {
+    name: "S No.",
+    width: "64px",
+    selector: row => row.sid,
+  },
+  {
+    name: "Restaurant ID",
+    selector: (row) => row.restaurant_id,
+    width: "178px",
+    sortable: true,
+  },
+  {
+    name: "Amount",
+    selector: (row) => row.amount,
+    width: "178px",
+    sortable: true,
+  },
+  {
+    name: "Transaction ID",
+    selector: row => row.transaction_id,
+    sortable: true,
+    width: "160px"
+  },
+  {
+    name: "Deposited on",
+    selector: (row) => row.deposited_on,
+    width: "140px",
+    sortable: true,
+  },
+  {
+    name: "Payout Start Date",
+    selector: (row) => row.start_date,
+    width: "140px",
+    sortable: true,
+  },
+  {
+    name: "Payout End Date",
+    selector: (row) => row.end_date,
+    sortable: true,
+    width: "148px",
+  },
 ];
 export const reviewColumns = [
   {

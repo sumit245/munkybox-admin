@@ -1,4 +1,15 @@
-#rdt_TableCell{
-    min-width: 200px;
-
+.rdt_TableCol_Sortable {
+  width: auto !important;
+  max-width: 200px;
+  min-width: fit-content;
+  flex-wrap: wrap;
+  word-wrap: break-word;
+}
+.collapsible-container {
+  padding: 16px;
+  background-color: #efefef;
+}
+.collapsible-details {
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
 }
