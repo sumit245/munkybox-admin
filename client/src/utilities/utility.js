@@ -610,8 +610,8 @@ export const payColumns = [
     sortable: true,
   },
   {
-    name: "Chef Amount",
-    selector: (row) => "$" + (parseFloat(row.order_amt) + parseFloat(row.add_on_amt) - parseFloat(row.discount)).toFixed(2),
+    name: "Base Revenue",
+    selector: (row) => "$" + (parseFloat(row.order_amt) + parseFloat(row.add_on_amt)).toFixed(2),
     width: "114px",
     sortable: true,
   },
@@ -622,14 +622,20 @@ export const payColumns = [
     sortable: true,
   },
   {
-    name: "Cancel Amount",
-    selector: (row) => "$" + parseFloat(row.cancel),
-    sortable: true,
-    width: "114px",
-  },
-  {
     name: "Payable",
     selector: (row) => "$" + ((parseFloat(row.order_amt) + parseFloat(row.add_on_amt) - parseFloat(row.discount) - (parseFloat(row.commission) + parseFloat(row.add_on_commission)))).toFixed(2),
+    sortable: true,
+    width: "84px",
+  },
+  {
+    name: "Paid",
+    selector: (row)=>"$"+row.paid_amt,
+    sortable: true,
+    width: "60px",
+  },
+  {
+    name: "Due",
+    selector: (row)=>"$"+row.due_amt,
     sortable: true,
     width: "114px",
   },

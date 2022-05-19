@@ -39,6 +39,7 @@ export default function AdminCoupon({ showModal }) {
               <td>Discount(%)</td>
               <td>Total Sales</td>
               <td>Total Orders</td>
+              <td>Meal Plan</td>
             </tr>
           </thead>
           <tbody>
@@ -49,6 +50,7 @@ export default function AdminCoupon({ showModal }) {
                   <td>{data.discount}</td>
                   <td>${data.sales}</td>
                   <td>{data.orders}</td>
+                  <td>{data.meal_plan}</td>
                   <td>
                     <button className='btn btn-danger mx-2' onClick={() => deleteCoupon(data._id)}>Delete</button>
                   </td>

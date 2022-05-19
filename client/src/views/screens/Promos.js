@@ -62,6 +62,17 @@ export default function Promos() {
         </Modal.Header>
         <Modal.Body>
 
+        <div className="form-group">
+            <label>
+              Promo Text <strong className="text-danger">*</strong>
+            </label>
+            <textarea
+              name="text"
+              onChange={(e) => onChangeText(e)}
+              type="text"
+              className="form-control required"
+            />
+          </div>
           <div className="form-group">
             <label>
               Promo Code <strong className="text-danger">*</strong>

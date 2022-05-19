@@ -14,6 +14,7 @@ export const COMMISSION_HISTORY = [
         transaction_id: "1234",
         balance: "135.40",
         paid_amt: "0",
+        due_amt:"135.40",
         paid: false,
         paid_date: "",
     },
