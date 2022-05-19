@@ -35,7 +35,7 @@ export default function Promos() {
     setState((prevState) => ({ ...prevState, [target.name]: target.value }));
   };
 
-  const saveAdminCoupon = async () => {
+  const saveAdminCoupon = async () => {  
     const response = await axios.post('/api/admin-coupon/', state)
     const { status, data, msg } = response.data
     if (status == 200) {
@@ -67,7 +67,7 @@ export default function Promos() {
               Promo Text <strong className="text-danger">*</strong>
             </label>
             <textarea
-              name="text"
+              name="promo_text"
               onChange={(e) => onChangeText(e)}
               type="text"
               className="form-control required"
