@@ -31,6 +31,16 @@ router.route("/:id").put(async (req, res) => {
 });
 // update a coupon
 
+router.route("/getcouponforuser").get(function (req, res) {
+    Coupon.find(function (err, coupons) {
+        if (err) {
+            res.json(err);
+        } else {
+            res.json(coupons);
+        }
+    });
+});
+//get all coupons
 router.route("/").post(function (req, res) {     
     let coupon = new Coupon(req.body);
     coupon
