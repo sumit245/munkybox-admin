@@ -153,9 +153,12 @@ router.route("/dashboard/:restaurant_id").get(async (req, res) => {
     .map((item) => item.base_price)
     .reduce(add, 0);
   const discountFifteen = fifteenOrders
+    .filter(item=>item.promo_id!=="PROMOADMIN")
     .map((item) => item.discount)
     .reduce(add, 0);
-  const sumThirty = thirtyOrders.map((item) => item.base_price).reduce(add, 0);
+  const sumThirty = thirtyOrders
+    .filter(item => item.promo_id !== "PROMOADMIN")
+    .map((item) => item.base_price).reduce(add, 0);
   const discountThirty = thirtyOrders
     .map((item) => item.discount)
     .reduce(add, 0);
