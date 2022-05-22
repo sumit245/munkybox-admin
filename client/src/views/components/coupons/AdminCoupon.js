@@ -3,10 +3,21 @@ import React, { useState, useEffect } from 'react'
 
 export default function AdminCoupon({ showModal }) {
   const [coupon, setCoupon] = useState([])
+  const [numOrders, setNumOrders] = useState("")
+  const [sales, setSales] = useState("")
+  const [twoMeals, setTwoMeals] = useState("")
+  const [fifteenMeal, setFifteenMeal] = useState("")
+  const [thirtyMeal, setThirtyMeal] = useState("")
   const fetchCoupon = async () => {
     const response = await axios.get('/api/admin-coupon')
     const { data } = response
-    setCoupon(data)
+    const { coupons, numOrders, sales, twoPlans, fifteenPlan, thirtyPlan } = data
+    setCoupon(coupons)
+    setNumOrders(numOrders)
+    setSales(sales)
+    setTwoMeals(twoPlans)
+    setFifteenMeal(fifteenPlan)
+    setThirtyMeal(thirtyPlan)
   }
   useEffect(() => {
     fetchCoupon()
@@ -20,7 +31,7 @@ export default function AdminCoupon({ showModal }) {
     }
   }
 
-  return ( 
+  return (
     <div className="ibox">
       <div className='ibox-title'>
         <h3>Admin Coupon</h3>
@@ -48,9 +59,15 @@ export default function AdminCoupon({ showModal }) {
                 <tr key={key}>
                   <td>{data.promo_code}</td>
                   <td>{data.discount}</td>
-                  <td>${data.sales}</td>
-                  <td>{data.orders}</td>
-                  <td>{data.meal_plan}</td>
+                  <td>${sales}</td>
+                  <td>{numOrders}</td>
+                  <td>
+                    <span>2 Meals: {twoMeals}</span>
+                    <br />
+                    <span>15 Meals: {fifteenMeal}</span>
+                    <br />
+                    <span>30 Meals: {thirtyMeal}</span>
+                  </td>
                   <td>
                     <button className='btn btn-danger mx-2' onClick={() => deleteCoupon(data._id)}>Delete</button>
                   </td>
