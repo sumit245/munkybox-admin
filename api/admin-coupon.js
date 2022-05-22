@@ -1,13 +1,33 @@
 const express = require("express");
 const router = express.Router();
 const Coupon = require("../models/admincoupon.model");
+const Order = require("../models/orders.model")
 
 router.route("/").get(function (req, res) {
-    Coupon.find(function (err, coupons) {
+    Coupon.find(async function (err, coupons) {
         if (err) {
             res.json(err);
         } else {
-            res.json(coupons);
+            function add(accumulator, a) {
+                return parseFloat(accumulator) + parseFloat(a);
+            }
+            let codes = coupons.map((item) => item.promo_code)
+            let orders = await Order.find({ promo_id: "PROMOADMIN" })
+            orders = orders.filter((item) => codes.indexOf(item.promo_code) > -1)
+            let prices = orders.map(item => item.price)
+            const sales = prices.reduce(add, 0)
+            let twoPlans = orders.filter(item => item.plan === "twoPlan")
+            let fifteenPlan = orders.filter(item => item.plan === "fifteenPlan")
+            let thirtyPlan = orders.filter(item => item.plan === "thirtyPlan")
+            res.json({
+                coupons: coupons,
+                numOrders: orders.length,
+                codes: codes,
+                sales: sales,
+                twoPlans: twoPlans.length,
+                fifteenPlan: fifteenPlan.length,
+                thirtyPlan: thirtyPlan.length
+            });
         }
     });
 });
@@ -41,7 +61,8 @@ router.route("/getcouponforuser").get(function (req, res) {
     });
 });
 //get all coupons
-router.route("/").post(function (req, res) {     
+
+router.route("/").post(function (req, res) {
     let coupon = new Coupon(req.body);
     coupon
         .save()

@@ -20,7 +20,7 @@ export default function AdminCoupon({ showModal }) {
     }
   }
 
-  return (
+  return ( 
     <div className="ibox">
       <div className='ibox-title'>
         <h3>Admin Coupon</h3>
