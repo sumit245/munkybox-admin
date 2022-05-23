@@ -242,14 +242,16 @@ export const ViewOrders = () => {
                 <tbody>
                   {
                     Array.isArray(add_on) && add_on.length !== 0 ?
-                      add_on.map((item, key) => (
+                      add_on
+                        .map((item)=>item
+                        .map((item, key) => (
                         <tr key={key}>
                           <td className="td">{item.item}</td>
                           <td>{item.rate}</td>
                           <td>{item.qty}</td>
                           <td>{item.order_date}</td>
                         </tr>
-                      ))
+                      )))
                       : (
                         <tr className="text-center">
                           <td colSpan={4}>

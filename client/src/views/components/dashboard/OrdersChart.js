@@ -25,14 +25,23 @@ export default function OrdersChart() {
       );
       let totalPrices = await orders.map((item) => item.total);
       let totalDelivery = await orders.map((item) => item.delivery_fee);
-      let totalService = await orders.map((item) => item.service_fee);
-      let taxes = await orders.map((item) => item.taxes);
       let tips = await orders.map((item) => item.tip);
+      let totalService = await orders.map((item) => (item.service_fee * 0.01 * item.price));
+      let taxes = await orders.map(item => (
+        (parseFloat(item.price) +
+          parseFloat(item.service_fee * 0.01 * item.price) +
+          parseFloat(item.delivery_fee) -
+          parseFloat(item.discount) +
+          parseFloat(item.tip)) *
+        (0.01 *
+          item.taxes)
+      ))
       let price = totalPrices.reduce(add, 0);
       let servicefees = totalService.reduce(add, 0);
       let delivery = totalDelivery.reduce(add, 0);
       let tax = taxes.reduce(add, 0);
       let tip = tips.reduce(add, 0);
+      // let tax = 0.01 * 13 * price
 
       setInProgress(startedOrders.length);
       setCompleted(completedOrders.length);

@@ -78,8 +78,7 @@ router.route("/getchefpayout/:rest_id").get(async (req, res) => {
 
   const basePrices = updatedorders.map((order) => order.base_price);
   let totalBaseIncome = basePrices.reduce(add, 0);
-
-  const discounts = updatedorders.map((order) => order.discount);
+  const discounts = updatedorders.filter(item=>item.promo_id!=="PROMOADMIN").map((order) => order.discount);
   let totalDiscount = discounts.reduce(add, 0);
 
   let x = updatedorders.map((order) => order.add_on);
