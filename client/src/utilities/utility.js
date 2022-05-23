@@ -359,24 +359,28 @@ export const orderColumns = [
     name: "ID",
     selector: "order_id",
     sortable: true,
+    width: "9%"
   },
   {
     name: "User",
     selector: (row, index) => row.user_name,
     sortable: true,
+    width: "10%"
   },
   {
-    name: "Restaurant ID",
+    name: "Rest ID",
     selector: (row, index) => row.restaurant_id,
     sortable: true,
+    width: "8%"
   },
   {
-    name: "Restaurant Name",
+    name: "Restaurant",
     selector: (row, index) => row.restaurant,
     sortable: true,
   },
   {
     name: "Plan",
+    width: "8%",
     selector: (row, index) =>
       row.plan === "twoPlan"
         ? "2 Meals"
@@ -391,20 +395,34 @@ export const orderColumns = [
     name: "Start",
     selector: "start_date",
     sortable: true,
+    width: "10%"
   },
   {
     name: "End",
     selector: "end_date",
     sortable: true,
+    width: "10%"
+  },
+  {
+    name: "Promo",
+    selector: (row) => (row.promo_id === "PROMOADMIN" ? row.promo_code : ""),
+    width: "8%"
+  },
+  {
+    name: "Discount",
+    selector: (row) => (row.promo_id === "PROMOADMIN" ? "$" + parseFloat(row.discount).toFixed(2) : ""),
+    width: "7%"
   },
   {
     name: "Status",
+    width: "8%",
     selector: "status",
     sortable: true,
   },
   {
     name: "Actions",
     center: true,
+    width: "7%",
     selector: (row) => (
       <>
         <a href={`/view_order/${row._id}`} className="p-1 ">
@@ -629,13 +647,13 @@ export const payColumns = [
   },
   {
     name: "Paid",
-    selector: (row)=>"$"+row.paid_amt,
+    selector: (row) => "$" + row.paid_amt,
     sortable: true,
     width: "60px",
   },
   {
     name: "Due",
-    selector: (row)=>"$"+row.due_amt,
+    selector: (row) => "$" + row.due_amt,
     sortable: true,
     width: "114px",
   },
