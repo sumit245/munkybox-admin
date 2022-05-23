@@ -85,11 +85,12 @@ router.route("/getchefpayout/:rest_id").get(async (req, res) => {
   let x = updatedorders.map((order) => order.add_on);
 
   let addOns = updatedorders.map((el) => el.add_on);
-  addOns=[].concat.apply([],addOns)
-  let quantities = addOns[0].map((item) => item.qty);
+  addOns = [].concat.apply([], addOns)
+  addOns=addOns.reduce((prev,curr)=>prev.concat(curr))
+  let quantities = addOns.map((item) => item.qty);
   let totalCount = quantities.reduce(add, 0);
 
-  let prices = addOns[0].map((item) => item.subtotal);
+  let prices = addOns.map((item) => item.subtotal);
   let totalPrice = prices.reduce(add, 0);
 
   const dashboard = await RestaurantDashboard.findOne({
