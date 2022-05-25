@@ -624,7 +624,7 @@ export const payColumns = [
   {
     name: "Restaurant",
     selector: (row) => row.restName,
-    width: "178px",
+    width: "168px",
     sortable: true,
   },
   {
@@ -641,26 +641,27 @@ export const payColumns = [
   },
   {
     name: "Total After Commission",
-    selector: (row) => "$" + parseFloat(row.totalMerchAmt + row.totalAddOnAmt - row.totalCommissionAmt - row.totalAddOnCommissionAmt).toFixed(2),
+    selector: (row) => "$" + parseFloat(row.totalMerchAmt + row.totalAddOnAmt - row.totalCommissionAmt).toFixed(2),
+    width: "114px",
+    style: {overflowWrap:"break-word"},
+    sortable: true,
+  },
+  {
+    name: "Net Income",
+    selector: (row) => "$" + parseFloat(row.totalMerchAmt + row.totalAddOnAmt - row.totalCommissionAmt).toFixed(2),
     width: "114px",
     sortable: true,
   },
 
   {
-    name: "Payable",
-    selector: (row) => "$" + parseFloat(row.payable).toFixed(2),
+    name: "Amount Received",
+    selector: (row) => "$" + parseFloat(row.paidAmt || 0).toFixed(2),
     sortable: true,
     width: "84px",
   },
   {
-    name: "Paid",
-    selector: (row) => "$" + (row.paidAmt || 0),
-    sortable: true,
-    width: "60px",
-  },
-  {
     name: "Due",
-    selector: (row) => "$" + parseFloat(row.payable).toFixed(2),
+    selector: (row) => "$" + parseFloat(row.totalMerchAmt + row.totalAddOnAmt - row.totalCommissionAmt).toFixed(2),
     sortable: true,
     width: "114px",
   },

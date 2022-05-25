@@ -1,9 +1,8 @@
 .rdt_TableCol_Sortable {
   width: auto !important;
   max-width: 200px;
-  min-width: fit-content;
+  min-width:fit-content;
   flex-wrap: wrap;
-  word-wrap: break-word;
 }
 .collapsible-container {
   padding: 16px;
@@ -12,4 +11,7 @@
 .collapsible-details {
   font-weight: bold;
   font-family: Arial, Helvetica, sans-serif;
+}
+.rdt_TableCol {
+  word-wrap:break-word;
 }

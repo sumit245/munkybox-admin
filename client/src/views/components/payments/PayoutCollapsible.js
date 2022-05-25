@@ -13,10 +13,10 @@ export default function PayoutCollapsible({ data }) {
     useEffect(() => {
         setID(data.restaurant_id)
         setOrderAmt(data.totalMerchAmt)
-        setAddOnAmt(data.add_on_amt)
+        setAddOnAmt(data.totalAddOnAmt)
         setCommission(data.totalCommissionAmt)
-        setAddOnCommission(data.add_on_commission)
-        setPaid(data.paid_amt)
+        setAddOnCommission(data.totalAddOnCommissionAmt)
+        setPaid(data.paidAmt)
         setDiscount(data.discount)
         setBalance(data.payable)
         setLoaded(true)

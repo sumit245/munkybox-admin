@@ -26,6 +26,7 @@ export default function Table({ title, data, columns, flag }) {
                     paginationServer
                     noHeader={flag}
                     dense={flag}
+                    style={{overflowWrap:"break-word"}}
                     customStyles={payOutStyles}
                 />
             </DataTableExtensions>
