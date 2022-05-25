@@ -21,7 +21,7 @@ router.route("/").get(async (req, res) => {
       restEmail: restaurant.email,
       restName: restaurant.restaurant_name,
       totalMerchAmt: orders.filter(order => order.restaurant_id === restaurant.restaurant_id)
-        .map(item => item.price).reduce(add, 0),
+        .map(item => item.base_price).reduce(add, 0),
       totalCommissionAmt: orders.filter(order => order.restaurant_id === restaurant.restaurant_id)
         .map(item => parseFloat(item.price).toFixed(2) * 0.1).reduce(add, 0)
     })
