@@ -10,6 +10,8 @@ const Payout = new Schema({
   payDate: String,
   totalMerchAmt: String,
   totalCommissionAmt: String,
+  payableAmt: String,
+  paidAmt: { type: String, default: 0 },
   totalCancelAmt: String,
   orders: Array,
   totalOrders: Number,

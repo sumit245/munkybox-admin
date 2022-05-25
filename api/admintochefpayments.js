@@ -7,12 +7,30 @@ const Payout = require("../models/payouts.model");
 const RestaurantDashboard = require("../models/restaurant_dashboard.model");
 const Payoutcycle = require("../models/payoutcylce.model");
 
-router.route("/").get(function (req, res) {
-  Payout.find(function (err, payouts) {
-    if (!err) {
-      res.json(payouts);
-    }
-  });
+router.route("/").get(async (req, res) => {
+  const restaurants = await NewRestaurant.find({}, { restaurant_id: 1, restaurant_name: 1, email: 1 })
+  const orders = await Orders.find({}, { order_id: 1, restaurant_id: 1, price: 1, plan: 1, add_on: 1, start_date: 1 })
+  function add(accumulator, a) {
+    return parseFloat(accumulator) + parseFloat(a);
+  }
+
+  let payouts = []
+  restaurants.forEach(restaurant => {
+    payouts.push({
+      restID: restaurant.restaurant_id,
+      restEmail: restaurant.email,
+      restName: restaurant.restaurant_name,
+      totalMerchAmt: orders.filter(order => order.restaurant_id === restaurant.restaurant_id)
+        .map(item => item.price).reduce(add, 0),
+      totalCommissionAmt: orders.filter(order => order.restaurant_id === restaurant.restaurant_id)
+        .map(item => parseFloat(item.price).toFixed(2) * 0.1).reduce(add, 0)
+    })
+  })
+  const payable = payouts.map((item) => item.totalMerchAmt - item.totalCommissionAmt)
+  payouts.push({ payableAmt: payable})
+  res.json({
+    payouts: payouts
+  })
 });
 // get all payouts for chef
 
@@ -78,14 +96,14 @@ router.route("/getchefpayout/:rest_id").get(async (req, res) => {
 
   const basePrices = updatedorders.map((order) => order.base_price);
   let totalBaseIncome = basePrices.reduce(add, 0);
-  const discounts = updatedorders.filter(item=>item.promo_id!=="PROMOADMIN").map((order) => order.discount);
+  const discounts = updatedorders.filter(item => item.promo_id !== "PROMOADMIN").map((order) => order.discount);
   let totalDiscount = discounts.reduce(add, 0);
 
   let x = updatedorders.map((order) => order.add_on);
 
   let addOns = updatedorders.map((el) => el.add_on);
   addOns = [].concat.apply([], addOns)
-  addOns=addOns.reduce((prev,curr)=>prev.concat(curr))
+  addOns = addOns.reduce((prev, curr) => prev.concat(curr))
   let quantities = addOns.map((item) => item.qty);
   let totalCount = quantities.reduce(add, 0);
 
@@ -95,7 +113,7 @@ router.route("/getchefpayout/:rest_id").get(async (req, res) => {
   const dashboard = await RestaurantDashboard.findOne({
     restaurant_id: req.params.rest_id,
   });
-  
+
   let { banners } = dashboard;
   let dues = banners.map((item) => item.due);
   let dueAmt = dues.reduce(add, 0);
@@ -123,7 +141,7 @@ router.route("/getpastpayout/:rest_id").get(async (req, res) => {
   const payoutcycle = await Payoutcycle.find({ status: "expired" }, null, {
     sort: { start_date: -1 },
   });
-  let pastpayouts = payoutcycle.map((item) => ({  
+  let pastpayouts = payoutcycle.map((item) => ({
     start_date: item.start_date,
     end_date: item.end_date,
   }));
@@ -179,5 +197,14 @@ router.route("/getpastpayout/:rest_id").get(async (req, res) => {
   res.json(pp);
 });
 //get past payout for all chef
+
+// router.route("/getadminpays/").get(function (req, res) {
+//   NewRestaurant.find({})
+//     .then(restaurant => {
+//       console.log(restaurant);
+//       res.json(restaurant)
+// })
+//     .catch(err => res.status(404).json({ msg: "No restaurant" }))
+// })
 
 module.exports = router;

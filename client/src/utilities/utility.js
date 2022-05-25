@@ -607,35 +607,35 @@ export const payColumns = [
   {
     name: "S No.",
     width: "64px",
-    selector: row => row.sid,
+    selector: (row, index) => index,
   },
   {
     name: " ID",
-    selector: row => row.restaurant_id,
+    selector: row => row.restID,
     sortable: true,
     width: "86px"
   },
   {
     name: "Restaurant Email",
-    selector: (row) => row.email,
+    selector: (row) => row.restEmail,
     width: "178px",
     sortable: true,
   },
   {
     name: "Restaurant Name",
-    selector: (row) => row.restaurant_name,
+    selector: (row) => row.restName,
     width: "178px",
     sortable: true,
   },
   {
     name: "Base Revenue",
-    selector: (row) => "$" + (parseFloat(row.order_amt) + parseFloat(row.add_on_amt)).toFixed(2),
+    selector: (row) => "$" + parseFloat(row.totalMerchAmt).toFixed(2),
     width: "114px",
     sortable: true,
   },
   {
     name: "Commission",
-    selector: (row) => "$" + (parseFloat(row.commission) + parseFloat(row.add_on_commission)).toFixed(2),
+    selector: (row) => "$" + parseFloat(row.totalCommissionAmt).toFixed(2),
     width: "114px",
     sortable: true,
   },

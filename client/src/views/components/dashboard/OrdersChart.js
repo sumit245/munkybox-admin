@@ -41,8 +41,7 @@ export default function OrdersChart() {
       let delivery = totalDelivery.reduce(add, 0);
       let tax = taxes.reduce(add, 0);
       let tip = tips.reduce(add, 0);
-      // let tax = 0.01 * 13 * price
-
+      
       setInProgress(startedOrders.length);
       setCompleted(completedOrders.length);
       setTotalCustomerPrice(price);
