@@ -607,7 +607,7 @@ export const payColumns = [
   {
     name: "S No.",
     width: "64px",
-    selector: (row, index) => index,
+    selector: (row, index) => index + 1,
   },
   {
     name: " ID",
@@ -641,19 +641,19 @@ export const payColumns = [
   },
   {
     name: "Payable",
-    selector: (row) => "$" + ((parseFloat(row.order_amt) + parseFloat(row.add_on_amt) - parseFloat(row.discount) - (parseFloat(row.commission) + parseFloat(row.add_on_commission)))).toFixed(2),
+    selector: (row) => "$" + parseFloat(row.payable).toFixed(2),
     sortable: true,
     width: "84px",
   },
   {
     name: "Paid",
-    selector: (row) => "$" + row.paid_amt,
+    selector: (row) => "$" + (row.paidAmt || 0),
     sortable: true,
     width: "60px",
   },
   {
     name: "Due",
-    selector: (row) => "$" + row.due_amt,
+    selector: (row) => "$" + parseFloat(row.payable).toFixed(2),
     sortable: true,
     width: "114px",
   },
