@@ -33,6 +33,9 @@ router.route("/").get(async (req, res) => {
   payouts.map(item => {
     item.totalAddOnCommissionAmt = parseFloat(item.totalAddOnAmt).toFixed(2) * 0.1
   })
+  payouts.map(item => {
+    item.totalCommissionAmt = parseFloat(item.totalCommissionAmt + item.totalAddOnCommissionAmt).toFixed(2)
+  })
   payouts.map((item) => { item.payable = item.totalMerchAmt - item.totalCommissionAmt })
   res.json({
     payouts: payouts
