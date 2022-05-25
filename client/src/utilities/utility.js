@@ -616,20 +616,20 @@ export const payColumns = [
     width: "86px"
   },
   {
-    name: "Restaurant Email",
+    name: "Email",
     selector: (row) => row.restEmail,
     width: "178px",
     sortable: true,
   },
   {
-    name: "Restaurant Name",
+    name: "Restaurant",
     selector: (row) => row.restName,
     width: "178px",
     sortable: true,
   },
   {
     name: "Base Revenue",
-    selector: (row) => "$" + parseFloat(row.totalMerchAmt).toFixed(2),
+    selector: (row) => "$" + parseFloat(row.totalMerchAmt + row.totalAddOnAmt).toFixed(2),
     width: "114px",
     sortable: true,
   },
@@ -639,6 +639,13 @@ export const payColumns = [
     width: "114px",
     sortable: true,
   },
+  {
+    name: "Total After Commission",
+    selector: (row) => "$" + parseFloat(row.totalMerchAmt + row.totalAddOnAmt - row.totalCommissionAmt - row.totalAddOnCommissionAmt).toFixed(2),
+    width: "114px",
+    sortable: true,
+  },
+
   {
     name: "Payable",
     selector: (row) => "$" + parseFloat(row.payable).toFixed(2),

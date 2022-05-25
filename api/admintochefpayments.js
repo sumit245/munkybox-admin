@@ -27,7 +27,7 @@ router.route("/").get(async (req, res) => {
         [].concat.apply([], orders.filter(order => order.restaurant_id === restaurant.restaurant_id)
           .flatMap(item => item.add_on)).map(item => item.subtotal).reduce(add, 0) : 0,
       totalCommissionAmt: orders.filter(order => order.restaurant_id === restaurant.restaurant_id)
-        .map(item => parseFloat(item.price).toFixed(2) * 0.1).reduce(add, 0)
+        .map(item => parseFloat(item.base_price).toFixed(2) * 0.1).reduce(add, 0)
     })
   })
   payouts.map(item => {
