@@ -26,8 +26,7 @@ router.route("/").get(async (req, res) => {
         .map(item => parseFloat(item.price).toFixed(2) * 0.1).reduce(add, 0)
     })
   })
-  const payable = payouts.map((item) => item.totalMerchAmt - item.totalCommissionAmt)
-  payouts.push({ payableAmt: payable})
+  const payable = payouts.map((item) => { item.payable = item.totalMerchAmt - item.totalCommissionAmt })
   res.json({
     payouts: payouts
   })
