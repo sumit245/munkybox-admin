@@ -9,7 +9,7 @@ const Payoutcycle = require("../models/payoutcylce.model");
 
 router.route("/").get(async (req, res) => {
   const restaurants = await NewRestaurant.find({}, { restaurant_id: 1, restaurant_name: 1, email: 1 })
-  const orders = await Orders.find({}, { order_id: 1, restaurant_id: 1, price: 1, plan: 1, add_on: 1, start_date: 1 })
+  const orders = await Orders.find({}, { order_id: 1, restaurant_id: 1, price: 1, base_price: 1, plan: 1, add_on: 1, start_date: 1 })
   function add(accumulator, a) {
     return parseFloat(accumulator) + parseFloat(a);
   }
@@ -22,11 +22,18 @@ router.route("/").get(async (req, res) => {
       restName: restaurant.restaurant_name,
       totalMerchAmt: orders.filter(order => order.restaurant_id === restaurant.restaurant_id)
         .map(item => item.base_price).reduce(add, 0),
+      totalAddOnAmt: orders.filter(order => order.restaurant_id === restaurant.restaurant_id)
+        .map(item => item.add_on).length > 0 ?
+        [].concat.apply([], orders.filter(order => order.restaurant_id === restaurant.restaurant_id)
+          .flatMap(item => item.add_on)).map(item => item.subtotal).reduce(add, 0) : 0,
       totalCommissionAmt: orders.filter(order => order.restaurant_id === restaurant.restaurant_id)
         .map(item => parseFloat(item.price).toFixed(2) * 0.1).reduce(add, 0)
     })
   })
-  const payable = payouts.map((item) => { item.payable = item.totalMerchAmt - item.totalCommissionAmt })
+  payouts.map(item => {
+    item.totalAddOnCommissionAmt = parseFloat(item.totalAddOnAmt).toFixed(2) * 0.1
+  })
+  payouts.map((item) => { item.payable = item.totalMerchAmt - item.totalCommissionAmt })
   res.json({
     payouts: payouts
   })
