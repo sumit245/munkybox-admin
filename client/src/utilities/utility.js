@@ -640,10 +640,10 @@ export const payColumns = [
     sortable: true,
   },
   {
-    name: "Total After Commission",
+    name: "Gross Income",
     selector: (row) => "$" + parseFloat(row.totalMerchAmt + row.totalAddOnAmt - row.totalCommissionAmt).toFixed(2),
     width: "114px",
-    style: {overflowWrap:"break-word"},
+    style: { overflowWrap: "break-word" },
     sortable: true,
   },
   {
@@ -654,7 +654,7 @@ export const payColumns = [
   },
 
   {
-    name: "Amount Received",
+    name: "Paid",
     selector: (row) => "$" + parseFloat(row.paidAmt || 0).toFixed(2),
     sortable: true,
     width: "84px",
@@ -672,17 +672,11 @@ export const transactionColumns = [
   {
     name: "S No.",
     width: "64px",
-    selector: row => row.sid,
-  },
-  {
-    name: "Restaurant ID",
-    selector: (row) => row.restaurant_id,
-    width: "178px",
-    sortable: true,
+    selector: (row, index) => index+1,
   },
   {
     name: "Amount",
-    selector: (row) => row.amount,
+    selector: (row) => row.totalBaseIncome,
     width: "178px",
     sortable: true,
   },
@@ -700,15 +694,25 @@ export const transactionColumns = [
   },
   {
     name: "Payout Start Date",
-    selector: (row) => row.start_date,
+    selector: (row) => moment(row.payout_start_date).format("Do MMM"),
     width: "140px",
     sortable: true,
   },
   {
     name: "Payout End Date",
-    selector: (row) => row.end_date,
+    selector: (row) => moment(row.payout_end_date).format("Do MMM"),
     sortable: true,
     width: "148px",
+  },
+  {
+    name: "Action",
+    selector: (row) =>
+    <div>
+        <button className="btn btn-primary mx-2 my-1">Pay</button>
+        <button className="btn btn-warning mx-2 my-1">View</button>
+    </div>,
+    sortable: true,
+    width: "168px",
   },
 ];
 export const reviewColumns = [

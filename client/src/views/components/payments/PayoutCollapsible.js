@@ -11,7 +11,7 @@ export default function PayoutCollapsible({ data }) {
     const [balance, setBalance] = useState(0)
     const [loaded, setLoaded] = useState(false)
     useEffect(() => {
-        setID(data.restaurant_id)
+        setID(data.restID)
         setOrderAmt(data.totalMerchAmt)
         setAddOnAmt(data.totalAddOnAmt)
         setCommission(data.totalCommissionAmt)
@@ -23,7 +23,6 @@ export default function PayoutCollapsible({ data }) {
     }, [data])
     if (loaded) {
         return (
-
             <div className='collapsible-container'>
                 <div className='row'>
                     <div className='col-sm-10'>
@@ -44,7 +43,7 @@ export default function PayoutCollapsible({ data }) {
                             </div>
                             <div className='col-sm-6'>
                                 <span className='collapsible-details'>Add on Commission:</span>
-                                <span>${add_on_commission}</span>
+                                <span>${parseFloat(add_on_commission).toFixed(2)}</span>
                             </div>
                         </div>
                         <div className='row'>
@@ -69,9 +68,8 @@ export default function PayoutCollapsible({ data }) {
 
                         </div>
                     </div>
-                    <div className='col-sm-2 justify-content-center'>
-                        <a href={`/view_transaction/${id}`} className='btn btn-warning my-2'>View Transaction</a>
-                        <a href={`/deposit_money/${id}`} className='btn btn-success my-2'>Pay</a>
+                    <div className='col-sm-2'>
+                        <a href={`/view_transaction/${id}`} className='btn btn-warning my-2'>View</a>
                     </div>
                 </div>
             </div>
