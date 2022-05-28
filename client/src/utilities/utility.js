@@ -1,5 +1,6 @@
 import { defaultThemes } from "react-data-table-component-with-filter";
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 export const customStyles = {
   headRow: {
@@ -89,7 +90,6 @@ export const customStyles = {
     },
   },
 };
-
 export const payOutStyles = {
   headRow: {
     style: {
@@ -672,7 +672,7 @@ export const transactionColumns = [
   {
     name: "S No.",
     width: "64px",
-    selector: (row, index) => index+1,
+    selector: (row, index) => index + 1,
   },
   {
     name: "Amount",
@@ -707,10 +707,10 @@ export const transactionColumns = [
   {
     name: "Action",
     selector: (row) =>
-    <div>
-        <button className="btn btn-primary mx-2 my-1">Pay</button>
-        <button className="btn btn-warning mx-2 my-1">View</button>
-    </div>,
+      <div>
+        <Link className="btn btn-primary mx-2 my-1" to={{ pathname: `/deposit_money/`, query: { ...row } }} >Pay</Link>
+        <Link className="btn btn-warning mx-2 my-1" to={{ pathname: `/commission_tracking/`, query: { ...row } }}>View</Link>
+      </div>,
     sortable: true,
     width: "168px",
   },

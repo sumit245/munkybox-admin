@@ -26,7 +26,7 @@ export default function AdminCoupon({ showModal }) {
   const deleteCoupon = async (id) => {
     const response = await axios.delete('/api/admin-coupon/' + id)
     const { status } = response.data
-    if (status == 200) {
+    if (status === 200) {
       alert("Deleted")
     }
   }

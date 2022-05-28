@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import TransactionTable from "./TransactionTable"
-import { COMMISSION_HISTORY, TRANSACTION_HISTORY } from '../../../utilities/fakepayout'
 import { transactionColumns } from '../../../utilities/utility'
-import { useLocation, useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import axios from 'axios'
 import moment from 'moment'
 
@@ -18,7 +17,7 @@ export default function TransactionDetails() {
         payout_start_date: "",
         payout_end_date: ""
     })
-    const [payouts,setPayouts]=useState([])
+    const [payouts, setPayouts] = useState([])
     const { id } = useParams()
     const fetchChefPayouts = async (id) => {
         const response = await axios.get("/api/admintochefpayments/getchefpayout/" + id)
@@ -52,8 +51,11 @@ export default function TransactionDetails() {
     return (
         <>
             <div className='ibox my-2'>
-                <div className='ibox-title'>
+                <div className='ibox-title py-2'>
                     <h5>Current Payout</h5>
+                    <div className='ibox-tool float-right'>
+                        <Link className='btn btn-sm btn-warning' to={{ pathname: `/commission_tracking/`, query: { ...state } }} >View</Link>
+                    </div>
                 </div>
                 <div className='ibox-content'>
                     <div className='form-inline' >
@@ -83,7 +85,7 @@ export default function TransactionDetails() {
                     </div>
                 </div>
             </div>
-            <TransactionTable title="Transactions" data={payouts} columns={transactionColumns} flag={true} />
+            <TransactionTable title="Transactions" data={payouts} columns={transactionColumns} flag={true} id={id} />
         </>
     )
 }

@@ -4,10 +4,11 @@ import DataTableExtensions from "react-data-table-component-extensions";
 import "react-data-table-component-extensions/dist/index.css";
 import { transactionStyles } from "../../../utilities/utility";
 
-export default function TransactionTable({ title, columns, data, flag }) {
+export default function TransactionTable({ title, columns, data, flag, id }) {
     const tableData = {
         columns,
         data,
+        id
     };
     return (
         <div className="ibox-content">
@@ -15,7 +16,7 @@ export default function TransactionTable({ title, columns, data, flag }) {
                 <DataTable
                     title={title}
                     columns={columns}
-                    // data={data}
+                    data={data}
                     responsive
                     highlightOnHover
                     pagination

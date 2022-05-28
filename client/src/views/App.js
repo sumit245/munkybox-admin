@@ -25,6 +25,8 @@ import Login from "./screens/Login";
 import Review from "./components/review/Review";
 import TransactionDetails from "./components/payments/TransactionDetails";
 import Deposit from "./components/payments/Deposit"
+import CommissionTracking from "./components/payments/CommissionTracking";
+import CommissionHistory from "./components/payments/CommissionHistory";
 
 export default function App() {
   const [isUser, setisUser] = useState(false)
@@ -37,8 +39,6 @@ export default function App() {
       setisUser(false)
     }
   }, [])
-
-
 
   return (
     <React.Fragment>
@@ -87,7 +87,6 @@ export default function App() {
                       path="/view_campaign/:id"
                       component={BannerDetails}
                     />
-
                     <Route exact path="/campaign" component={Banners} />
                     <Route exact path="/payments" component={Payouts} />
                     <Route exact path="/setting" component={Settings} />
@@ -101,6 +100,8 @@ export default function App() {
                     <Route path="/policies/:id" component={DeleteAlert} />
                     <Route path="/view_transaction/:id" component={TransactionDetails} />
                     <Route path="/deposit_money/:id" children={<Deposit />} />
+                    <Route path="/commission_tracking/" children={<CommissionTracking  />} />
+                    <Route path="/commission_history/" children={<CommissionHistory/>}/>
                   </Switch>
                 </div>
               </div>
