@@ -10,6 +10,7 @@ const Payout = new Schema({
   payDate: String,
   totalMerchAmt: String,
   totalCommissionAmt: String,
+  commissionAmt:String,
   totalAddOnAmt: String,
   totalAddOnCommissionAmt:String,
   payableAmt: String,

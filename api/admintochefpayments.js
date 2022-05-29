@@ -27,6 +27,8 @@ router.route("/").get(async (req, res) => {
         [].concat.apply([], orders.filter(order => order.restaurant_id === restaurant.restaurant_id)
           .flatMap(item => item.add_on)).map(item => item.subtotal).reduce(add, 0) : 0,
       totalCommissionAmt: orders.filter(order => order.restaurant_id === restaurant.restaurant_id)
+        .map(item => parseFloat(item.base_price).toFixed(2) * 0.1).reduce(add, 0),
+      commissionAmt: orders.filter(order => order.restaurant_id === restaurant.restaurant_id)
         .map(item => parseFloat(item.base_price).toFixed(2) * 0.1).reduce(add, 0)
     })
   })
@@ -207,13 +209,5 @@ router.route("/getpastpayout/:rest_id").get(async (req, res) => {
 });
 //get past payout for all chef
 
-// router.route("/getadminpays/").get(function (req, res) {
-//   NewRestaurant.find({})
-//     .then(restaurant => {
-//       console.log(restaurant);
-//       res.json(restaurant)
-// })
-//     .catch(err => res.status(404).json({ msg: "No restaurant" }))
-// })
 
 module.exports = router;
