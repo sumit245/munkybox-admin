@@ -14,7 +14,7 @@ export default function PayoutCollapsible({ data }) {
         setID(data.restID)
         setOrderAmt(data.totalMerchAmt)
         setAddOnAmt(data.totalAddOnAmt)
-        setCommission(data.totalCommissionAmt)
+        setCommission(data.commissionAmt)
         setAddOnCommission(data.totalAddOnCommissionAmt)
         setPaid(data.paidAmt)
         setDiscount(data.discount)
@@ -33,7 +33,8 @@ export default function PayoutCollapsible({ data }) {
                             </div>
                             <div className='col-sm-6'>
                                 <span className='collapsible-details'>Commission:</span>
-                                <span>${commission}</span>
+                                <span>${parseFloat(commission).toFixed(2
+                                )}</span>
                             </div>
                         </div>
                         <div className='row'>
@@ -49,7 +50,7 @@ export default function PayoutCollapsible({ data }) {
                         <div className='row'>
                             <div className='col-sm-6'>
                                 <span className='collapsible-details'>Discount:</span>
-                                <span>${parseFloat(discount||0).toFixed(2)}</span>
+                                <span>${parseFloat(discount || 0).toFixed(2)}</span>
                             </div>
                             <div className='col-sm-6'>
                                 <span className='collapsible-details'>Banner Due:</span>
@@ -59,11 +60,11 @@ export default function PayoutCollapsible({ data }) {
                         <div className='row'>
                             <div className='col-sm-6'>
                                 <span className='collapsible-details'>Paid:</span>
-                                <span>${parseFloat(paid_amt||0).toFixed(2)}</span>
+                                <span>${parseFloat(paid_amt || 0).toFixed(2)}</span>
                             </div>
                             <div className='col-sm-6'>
                                 <span className='collapsible-details'>Balance:</span>
-                                <span>${balance}</span>
+                                <span>${parseFloat(order_amt + add_on_amt - commission - add_on_commission).toFixed(2)}</span>
                             </div>
 
                         </div>

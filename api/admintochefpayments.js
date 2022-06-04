@@ -144,6 +144,66 @@ router.route("/getchefpayout/:rest_id").get(async (req, res) => {
 });
 //get current payout for all chef
 
+// router.route("/getAdminRevenue/").get(async (req, res) => {
+//   function add(accumulator, a) {
+//     return parseFloat(accumulator) + parseFloat(a);
+//   }
+
+//   const payoutcycle = await Payoutcycle.findOne({ status: "current" });
+//   const { start_date, end_date } = payoutcycle;
+//   const myorders = await Orders.find({
+//     $and: [
+//       { restaurant_id: req.params.rest_id },
+//       {
+//         $or: [
+//           { status: "accepted" },
+//           { status: "started" },
+//           { status: "completed" },
+//         ],
+//       },
+//     ],
+//   });
+
+//   let updatedorders = myorders.filter((item) =>
+//     moment(item.order_time).isBetween(
+//       moment(start_date),
+//       moment(end_date),
+//       null,
+//       "[]"
+//     )
+//   );
+
+//   const basePrices = updatedorders.map((order) => order.base_price);
+//   let totalBaseIncome = basePrices.reduce(add, 0);
+//   const discounts = updatedorders.filter(item => item.promo_id !== "PROMOADMIN").map((order) => order.discount);
+//   let totalDiscount = discounts.reduce(add, 0);
+
+//   let x = updatedorders.map((order) => order.add_on);
+
+//   let addOns = updatedorders.map((el) => el.add_on);
+//   addOns = [].concat.apply([], addOns)
+//   addOns = addOns.reduce((prev, curr) => prev.concat(curr))
+//   let quantities = addOns.map((item) => item.qty);
+//   let totalCount = quantities.reduce(add, 0);
+
+//   let prices = addOns.map((item) => item.subtotal);
+//   let totalPrice = prices.reduce(add, 0);
+
+//   const dashboard = await RestaurantDashboard.find();
+
+//   let { banners } = dashboard;
+//   let dues = banners.map((item) => item.due);
+//   let dueAmt = dues.reduce(add, 0);
+
+//   res.json({
+//     income: income,
+//     orders: orders,
+//     commission: commission,
+//     paidtochef:paidtochef
+//   });
+// });
+//get current payout for all chef
+
 router.route("/getpastpayout/:rest_id").get(async (req, res) => {
   function add(accumulator, a) {
     return parseFloat(accumulator) + parseFloat(a);

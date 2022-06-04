@@ -708,7 +708,7 @@ export const transactionColumns = [
     name: "Action",
     selector: (row) =>
       <div>
-        <Link className="btn btn-primary mx-2 my-1" to={{ pathname: `/deposit_money/`, query: { ...row } }} >Pay</Link>
+        <Link className="btn btn-primary mx-2 my-1" to={{ pathname: `/deposit_money/1`, query: { ...row } }} >Pay</Link>
         <Link className="btn btn-warning mx-2 my-1" to={{ pathname: `/commission_tracking/`, query: { ...row } }}>View</Link>
       </div>,
     sortable: true,

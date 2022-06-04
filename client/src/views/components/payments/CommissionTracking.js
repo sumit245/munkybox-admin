@@ -15,11 +15,12 @@ export default function CommissionTracking() {
     })
     const [loaded, setLoaded] = useState(false)
     const { query } = useLocation()
-
+    const location=useLocation()
     useEffect(() => {
+        console.log(location);
         setState(query)
         setLoaded(true)
-    }, [query])
+    }, [])
     const { totalBaseIncome,
         totalDiscount,
         numOrders,
@@ -111,7 +112,7 @@ export default function CommissionTracking() {
                                 <h4 className='float-right mx-1 align-items-center text-info'>-${parseFloat((totalAddOnRevenue + totalBaseIncome) * 0.1).toFixed(2)}</h4>
                                 <Link className='text-primary' to={{
                                     pathname: `/commission_history`,
-                                    query: { orders }
+                                    query: { query }
                                 }}>
                                     <i className='fa fa-history' />
                                 </Link>

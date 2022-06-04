@@ -37,8 +37,8 @@ export default function Promos() {
 
   const saveAdminCoupon = async () => {  
     const response = await axios.post('/api/admin-coupon/', state)
-    const { status, data, msg } = response.data
-    if (status == 200) {
+    const { status, msg } = response.data
+    if (status === 200) {
       setShow(false)
       alert(msg)
     }

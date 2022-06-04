@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Router, Route, Switch, useHistory, useParams, useLocation } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
 import history from "../history";
 import SideNav from "./components/SideNav";
 import TopNavigation from "./components/TopNavigation";
@@ -24,9 +24,8 @@ import Banners from "./screens/Banners";
 import Login from "./screens/Login";
 import Review from "./components/review/Review";
 import TransactionDetails from "./components/payments/TransactionDetails";
-import Deposit from "./components/payments/Deposit"
 import CommissionTracking from "./components/payments/CommissionTracking";
-import CommissionHistory from "./components/payments/CommissionHistory";
+import ModalSwitch from "./ModalSwitch";
 
 export default function App() {
   const [isUser, setisUser] = useState(false)
@@ -42,7 +41,7 @@ export default function App() {
 
   return (
     <React.Fragment>
-      <Router history={history}>
+      <Router history={history} >
         {
           isUser ? (
             <React.Fragment>
@@ -99,10 +98,9 @@ export default function App() {
                     <Route path="/banner/:id" component={DeleteAlert} />
                     <Route path="/policies/:id" component={DeleteAlert} />
                     <Route path="/view_transaction/:id" component={TransactionDetails} />
-                    <Route path="/deposit_money/:id" children={<Deposit />} />
-                    <Route path="/commission_tracking/" children={<CommissionTracking  />} />
-                    <Route path="/commission_history/" children={<CommissionHistory/>}/>
+                    <Route path="/commission_tracking/" component={CommissionTracking} />
                   </Switch>
+                  <ModalSwitch />
                 </div>
               </div>
             </React.Fragment>

@@ -1,6 +1,5 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+
 export default function PersonalDetails({ user }) {
   const [loaded, setLoaded] = useState(false);
 

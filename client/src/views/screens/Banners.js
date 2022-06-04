@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Table from "../../utilities/Table";
 import axios from "axios";
-import { bannerColumns, promoColumns } from "../../utilities/utility";
+import { bannerColumns } from "../../utilities/utility";
 import PromotionCard from "../components/promotions/PromotionCard";
 
 export default function Promos() {
@@ -10,7 +10,6 @@ export default function Promos() {
   const getcoupons = async () => {
     const response = await axios.get("/api/promo/");
     const { data } = await response.data;
-    console.log(coupons);
     setCoupon(data);
   };
 
@@ -24,7 +23,7 @@ export default function Promos() {
   useEffect(() => {
     getcoupons();
     getPromos();
-  }, []);
+  }, [coupons]);
   return (
     <div className="wrapper wrapper-content">
       <PromotionCard total={coupons && coupons.length} />

@@ -4,36 +4,22 @@ import { useHistory, useLocation, useParams } from "react-router-dom"
 export default function Deposit() {
     const [orders, setOrder] = useState([])
     const history = useHistory()
-    const { id } = useParams()
     const { query } = useLocation()
     const back = (e) => {
         e.stopPropagation()
-        history.goBack()
+        history.push({
+            pathname: "/commission_tracking",
+            query: query.query
+        })
     }
     useEffect(() => {
-        setOrder(query.orders)
-    }, [])
+        const { orders } = query.query
+        setOrder(orders)
+    }, [query])
 
     return (
-        <div style={{
-            position: "fixed",
-            display: 'flex',
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            zIndex: 1000,
-            background: "rgba(0, 0, 0, 0.15)",
-            overflowY: "hidden"
-        }}
-            onClick={back}
-        >
-            <div className="ibox scrollable-pop" style={{
-                position: "absolute",
-                top: "10%",
-                left: "35%",
-                width: 400,
-            }}>
+        <div onClick={back}>
+            <div className="ibox scrollable-popup">
                 <div className="ibox-title">
                     <h4>Commission History</h4>
                     <div className="ibox-tools">
@@ -101,5 +87,6 @@ export default function Deposit() {
                 </div>
             </div>
         </div>
+
     )
 }

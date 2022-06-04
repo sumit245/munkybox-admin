@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import TransactionTable from "./TransactionTable"
 import { transactionColumns } from '../../../utilities/utility'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useLocation } from 'react-router-dom'
 import axios from 'axios'
 import moment from 'moment'
 
@@ -38,6 +38,7 @@ export default function TransactionDetails() {
             component = false
         }
     }, [])
+    const location = useLocation()
     const { totalBaseIncome,
         totalDiscount,
         numOrders,
@@ -54,7 +55,7 @@ export default function TransactionDetails() {
                 <div className='ibox-title py-2'>
                     <h5>Current Payout</h5>
                     <div className='ibox-tool float-right'>
-                        <Link className='btn btn-sm btn-warning' to={{ pathname: `/commission_tracking/`, query: { ...state } }} >View</Link>
+                        <Link className='btn btn-sm btn-warning' to={{ pathname: `/commission_tracking/`, query: { ...state }, state: { background: location } }} >View</Link>
                     </div>
                 </div>
                 <div className='ibox-content'>

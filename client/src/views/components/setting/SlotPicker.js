@@ -7,7 +7,7 @@ export default function SlotPicker({
 }) {
   const [slots, setSlot] = useState(false);
   const handleTimeChange = (e) => {
-    const { name, value } = e.target;
+    const { value } = e.target;
     setSlot(value);
   };
   const addslot = () => {
