@@ -52,7 +52,7 @@ export default function EditBasicInfo(props) {
       alert("State is required!!!");
       return;
     }
-    if (!state.cuisine_type) {
+    if (!state.cuisine_typ  e) {
       alert("Restaurant Name is required");
       return;
     }

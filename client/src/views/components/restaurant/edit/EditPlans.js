@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { SET_PLANS } from "../../../../utilities/constants";
 export default function EditPlans({ plan, restaurant, goToStep }) {
+   
   const dispatch = useDispatch();
   const [price, setPrice] = useState({});
   let { base_2price, base_15price, base_30price } = restaurant;
