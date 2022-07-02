@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import ShowCard from "../restaurant/view/ShowCard";
 import moment from "moment";
+import { saveAs } from "file-saver";
 
 export const ViewOrders = () => {
   const { id } = useParams();
@@ -85,6 +86,23 @@ export const ViewOrders = () => {
       parseFloat(tip)) *
     0.01 *
     taxes;
+  const downloadPdf = async () => {
+    const res = await axios.post(
+      "http://192.168.1.4:5000/api/orders/create-pdf",
+      {
+        name: order.user_name,
+        receiptId: 0,
+        price1: 0,
+        price2: 0,
+      }
+    );
+    const response = await axios.get(
+      "http://192.168.1.4:5000/api/orders/fetch-pdf",
+      { responseType: "blob" }
+    );
+    const pdfBlob = new Blob([response.data], { type: "application/pdf" });
+    saveAs(pdfBlob,'receipt.pdf')
+  };
   if (!cardview) {
     return (
       <>
@@ -94,13 +112,9 @@ export const ViewOrders = () => {
           </div>
           <div className="col-lg-4">
             <div className="title-action">
-              <a
-                href="invoice_print.html"
-                target="_blank"
-                className="btn btn-primary"
-              >
+              <button onClick={downloadPdf} className="btn btn-primary">
                 <i className="fa fa-print" /> Print Invoice{" "}
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -129,10 +143,10 @@ export const ViewOrders = () => {
                   <br />
                   {address &&
                     address.address_type +
-                    ", " +
-                    address.flat_num +
-                    ", " +
-                    (address.locality || "")}
+                      ", " +
+                      address.flat_num +
+                      ", " +
+                      (address.locality || "")}
                   <br />
                   {address && address.city + ", " + address.postal_code}
                   <br />
@@ -142,7 +156,8 @@ export const ViewOrders = () => {
                 </address>
                 <p>
                   <span>
-                    <strong>Ordered at:</strong> {moment(order_time).format("DD-MMM-YYYY HH:mm:ss")}
+                    <strong>Ordered at:</strong>{" "}
+                    {moment(order_time).format("DD-MMM-YYYY HH:mm:ss")}
                   </span>
                 </p>
               </div>
@@ -165,8 +180,8 @@ export const ViewOrders = () => {
                           {plan === "twoPlan"
                             ? "2 Meals"
                             : plan === "fifteenPlan"
-                              ? "15 Meals"
-                              : "30 Meals"}
+                            ? "15 Meals"
+                            : "30 Meals"}
                         </strong>
                       </div>
                       <small>{meal_type + ", " + category + "-" + time}</small>
@@ -240,27 +255,22 @@ export const ViewOrders = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {
-                    Array.isArray(add_on) && add_on.length !== 0 ?
-                      add_on
-                        .map((item)=>item
-                        .map((item, key) => (
+                  {Array.isArray(add_on) && add_on.length !== 0 ? (
+                    add_on.map((item) =>
+                      item.map((item, key) => (
                         <tr key={key}>
                           <td className="td">{item.item}</td>
                           <td>{item.rate}</td>
                           <td>{item.qty}</td>
                           <td>{item.order_date}</td>
                         </tr>
-                      )))
-                      : (
-                        <tr className="text-center">
-                          <td colSpan={4}>
-
-                            No add-on for this user
-                          </td>
-                        </tr>
-                      )
-                  }
+                      ))
+                    )
+                  ) : (
+                    <tr className="text-center">
+                      <td colSpan={4}>No add-on for this user</td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>

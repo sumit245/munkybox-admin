@@ -1,7 +1,79 @@
 const express = require("express");
 const router = express.Router();
 const Order = require("../models/orders.model");
-const stripe=require("stripe")
+const stripe = require("stripe");
+const pdfTemplate = require("../receipt");
+const pdf = require("html-pdf");
+// const pdf = require("pdf-creator-node");
+// const fs = require("fs");
+// const html = fs.readFileSync("template/template.html", "utf-8");
+
+router.route("/create-pdf/").post(async (req, res) => {
+  pdf
+    .create(pdfTemplate(req.body), {})
+    .toFile(`${__dirname}/receipt.pdf`, (err) => {
+      if (err) {
+        console.log(err);
+      }
+      res.send(Promise.resolve());
+    });
+});
+
+router.route("/fetch-pdf").get(async (req, res) => {
+  await res.sendFile(`${__dirname}/receipt.pdf`);
+});
+
+// const options = {
+//   format: "A4",
+//   orientation: "portrait",
+//   border: "10mm",
+//   header: {
+//     height: "45mm",
+//     contents: '<div style="text-align: center;">Author: Shyam Hajare</div>',
+//   },
+//   footer: {
+//     height: "28mm",
+//     contents: {
+//       first: "Cover page",
+//       2: "Second page", // Any page number is working. 1-based index
+//       default:
+//         '<span style="color: #444;">{{page}}</span>/<span>{{pages}}</span>', // fallback value
+//       last: "Last Page",
+//     },
+//   },
+// };
+// var users = [
+//   {
+//     name: "Shyam",
+//     age: "26",
+//   },
+//   {
+//     name: "Navjot",
+//     age: "26",
+//   },
+//   {
+//     name: "Vitthal",
+//     age: "26",
+//   },
+// ];
+// var document = {
+//   html: html,
+//   data: {
+//     users: users,
+//   },
+//   path: "./output.pdf",
+//   type: "",
+// };
+// router.route("/generate").get(function (req, resp) {
+//   pdf
+//     .create(document, options)
+//     .then((res) => {
+//       resp.sendFile(`${__dirname}/output.pdf`)
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//     });
+// });
 
 router.route("/").get(function (req, res) {
   Order.find(function (err, order) {
@@ -148,17 +220,21 @@ router.route("/dashboard/:restaurant_id").get(async (req, res) => {
     (item) => item.plan === "thirtyPlan"
   );
   const sumTwo = twoOrders.map((item) => item.base_price).reduce(add, 0);
-  const discountTwo = twoOrders.filter(item=>item.promo_id!=="PROMOADMIN").map((item) => item.discount).reduce(add, 0);
+  const discountTwo = twoOrders
+    .filter((item) => item.promo_id !== "PROMOADMIN")
+    .map((item) => item.discount)
+    .reduce(add, 0);
   const sumFifteen = fifteenOrders
     .map((item) => item.base_price)
     .reduce(add, 0);
   const discountFifteen = fifteenOrders
-    .filter(item=>item.promo_id!=="PROMOADMIN")
+    .filter((item) => item.promo_id !== "PROMOADMIN")
     .map((item) => item.discount)
     .reduce(add, 0);
   const sumThirty = thirtyOrders
-    .filter(item => item.promo_id !== "PROMOADMIN")
-    .map((item) => item.base_price).reduce(add, 0);
+    .filter((item) => item.promo_id !== "PROMOADMIN")
+    .map((item) => item.base_price)
+    .reduce(add, 0);
   const discountThirty = thirtyOrders
     .map((item) => item.discount)
     .reduce(add, 0);

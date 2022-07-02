@@ -1,11 +1,7 @@
 import axios from "axios";
-import React, { useState, useEffect, 
-} from "react";
-import { useDispatch
-  } from "react-redux";
-import {
-  editBasicInfo,
-} from "../../../../actions/restaurantAction";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { editBasicInfo } from "../../../../actions/restaurantAction";
 
 export default function EditBasicInfo(props) {
   const [cuisine, setCuisine] = useState([]);
@@ -52,7 +48,7 @@ export default function EditBasicInfo(props) {
       alert("State is required!!!");
       return;
     }
-    if (!state.cuisine_typ  e) {
+    if (!state.cuisine_type) {
       alert("Restaurant Name is required");
       return;
     }
