@@ -87,21 +87,17 @@ export const ViewOrders = () => {
     0.01 *
     taxes;
   const downloadPdf = async () => {
-    const res = await axios.post(
-      "http://192.168.1.4:5000/api/orders/create-pdf",
-      {
-        name: order.user_name,
-        receiptId: 0,
-        price1: 0,
-        price2: 0,
-      }
-    );
-    const response = await axios.get(
-      "http://192.168.1.4:5000/api/orders/fetch-pdf",
-      { responseType: "blob" }
-    );
+    const res = await axios.post("/api/orders/create-pdf", {
+      name: order.user_name,
+      receiptId: 0,
+      price1: 0,
+      price2: 0,
+    });
+    const response = await axios.get("/api/orders/fetch-pdf", {
+      responseType: "blob",
+    });
     const pdfBlob = new Blob([response.data], { type: "application/pdf" });
-    saveAs(pdfBlob,'receipt.pdf')
+    saveAs(pdfBlob, "receipt.pdf");
   };
   if (!cardview) {
     return (
