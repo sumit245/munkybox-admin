@@ -89,7 +89,7 @@ export const ViewOrders = () => {
   const downloadPdf = async () => {
     const res = await axios.post("/api/orders/create-pdf", {
       name: order.user_name,
-      receiptId: 0,
+      receiptId: order.order_id,
       price1: 0,
       price2: 0,
     });
