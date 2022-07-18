@@ -1,8 +1,9 @@
 {
   "files": {
-    "main.css": "/static/css/main.a20f03bd.css",
-    "main.js": "/static/js/main.59c3fb12.js",
+    "main.css": "/static/css/main.32c80ae1.css",
+    "main.js": "/static/js/main.621cd109.js",
     "static/js/787.a2d77c06.chunk.js": "/static/js/787.a2d77c06.chunk.js",
+    "static/media/chef_login.png": "/static/media/chef_login.5fd18b3d6a7c50f9789d.png",
     "static/media/login_screen_user.png": "/static/media/login_screen_user.47736f98ceb622a27f89.png",
     "static/media/cooking.gif": "/static/media/cooking.b02baf21a017f4191a63.gif",
     "static/media/home_screen_user.png": "/static/media/home_screen_user.f3dfd6c9be518e0a3ded.png",
@@ -14,20 +15,21 @@
     "static/media/subscription_user.png": "/static/media/subscription_user.a452e4a3c9b11a4d762d.png",
     "static/media/explore.png": "/static/media/explore.0d967ac1f199dc15bf01.png",
     "static/media/imagebg.jpg": "/static/media/imagebg.ab848f1c0733534f2299.jpg",
+    "static/media/chef_promo.png": "/static/media/chef_promo.4f24b4dd3496d1fb3aed.png",
+    "static/media/chef_dashboard.png": "/static/media/chef_dashboard.9b4bdcdc7bd317a299ba.png",
+    "static/media/chef_review.png": "/static/media/chef_review.498a0a24752b621941e6.png",
+    "static/media/chef_dispatch.png": "/static/media/chef_dispatch.51c8a24e5d3bcc2be4bb.png",
+    "static/media/chef_home.png": "/static/media/chef_home.7750d597772a9d23380a.png",
     "static/media/my_orders.png": "/static/media/my_orders.717708c6330f0e9fa66d.png",
     "static/media/veggy.ttf": "/static/media/veggy.790f866c8cb263e6e460.ttf",
-    "static/media/home.png": "/static/media/home.9e77ccf2d1e01625add2.png",
     "static/media/Chocolate Bar Demo.otf": "/static/media/Chocolate Bar Demo.450c9519f3be2d17da9f.otf",
     "static/media/wave.png": "/static/media/wave.ba88fffa486328be981a.png",
     "static/media/logo_feasti1.png": "/static/media/logo_feasti1.feef9303b0a543f39cfe.png",
     "static/media/hotpizza.ttf": "/static/media/hotpizza.73578b7f4da5af44c4fa.ttf",
-    "static/media/boss.png": "/static/media/boss.c6280067d532ea7a1be4.png",
     "static/media/icon-01.png": "/static/media/icon-01.f90eff136a68861ef92f.png",
     "static/media/icon-04.png": "/static/media/icon-04.6e1ff7efba87e187b88a.png",
     "static/media/icon-03.png": "/static/media/icon-03.e21c9319bf6dc7b14063.png",
     "static/media/icon-02.png": "/static/media/icon-02.5f9e80bd381bbbf20f61.png",
-    "static/media/cash_icon.png": "/static/media/cash_icon.229d79135880fef941bc.png",
-    "static/media/yummy.jpg": "/static/media/yummy.6a6092e0ba211a203219.jpg",
     "static/media/Bulb_Icon.svg": "/static/media/Bulb_Icon.febcbf42cd10d0b58c20a6ac8889ecc2.svg",
     "static/media/Ig-logo.svg": "/static/media/Ig-logo.c80092743d94c75a7ec9a27675eaef38.svg",
     "static/media/Food_Icon.svg": "/static/media/Food_Icon.f6641ad5458140027563d2a44cb1d345.svg",
@@ -38,12 +40,12 @@
     "index.html": "/index.html",
     "static/media/fb-logo.svg": "/static/media/fb-logo.f0391d69645c7323017248ba6ecd7fa8.svg",
     "static/media/quotation.svg": "/static/media/quotation.a71135c18fa415f8b99d6b8c41a58e72.svg",
-    "main.a20f03bd.css.map": "/static/css/main.a20f03bd.css.map",
-    "main.59c3fb12.js.map": "/static/js/main.59c3fb12.js.map",
+    "main.32c80ae1.css.map": "/static/css/main.32c80ae1.css.map",
+    "main.621cd109.js.map": "/static/js/main.621cd109.js.map",
     "787.a2d77c06.chunk.js.map": "/static/js/787.a2d77c06.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.a20f03bd.css",
-    "static/js/main.59c3fb12.js"
+    "static/css/main.32c80ae1.css",
+    "static/js/main.621cd109.js"
   ]
 }
