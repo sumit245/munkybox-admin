@@ -10,7 +10,7 @@ module.exports = ({ name, price1, price2, receiptId }) => {
              .invoice-box {
              max-width: 800px;
              margin: auto;
-             padding: 30px;
+             padding: 30px;mj
              border: 1px solid #eee;
              box-shadow: 0 0 10px rgba(0, 0, 0, .15);
              font-size: 16px;

@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.32c80ae1.css",
-    "main.js": "/static/js/main.621cd109.js",
+    "main.css": "/static/css/main.17e4685a.css",
+    "main.js": "/static/js/main.52552dc5.js",
     "static/js/787.a2d77c06.chunk.js": "/static/js/787.a2d77c06.chunk.js",
     "static/media/chef_login.png": "/static/media/chef_login.5fd18b3d6a7c50f9789d.png",
     "static/media/login_screen_user.png": "/static/media/login_screen_user.47736f98ceb622a27f89.png",
@@ -14,7 +14,6 @@
     "static/media/checkout.png": "/static/media/checkout.b4da28f824e6c38dd257.png",
     "static/media/subscription_user.png": "/static/media/subscription_user.a452e4a3c9b11a4d762d.png",
     "static/media/explore.png": "/static/media/explore.0d967ac1f199dc15bf01.png",
-    "static/media/imagebg.jpg": "/static/media/imagebg.ab848f1c0733534f2299.jpg",
     "static/media/chef_promo.png": "/static/media/chef_promo.4f24b4dd3496d1fb3aed.png",
     "static/media/chef_dashboard.png": "/static/media/chef_dashboard.9b4bdcdc7bd317a299ba.png",
     "static/media/chef_review.png": "/static/media/chef_review.498a0a24752b621941e6.png",
@@ -30,6 +29,8 @@
     "static/media/icon-04.png": "/static/media/icon-04.6e1ff7efba87e187b88a.png",
     "static/media/icon-03.png": "/static/media/icon-03.e21c9319bf6dc7b14063.png",
     "static/media/icon-02.png": "/static/media/icon-02.5f9e80bd381bbbf20f61.png",
+    "static/media/eduntrain.webp": "/static/media/eduntrain.cba774b0ed65dcdf1cac.webp",
+    "static/media/trustworthy.jpg": "/static/media/trustworthy.6358369d7cfc954e6ae7.jpg",
     "static/media/Bulb_Icon.svg": "/static/media/Bulb_Icon.febcbf42cd10d0b58c20a6ac8889ecc2.svg",
     "static/media/Ig-logo.svg": "/static/media/Ig-logo.c80092743d94c75a7ec9a27675eaef38.svg",
     "static/media/Food_Icon.svg": "/static/media/Food_Icon.f6641ad5458140027563d2a44cb1d345.svg",
@@ -40,12 +41,12 @@
     "index.html": "/index.html",
     "static/media/fb-logo.svg": "/static/media/fb-logo.f0391d69645c7323017248ba6ecd7fa8.svg",
     "static/media/quotation.svg": "/static/media/quotation.a71135c18fa415f8b99d6b8c41a58e72.svg",
-    "main.32c80ae1.css.map": "/static/css/main.32c80ae1.css.map",
-    "main.621cd109.js.map": "/static/js/main.621cd109.js.map",
+    "main.17e4685a.css.map": "/static/css/main.17e4685a.css.map",
+    "main.52552dc5.js.map": "/static/js/main.52552dc5.js.map",
     "787.a2d77c06.chunk.js.map": "/static/js/787.a2d77c06.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.32c80ae1.css",
-    "static/js/main.621cd109.js"
+    "static/css/main.17e4685a.css",
+    "static/js/main.52552dc5.js"
   ]
 }
