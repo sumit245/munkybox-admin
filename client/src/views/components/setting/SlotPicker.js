@@ -11,7 +11,6 @@ export default function SlotPicker({
     setSlot(value);
   };
   const addslot = () => {
-    console.log(slots);
     addSlots(slots);
   };
   return (

@@ -52,7 +52,6 @@ export default function DynamicMeal({ day, index, addMeal }) {
     setaddOns(values);
   };
   const done = () => {
-    console.log(meal);
     if (!meal.meal_name) {
       alert("Meal name is  required");
       return;

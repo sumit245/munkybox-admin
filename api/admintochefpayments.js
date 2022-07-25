@@ -8,40 +8,77 @@ const RestaurantDashboard = require("../models/restaurant_dashboard.model");
 const Payoutcycle = require("../models/payoutcylce.model");
 
 router.route("/").get(async (req, res) => {
-  const restaurants = await NewRestaurant.find({}, { restaurant_id: 1, restaurant_name: 1, email: 1 })
-  const orders = await Orders.find({}, { order_id: 1, restaurant_id: 1, price: 1, base_price: 1, plan: 1, add_on: 1, start_date: 1 })
+  const restaurants = await NewRestaurant.find(
+    {},
+    { restaurant_id: 1, restaurant_name: 1, email: 1 }
+  );
+  const orders = await Orders.find(
+    {},
+    {
+      order_id: 1,
+      restaurant_id: 1,
+      price: 1,
+      base_price: 1,
+      plan: 1,
+      add_on: 1,
+      start_date: 1,
+    }
+  );
   function add(accumulator, a) {
     return parseFloat(accumulator) + parseFloat(a);
   }
 
-  let payouts = []
-  restaurants.forEach(restaurant => {
+  let payouts = [];
+  restaurants.forEach((restaurant) => {
     payouts.push({
       restID: restaurant.restaurant_id,
       restEmail: restaurant.email,
       restName: restaurant.restaurant_name,
-      totalMerchAmt: orders.filter(order => order.restaurant_id === restaurant.restaurant_id)
-        .map(item => item.base_price).reduce(add, 0),
-      totalAddOnAmt: orders.filter(order => order.restaurant_id === restaurant.restaurant_id)
-        .map(item => item.add_on).length > 0 ?
-        [].concat.apply([], orders.filter(order => order.restaurant_id === restaurant.restaurant_id)
-          .flatMap(item => item.add_on)).map(item => item.subtotal).reduce(add, 0) : 0,
-      totalCommissionAmt: orders.filter(order => order.restaurant_id === restaurant.restaurant_id)
-        .map(item => parseFloat(item.base_price).toFixed(2) * 0.1).reduce(add, 0),
-      commissionAmt: orders.filter(order => order.restaurant_id === restaurant.restaurant_id)
-        .map(item => parseFloat(item.base_price).toFixed(2) * 0.1).reduce(add, 0)
-    })
-  })
-  payouts.map(item => {
-    item.totalAddOnCommissionAmt = parseFloat(item.totalAddOnAmt).toFixed(2) * 0.1
-  })
-  payouts.map(item => {
-    item.totalCommissionAmt = parseFloat(item.totalCommissionAmt + item.totalAddOnCommissionAmt).toFixed(2)
-  })
-  payouts.map((item) => { item.payable = item.totalMerchAmt - item.totalCommissionAmt })
+      totalMerchAmt: orders
+        .filter((order) => order.restaurant_id === restaurant.restaurant_id)
+        .map((item) => item.base_price)
+        .reduce(add, 0),
+      totalAddOnAmt:
+        orders
+          .filter((order) => order.restaurant_id === restaurant.restaurant_id)
+          .map((item) => item.add_on).length > 0
+          ? [].concat
+              .apply(
+                [],
+                orders
+                  .filter(
+                    (order) => order.restaurant_id === restaurant.restaurant_id
+                  )
+                  .flatMap((item) => item.add_on)
+              )
+              .map((item) => item.subtotal)
+              .reduce(add, 0)
+          : 0,
+      totalCommissionAmt: orders
+        .filter((order) => order.restaurant_id === restaurant.restaurant_id)
+        .map((item) => parseFloat(item.base_price).toFixed(2) * 0.1)
+        .reduce(add, 0),
+      commissionAmt: orders
+        .filter((order) => order.restaurant_id === restaurant.restaurant_id)
+        .map((item) => parseFloat(item.base_price).toFixed(2) * 0.1)
+        .reduce(add, 0),
+    });
+  });
+  payouts.map((item) => {
+    item.totalAddOnCommissionAmt =
+      parseFloat(item.totalAddOnAmt).toFixed(2) * 0.1;
+  });
+  payouts.map((item) => {
+    item.totalCommissionAmt = parseFloat(
+      item.totalCommissionAmt + item.totalAddOnCommissionAmt
+    ).toFixed(2);
+  });
+  payouts.map((item) => {
+    item.payable = item.totalMerchAmt - item.totalCommissionAmt;
+  });
   res.json({
-    payouts: payouts
-  })
+    payouts: payouts,
+  });
 });
 // get all payouts for chef
 
@@ -107,16 +144,28 @@ router.route("/getchefpayout/:rest_id").get(async (req, res) => {
 
   const basePrices = updatedorders.map((order) => order.base_price);
   let totalBaseIncome = basePrices.reduce(add, 0);
-  const discounts = updatedorders.filter(item => item.promo_id !== "PROMOADMIN").map((order) => order.discount);
+  const discounts = updatedorders
+    .filter((item) => item.promo_id !== "PROMOADMIN")
+    .map((order) => order.discount);
   let totalDiscount = discounts.reduce(add, 0);
 
   let x = updatedorders.map((order) => order.add_on);
 
   let addOns = updatedorders.map((el) => el.add_on);
-  addOns = [].concat.apply([], addOns)
-  addOns = addOns.reduce((prev, curr) => prev.concat(curr))
-  let quantities = addOns.map((item) => item.qty);
-  let totalCount = quantities.reduce(add, 0);
+  addOns = [].concat.apply([], addOns);
+  let z = addOns;
+  const dimensions = [
+    addOns.length,
+    addOns.reduce((x, y) => Math.max(x, y.length), 0),
+  ];
+  let totalCount = 0;
+  if (dimensions[0] !== 0) {
+    addOns = addOns.reduce((prev, curr) => prev.concat(curr));
+    let quantities = addOns.map((item) => item.qty);
+    totalCount = quantities.reduce(add, 0);
+  } else {
+    totalCount = 0;
+  }
 
   let prices = addOns.map((item) => item.subtotal);
   let totalPrice = prices.reduce(add, 0);
@@ -268,6 +317,5 @@ router.route("/getpastpayout/:rest_id").get(async (req, res) => {
   res.json(pp);
 });
 //get past payout for all chef
-
 
 module.exports = router;

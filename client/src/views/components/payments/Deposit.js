@@ -7,10 +7,6 @@ export default function Deposit() {
     e.stopPropagation()
     history.goBack()
   }
-  const { query } = useLocation()
-  useEffect(() => {
-    console.log(query);
-  }, [])
 
   return (
     <div style={{

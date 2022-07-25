@@ -15,23 +15,7 @@ export default function Documents(props) {
       mount = false;
     };
   }, [papers]);
-  // useEffect(() => {
-  //   let componentMounted = true;
-  //   let pods = [];
-  //   if (componentMounted) {
-  //     documents.map((data, key) => {
-  //       if (Array.isArray(data)) {
-  //         pods.push(data);
-  //       }
-  //     });
-  //     setPod(pods);
-  //   }
-  //   return () => {
-  //     componentMounted = false;
-  //     console.log(pods);
-  //   };
-  // }, []);
-
+  
   return (
     <fieldset>
       <div className="row mt-2">

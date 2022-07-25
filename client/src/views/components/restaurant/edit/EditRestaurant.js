@@ -28,7 +28,6 @@ export default function EditRestaurant(props) {
   const onSubmit = async (e) => {
     setLoaded(false);
     e.preventDefault();
-    console.log(state);
     const response = await axios.put("/api/newrest/" + id, state);
     if (response !== null) {
       alert("Restaurant Updated");

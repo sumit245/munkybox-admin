@@ -5,7 +5,7 @@ module.exports = ({ name, price1, price2, receiptId }) => {
     <html>
        <head>
           <meta charset="utf-8">
-          <title>PDF Result Template</title>
+          <title>Receipt</title>
           <style>
              .invoice-box {
              max-width: 800px;

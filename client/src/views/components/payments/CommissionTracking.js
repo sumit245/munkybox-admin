@@ -17,7 +17,6 @@ export default function CommissionTracking() {
     const { query } = useLocation()
     const location=useLocation()
     useEffect(() => {
-        console.log(location);
         setState(query)
         setLoaded(true)
     }, [])

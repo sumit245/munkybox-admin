@@ -14,7 +14,6 @@ export default function ViewRestaurant(props) {
   const { id } = useParams();
   const dispatch = useDispatch()
   useEffect(() => {
-    console.log(id);
     dispatch(getRestaurant(id))
   }, [dispatch,id])
   return (
