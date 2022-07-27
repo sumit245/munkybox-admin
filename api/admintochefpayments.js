@@ -22,6 +22,8 @@ router.route("/").get(async (req, res) => {
       plan: 1,
       add_on: 1,
       start_date: 1,
+      discount: 1,
+      promo_id: 1,
     }
   );
   function add(accumulator, a) {
@@ -37,6 +39,22 @@ router.route("/").get(async (req, res) => {
       totalMerchAmt: orders
         .filter((order) => order.restaurant_id === restaurant.restaurant_id)
         .map((item) => item.base_price)
+        .reduce(add, 0),
+      totalDiscount: orders
+        .filter(
+          (order) =>
+            order.restaurant_id === restaurant.restaurant_id &&
+            order.promo_id !== "PROMOADMIN"
+        )
+        .map((item) => parseFloat(item.discount))
+        .reduce(add, 0),
+      totalAdminDiscount: orders
+        .filter(
+          (order) =>
+            order.restaurant_id === restaurant.restaurant_id &&
+            order.promo_id === "PROMOADMIN"
+        )
+        .map((item) => parseFloat(item.discount))
         .reduce(add, 0),
       totalAddOnAmt:
         orders
@@ -153,7 +171,6 @@ router.route("/getchefpayout/:rest_id").get(async (req, res) => {
 
   let addOns = updatedorders.map((el) => el.add_on);
   addOns = [].concat.apply([], addOns);
-  let z = addOns;
   const dimensions = [
     addOns.length,
     addOns.reduce((x, y) => Math.max(x, y.length), 0),

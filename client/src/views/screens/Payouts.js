@@ -7,7 +7,6 @@ import axios from 'axios'
 
 export default function Payouts() {
     const [payouts, setPayouts] = useState([])
-    
     const fetchPayOut = async () => {
         const response = await axios.get("api/admintochefpayments/")
         const { payouts } = response.data

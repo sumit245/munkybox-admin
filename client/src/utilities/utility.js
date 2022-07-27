@@ -359,19 +359,19 @@ export const orderColumns = [
     name: "ID",
     selector: "order_id",
     sortable: true,
-    width: "9%"
+    width: "9%",
   },
   {
     name: "User",
     selector: (row, index) => row.user_name,
     sortable: true,
-    width: "10%"
+    width: "10%",
   },
   {
     name: "Rest ID",
     selector: (row, index) => row.restaurant_id,
     sortable: true,
-    width: "8%"
+    width: "8%",
   },
   {
     name: "Restaurant",
@@ -385,33 +385,36 @@ export const orderColumns = [
       row.plan === "twoPlan"
         ? "2 Meals"
         : row.plan === "fifteenPlan"
-          ? "15 Meals"
-          : row.plan === "thirtyPlan"
-            ? "30 Meals"
-            : null,
+        ? "15 Meals"
+        : row.plan === "thirtyPlan"
+        ? "30 Meals"
+        : null,
     sortable: true,
   },
   {
     name: "Start",
     selector: "start_date",
     sortable: true,
-    width: "10%"
+    width: "10%",
   },
   {
     name: "End",
     selector: "end_date",
     sortable: true,
-    width: "10%"
+    width: "10%",
   },
   {
     name: "Promo",
     selector: (row) => (row.promo_id === "PROMOADMIN" ? row.promo_code : ""),
-    width: "8%"
+    width: "8%",
   },
   {
     name: "Discount",
-    selector: (row) => (row.promo_id === "PROMOADMIN" ? "$" + parseFloat(row.discount).toFixed(2) : ""),
-    width: "7%"
+    selector: (row) =>
+      row.promo_id === "PROMOADMIN"
+        ? "$" + parseFloat(row.discount).toFixed(2)
+        : "",
+    width: "7%",
   },
   {
     name: "Status",
@@ -611,9 +614,9 @@ export const payColumns = [
   },
   {
     name: " ID",
-    selector: row => row.restID,
+    selector: (row) => row.restID,
     sortable: true,
-    width: "86px"
+    width: "86px",
   },
   {
     name: "Email",
@@ -629,7 +632,8 @@ export const payColumns = [
   },
   {
     name: "Base Revenue",
-    selector: (row) => "$" + parseFloat(row.totalMerchAmt + row.totalAddOnAmt).toFixed(2),
+    selector: (row) =>
+      "$" + parseFloat(row.totalMerchAmt + row.totalAddOnAmt).toFixed(2),
     width: "114px",
     sortable: true,
   },
@@ -641,14 +645,25 @@ export const payColumns = [
   },
   {
     name: "Gross Income",
-    selector: (row) => "$" + parseFloat(row.totalMerchAmt + row.totalAddOnAmt - row.totalCommissionAmt).toFixed(2),
+    selector: (row) =>
+      "$" +
+      parseFloat(
+        row.totalMerchAmt + row.totalAddOnAmt - row.totalCommissionAmt
+      ).toFixed(2),
     width: "114px",
     style: { overflowWrap: "break-word" },
     sortable: true,
   },
   {
     name: "Net Income",
-    selector: (row) => "$" + parseFloat(row.totalMerchAmt + row.totalAddOnAmt - row.totalCommissionAmt).toFixed(2),
+    selector: (row) =>
+      "$" +
+      parseFloat(
+        row.totalMerchAmt +
+          row.totalAddOnAmt -
+          row.totalCommissionAmt -
+          row.totalDiscount
+      ).toFixed(2),
     width: "114px",
     sortable: true,
   },
@@ -661,12 +676,14 @@ export const payColumns = [
   },
   {
     name: "Due",
-    selector: (row) => "$" + parseFloat(row.totalMerchAmt + row.totalAddOnAmt - row.totalCommissionAmt).toFixed(2),
+    selector: (row) =>
+      "$" +
+      parseFloat(
+        row.totalMerchAmt + row.totalAddOnAmt - row.totalCommissionAmt
+      ).toFixed(2),
     sortable: true,
     width: "114px",
   },
-
-
 ];
 export const transactionColumns = [
   {
@@ -682,9 +699,9 @@ export const transactionColumns = [
   },
   {
     name: "Transaction ID",
-    selector: row => row.transaction_id,
+    selector: (row) => row.transaction_id,
     sortable: true,
-    width: "160px"
+    width: "160px",
   },
   {
     name: "Deposited on",
@@ -706,11 +723,22 @@ export const transactionColumns = [
   },
   {
     name: "Action",
-    selector: (row) =>
+    selector: (row) => (
       <div>
-        <Link className="btn btn-primary mx-2 my-1" to={{ pathname: `/deposit_money/1`, query: { ...row } }} >Pay</Link>
-        <Link className="btn btn-warning mx-2 my-1" to={{ pathname: `/commission_tracking/`, query: { ...row } }}>View</Link>
-      </div>,
+        <Link
+          className="btn btn-primary mx-2 my-1"
+          to={{ pathname: `/deposit_money/1`, query: { ...row } }}
+        >
+          Pay
+        </Link>
+        <Link
+          className="btn btn-warning mx-2 my-1"
+          to={{ pathname: `/commission_tracking/`, query: { ...row } }}
+        >
+          View
+        </Link>
+      </div>
+    ),
     sortable: true,
     width: "168px",
   },
@@ -744,11 +772,17 @@ export const reviewColumns = [
     name: "Review",
     selector: (row, index) => (
       <div className="text-justify">
-        <h6 className="text-warning"><span> {row.rating} <i className="fa fa-star" /> </span> </h6>
-        <p className="crop" id="test" >
+        <h6 className="text-warning">
+          <span>
+            {" "}
+            {row.rating} <i className="fa fa-star" />{" "}
+          </span>{" "}
+        </h6>
+        <p className="crop" id="test">
           {row.details}
         </p>
-      </div >),
+      </div>
+    ),
     width: 360,
     sortable: true,
   },

@@ -17,6 +17,7 @@ export default function TransactionDetails() {
     payout_start_date: "",
     payout_end_date: "",
   });
+  const [_id, setID] = useState("");
   const [payouts, setPayouts] = useState([]);
   const { id } = useParams();
   const fetchChefPayouts = async (id) => {
@@ -25,6 +26,7 @@ export default function TransactionDetails() {
     );
     const { data } = response;
     setState(data);
+    setID(id);
   };
   const pastPayments = async (id) => {
     const response = await axios.get(
@@ -32,6 +34,7 @@ export default function TransactionDetails() {
     );
     const { data } = response;
     setPayouts(data);
+    setID(id);
   };
   useEffect(() => {
     let component = true;
@@ -64,7 +67,7 @@ export default function TransactionDetails() {
               className="btn btn-sm btn-warning"
               to={{
                 pathname: `/commission_tracking/`,
-                query: { ...state },
+                query: { ...state, _id },
                 state: { background: location },
               }}
             >
@@ -92,6 +95,7 @@ export default function TransactionDetails() {
                 {parseFloat(
                   parseFloat(totalBaseIncome) + parseFloat(totalAddOnRevenue)
                 ) -
+                  parseFloat(totalDiscount) -
                   parseFloat(
                     parseFloat(totalBaseIncome) + parseFloat(totalAddOnRevenue)
                   ).toFixed(2) *
@@ -109,7 +113,7 @@ export default function TransactionDetails() {
               </div>
             </div>
             <div className="col-sm-4">
-              <h5>Next Paymet</h5>
+              <h5>Next Payment</h5>
               <span>
                 {moment(payout_end_date).add(2, "days").format("Do MMM")}
               </span>
@@ -122,7 +126,7 @@ export default function TransactionDetails() {
         data={payouts}
         columns={transactionColumns}
         flag={true}
-        id={id}
+        id={_id}
       />
     </>
   );
