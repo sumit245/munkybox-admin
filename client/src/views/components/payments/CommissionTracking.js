@@ -12,7 +12,7 @@ export default function CommissionTracking() {
     totalAddOnRevenue: "",
     payout_start_date: "",
     payout_end_date: "",
-    _id:""
+    _id: "",
   });
   const [loaded, setLoaded] = useState(false);
   const { query } = useLocation();
@@ -38,7 +38,7 @@ export default function CommissionTracking() {
         <div className="ibox-title">
           <h5>Commission Tracking</h5>
           <div className="ibox-tools">
-            <a className="close-link" href={"/view_transaction/" + _id }>
+            <a className="close-link" href={"/view_transaction/" + _id}>
               <i className="fa fa-times" />
             </a>
           </div>
@@ -107,7 +107,7 @@ export default function CommissionTracking() {
               </div>
               <div className="float-right">
                 <h4 className="text-danger float-right">
-                  ${parseFloat(totalDiscount).toFixed(2)}
+                  - ${parseFloat(totalDiscount).toFixed(2)}
                 </h4>
               </div>
             </div>
@@ -117,7 +117,7 @@ export default function CommissionTracking() {
               </div>
               <div className="float-right">
                 <h4 className="text-danger float-right">
-                  ${parseFloat(due).toFixed(2)}
+                  - ${parseFloat(due).toFixed(2)}
                 </h4>
               </div>
             </div>

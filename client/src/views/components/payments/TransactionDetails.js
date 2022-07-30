@@ -26,6 +26,7 @@ export default function TransactionDetails() {
     );
     const { data } = response;
     setState(data);
+    console.log(data);
     setID(id);
   };
   const pastPayments = async (id) => {
@@ -95,6 +96,7 @@ export default function TransactionDetails() {
                 {parseFloat(
                   parseFloat(totalBaseIncome) + parseFloat(totalAddOnRevenue)
                 ) -
+                  parseFloat(due) -
                   parseFloat(totalDiscount) -
                   parseFloat(
                     parseFloat(totalBaseIncome) + parseFloat(totalAddOnRevenue)

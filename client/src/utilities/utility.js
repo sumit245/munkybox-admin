@@ -662,7 +662,8 @@ export const payColumns = [
         row.totalMerchAmt +
           row.totalAddOnAmt -
           row.totalCommissionAmt -
-          row.totalDiscount
+          row.totalDiscount -
+          row.totalBannerDue
       ).toFixed(2),
     width: "114px",
     sortable: true,
@@ -679,7 +680,11 @@ export const payColumns = [
     selector: (row) =>
       "$" +
       parseFloat(
-        row.totalMerchAmt + row.totalAddOnAmt - row.totalCommissionAmt
+        row.totalMerchAmt +
+          row.totalAddOnAmt -
+          row.totalCommissionAmt -
+          row.totalDiscount -
+          row.totalBannerDue
       ).toFixed(2),
     sortable: true,
     width: "114px",
@@ -693,19 +698,22 @@ export const transactionColumns = [
   },
   {
     name: "Amount",
-    selector: (row) => row.totalBaseIncome,
+    selector: (row) => row.chefBalance,
     width: "178px",
     sortable: true,
   },
   {
     name: "Transaction ID",
-    selector: (row) => row.transaction_id,
+    selector: (row) => row.txn_id,
     sortable: true,
     width: "160px",
   },
   {
     name: "Deposited on",
-    selector: (row) => row.deposited_on,
+    selector: (row) =>
+      moment(row.deposit_date).isValid()
+        ? moment(row.deposit_date).format("DD/MM/YYYY HH:mm:ss A")
+        : "",
     width: "140px",
     sortable: true,
   },
@@ -723,13 +731,15 @@ export const transactionColumns = [
   },
   {
     name: "Action",
-    selector: (row) => (
+    selector: (row, index) => (
       <div>
         <Link
-          className="btn btn-primary mx-2 my-1"
-          to={{ pathname: `/deposit_money/1`, query: { ...row } }}
+          className={`btn ${
+            row.status === "Paid" ? "btn-secondary" : "btn-primary"
+          } mx-2 my-1`}
+          to={{ pathname: `/deposit_money/${index}`, query: { ...row } }}
         >
-          Pay
+          {row.status === "Paid" ? "Paid" : "Pay"}
         </Link>
         <Link
           className="btn btn-warning mx-2 my-1"

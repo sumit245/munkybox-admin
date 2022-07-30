@@ -6,6 +6,7 @@ const Orders = require("../models/orders.model");
 const Payout = require("../models/payouts.model");
 const RestaurantDashboard = require("../models/restaurant_dashboard.model");
 const Payoutcycle = require("../models/payoutcylce.model");
+const Transaction = require("../models/transactions.model");
 
 router.route("/").get(async (req, res) => {
   const restaurants = await NewRestaurant.find(
@@ -13,7 +14,7 @@ router.route("/").get(async (req, res) => {
     { restaurant_id: 1, restaurant_name: 1, email: 1 }
   );
   const orders = await Orders.find(
-    {},
+    { status: { $ne: "rejected" } },
     {
       order_id: 1,
       restaurant_id: 1,
@@ -29,7 +30,10 @@ router.route("/").get(async (req, res) => {
   function add(accumulator, a) {
     return parseFloat(accumulator) + parseFloat(a);
   }
-
+  const dashboard = await RestaurantDashboard.find(
+    {},
+    { restaurant_id: 1, banners: 1, coupons: 1 }
+  );
   let payouts = [];
   restaurants.forEach((restaurant) => {
     payouts.push({
@@ -40,6 +44,23 @@ router.route("/").get(async (req, res) => {
         .filter((order) => order.restaurant_id === restaurant.restaurant_id)
         .map((item) => item.base_price)
         .reduce(add, 0),
+      totalBannerDue:
+        dashboard
+          .filter(
+            (dashboard) => dashboard.restaurant_id === restaurant.restaurant_id
+          )
+          .map((dash) => dash.banners)
+          .flat().length > 0
+          ? dashboard
+              .filter(
+                (dashboard) =>
+                  dashboard.restaurant_id === restaurant.restaurant_id
+              )
+              .map((dash) => dash.banners)
+              .flat()
+              .map((banner) => banner.due)
+              .reduce(add, 0)
+          : 0,
       totalDiscount: orders
         .filter(
           (order) =>
@@ -192,7 +213,13 @@ router.route("/getchefpayout/:rest_id").get(async (req, res) => {
   });
 
   let { banners } = dashboard;
-  let dues = banners.map((item) => item.due);
+  let dues = banners
+    .filter(
+      (item) =>
+        item.status === "Inactive" &&
+        moment(item.end_date).isBetween(moment(start_date), moment(end_date))
+    )
+    .map((item) => item.due);
   let dueAmt = dues.reduce(add, 0);
 
   res.json({
@@ -208,66 +235,6 @@ router.route("/getchefpayout/:rest_id").get(async (req, res) => {
     totalAddOnRevenue: totalPrice,
   });
 });
-//get current payout for all chef
-
-// router.route("/getAdminRevenue/").get(async (req, res) => {
-//   function add(accumulator, a) {
-//     return parseFloat(accumulator) + parseFloat(a);
-//   }
-
-//   const payoutcycle = await Payoutcycle.findOne({ status: "current" });
-//   const { start_date, end_date } = payoutcycle;
-//   const myorders = await Orders.find({
-//     $and: [
-//       { restaurant_id: req.params.rest_id },
-//       {
-//         $or: [
-//           { status: "accepted" },
-//           { status: "started" },
-//           { status: "completed" },
-//         ],
-//       },
-//     ],
-//   });
-
-//   let updatedorders = myorders.filter((item) =>
-//     moment(item.order_time).isBetween(
-//       moment(start_date),
-//       moment(end_date),
-//       null,
-//       "[]"
-//     )
-//   );
-
-//   const basePrices = updatedorders.map((order) => order.base_price);
-//   let totalBaseIncome = basePrices.reduce(add, 0);
-//   const discounts = updatedorders.filter(item => item.promo_id !== "PROMOADMIN").map((order) => order.discount);
-//   let totalDiscount = discounts.reduce(add, 0);
-
-//   let x = updatedorders.map((order) => order.add_on);
-
-//   let addOns = updatedorders.map((el) => el.add_on);
-//   addOns = [].concat.apply([], addOns)
-//   addOns = addOns.reduce((prev, curr) => prev.concat(curr))
-//   let quantities = addOns.map((item) => item.qty);
-//   let totalCount = quantities.reduce(add, 0);
-
-//   let prices = addOns.map((item) => item.subtotal);
-//   let totalPrice = prices.reduce(add, 0);
-
-//   const dashboard = await RestaurantDashboard.find();
-
-//   let { banners } = dashboard;
-//   let dues = banners.map((item) => item.due);
-//   let dueAmt = dues.reduce(add, 0);
-
-//   res.json({
-//     income: income,
-//     orders: orders,
-//     commission: commission,
-//     paidtochef:paidtochef
-//   });
-// });
 //get current payout for all chef
 
 router.route("/getpastpayout/:rest_id").get(async (req, res) => {
@@ -297,42 +264,120 @@ router.route("/getpastpayout/:rest_id").get(async (req, res) => {
   const dashboard = await RestaurantDashboard.findOne({
     restaurant_id: req.params.rest_id,
   });
+  const restaurantDetails = await NewRestaurant.findOne({
+    restaurant_id: req.params.rest_id,
+  });
+  const transaction = await Transaction.find({
+    restaurant_id: req.params.rest_id,
+  });
   let pp = pastpayouts.map((item) => {
     let sd = item.start_date;
     let nd = item.end_date;
+    let currentTransaction = transaction.filter(
+      (txn) => txn.start_date === sd && txn.end_date === nd
+    );
+    currentTransaction = currentTransaction[0];
+    let txn_id =
+      typeof currentTransaction === "object" &&
+      Object.keys(currentTransaction, "txn_id")
+        ? currentTransaction.txn_id
+        : "";
+    let deposit_date =
+      typeof currentTransaction === "object" &&
+      Object.keys(currentTransaction, "deposit_date")
+        ? currentTransaction.deposit_date
+        : "";
+    let status =
+      typeof currentTransaction === "object" &&
+      Object.keys(currentTransaction, "status")
+        ? currentTransaction.status
+        : "";
     let updatedorders = myorders.filter((item) =>
       moment(item.order_time).isBetween(moment(sd), moment(nd), null, "[]")
     );
     const basePrices = updatedorders.map((order) => order.base_price);
-    const addOns = updatedorders.map((el) => el.add_on);
-    let quantities = addOns.map((extras) => extras.map((item) => item.qty));
-    let subtotal = quantities.map((item) => item.reduce(add, 0));
-    let totalCount = subtotal.reduce(add, 0);
+    let totalAddOns =
+      updatedorders.map((item) => item.add_on).length > 0
+        ? [].concat
+            .apply(
+              [],
+              updatedorders.flatMap((item) => item.add_on)
+            )
+            .map((item) => item.qty)
+            .reduce(add, 0)
+        : 0;
 
-    let prices = addOns.map((extras) => extras.map((item) => item.subtotal));
-    let subtotalPrice = prices.map((item) => item.reduce(add, 0));
-    let totalPrice = subtotalPrice.reduce(add, 0);
+    let totalAddOnRevenue =
+      updatedorders.map((item) => item.add_on).length > 0
+        ? [].concat
+            .apply(
+              [],
+              updatedorders.flatMap((item) => item.add_on)
+            )
+            .map((item) => item.subtotal)
+            .reduce(add, 0)
+        : 0;
     let totalBaseIncome = basePrices.reduce(add, 0);
-    const discounts = updatedorders.map((order) => order.discount);
+    let totalCommission = totalBaseIncome * 0.1;
+    const discounts = updatedorders
+      .filter((order) => order.promo_id !== "PROMOADMIN")
+      .map((order) => order.discount);
     let totalDiscount = discounts.reduce(add, 0);
+    let AdOnsCommission = totalAddOnRevenue * 0.1;
     let { banners } = dashboard;
-    let dues = banners.map((item) => item.due);
+    let dues = banners
+      .filter(
+        (item) =>
+          item.status === "Inactive" &&
+          moment(item.end_date).isBetween(moment(sd), moment(nd))
+      )
+      .map((item) => item.due);
     let dueAmt = dues.reduce(add, 0);
+    const { account_number, bank_name, branch_number, institution_number } =
+      restaurantDetails;
+    let chefBalance = parseFloat(
+      totalBaseIncome +
+        totalAddOnRevenue -
+        AdOnsCommission -
+        totalCommission -
+        totalDiscount -
+        dueAmt
+    ).toFixed(2);
     return {
-      restID: req.params.id,
+      restID: req.params.rest_id,
+      account_number: account_number,
+      bank_name: bank_name,
+      branch_number: branch_number,
+      institution_number: institution_number,
       orders: updatedorders,
+      totalAddOns: totalAddOns,
       numOrders: updatedorders.length,
       totalBaseIncome: totalBaseIncome,
+      totalCommission: totalCommission,
       totalDiscount: totalDiscount,
       due: dueAmt,
+      totalAddOnRevenue: totalAddOnRevenue,
+      chefBalance: chefBalance,
+      txn_id: txn_id,
+      status: status,
+      deposit_date: deposit_date,
       payout_end_date: nd,
       payout_start_date: sd,
-      totalAddOns: totalCount,
-      totalAddOnRevenue: totalPrice,
     };
   });
   res.json(pp);
 });
 //get past payout for all chef
+
+router.route("/deposit").post(async (req, res) => {
+  let transaction = new Transaction(req.body);
+  const response = await transaction.save();
+  if (response) {
+    res.json({
+      data: response,
+      status: 200,
+    });
+  }
+});
 
 module.exports = router;

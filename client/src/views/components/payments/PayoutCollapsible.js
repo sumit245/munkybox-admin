@@ -11,6 +11,7 @@ export default function PayoutCollapsible({ data }) {
   const [admindiscount, setAdminDiscount] = useState(0);
   const [balance, setBalance] = useState(0);
   const [loaded, setLoaded] = useState(false);
+  const [bannerDue, setBannerDue] = useState(0);
   useEffect(() => {
     setID(data.restID);
     setOrderAmt(data.totalMerchAmt);
@@ -18,6 +19,7 @@ export default function PayoutCollapsible({ data }) {
     setCommission(data.commissionAmt);
     setAddOnCommission(data.totalAddOnCommissionAmt);
     setPaid(data.paidAmt);
+    setBannerDue(data.totalBannerDue);
     setDiscount(data.totalDiscount);
     setAdminDiscount(data.totalAdminDiscount);
     setBalance(data.payable);
@@ -61,7 +63,7 @@ export default function PayoutCollapsible({ data }) {
               </div>
               <div className="col-sm-6">
                 <span className="collapsible-details">Banner Due:</span>
-                <span>$0.00</span>
+                <span>$ {parseFloat(bannerDue).toFixed(2)}</span>
               </div>
             </div>
             <div className="row">
@@ -74,7 +76,12 @@ export default function PayoutCollapsible({ data }) {
                 <span>
                   $
                   {parseFloat(
-                    order_amt + add_on_amt - commission - add_on_commission-discount
+                    order_amt +
+                      add_on_amt -
+                      commission -
+                      add_on_commission -
+                      discount -
+                      bannerDue
                   ).toFixed(2)}
                 </span>
               </div>
