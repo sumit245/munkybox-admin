@@ -163,12 +163,13 @@ router.route("/forchefhome/:restaurant_id").get(async (req, res) => {
     restaurant_id: req.params.restaurant_id,
     $or: [{ status: "accepted" }, { status: "started" }],
   });
+
   const restaurant = await NewRestaurant.findOne({
     restaurant_id: req.params.restaurant_id,
   });
   const { meals } = restaurant;
   const dateInNumber = moment().day();
-  const meal = meals[dateInNumber];
+  const meal = meals[dateInNumber - 1];
   const { meal_name, add_on } = meal;
   let add_on_name =
     Array.isArray(add_on) && add_on.length !== 0
