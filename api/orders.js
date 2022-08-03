@@ -159,11 +159,17 @@ router.route("/cancelled/:restaurant_id").get(async (req, res) => {
 //get cancelled orders
 
 router.route("/forchefhome/:restaurant_id").get(async (req, res) => {
+  function add(accumulator, a) {
+    return parseFloat(accumulator) + parseFloat(a);
+  }
   const activeorders = await Order.find({
     restaurant_id: req.params.restaurant_id,
     $or: [{ status: "accepted" }, { status: "started" }],
   });
-
+  let orderedAdOns = [].concat.apply(
+    [],
+    activeorders.flatMap((item) => item.add_on)
+  );
   const restaurant = await NewRestaurant.findOne({
     restaurant_id: req.params.restaurant_id,
   });
@@ -171,15 +177,34 @@ router.route("/forchefhome/:restaurant_id").get(async (req, res) => {
   const dateInNumber = moment().day();
   const meal = meals[dateInNumber - 1];
   const { meal_name, add_on } = meal;
+  let add_on_keys = ["add_on_name", "qty"];
   let add_on_name =
     Array.isArray(add_on) && add_on.length !== 0
       ? add_on.map((data) => data.add_on)
       : [];
+  let filtered_add_ons = [];
+  add_on_name.forEach((add_on) =>
+    filtered_add_ons.push(
+      orderedAdOns
+        .filter((item) => item.item === add_on)
+        .map((item) => item.qty)
+        .reduce(add, 0)
+    )
+  );
+  let add_ons_orders = [];
+  add_on_name.forEach((element, index) => {
+    let obj = {
+      add_on_name: add_on_name[index],
+      qty: filtered_add_ons[index],
+    };
+    add_ons_orders.push(obj);
+  });
+
   res.json({
     activeorders: activeorders,
     count: activeorders.length,
     meal_name: meal_name,
-    add_on: add_on_name,
+    add_ons: add_ons_orders,
   });
 });
 //get active orders
