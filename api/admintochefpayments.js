@@ -187,26 +187,35 @@ router.route("/getchefpayout/:rest_id").get(async (req, res) => {
     .filter((item) => item.promo_id !== "PROMOADMIN")
     .map((order) => order.discount);
   let totalDiscount = discounts.reduce(add, 0);
-
   let x = updatedorders.map((order) => order.add_on);
 
-  let addOns = updatedorders.map((el) => el.add_on);
+  let addOns = myorders.map((el) => el.add_on);
   addOns = [].concat.apply([], addOns);
+  let currentAdOns = addOns;
+  // addOns.filter((item) => item.item === "Pie");
+
   const dimensions = [
-    addOns.length,
-    addOns.reduce((x, y) => Math.max(x, y.length), 0),
+    currentAdOns.length,
+    currentAdOns.reduce((x, y) => Math.max(x, y.length), 0),
   ];
   let totalCount = 0;
+  let totalPrice = 0;
   if (dimensions[0] !== 0) {
-    addOns = addOns.reduce((prev, curr) => prev.concat(curr));
-    let quantities = addOns.map((item) => item.qty);
-    totalCount = quantities.reduce(add, 0);
+    currentAdOns = [].concat.apply([], currentAdOns);
+    currentAdOns = currentAdOns.filter((item) =>
+      moment(item.order_date).isBetween(
+        moment(start_date),
+        moment(end_date),
+        null,
+        "[]"
+      )
+    );
+    totalCount = currentAdOns.map((item) => item.qty).reduce(add, 0);
+    totalPrice = currentAdOns.map((item) => item.subtotal).reduce(add, 0);
   } else {
     totalCount = 0;
+    totalPrice = 0;
   }
-
-  let prices = addOns.map((item) => item.subtotal);
-  let totalPrice = prices.reduce(add, 0);
 
   const dashboard = await RestaurantDashboard.findOne({
     restaurant_id: req.params.rest_id,
@@ -233,6 +242,8 @@ router.route("/getchefpayout/:rest_id").get(async (req, res) => {
     payout_end_date: end_date,
     totalAddOns: totalCount,
     totalAddOnRevenue: totalPrice,
+    currentAdOns: currentAdOns,
+    today: moment("27-Jul-2022"),
   });
 });
 //get current payout for all chef
@@ -303,6 +314,14 @@ router.route("/getpastpayout/:rest_id").get(async (req, res) => {
               [],
               updatedorders.flatMap((item) => item.add_on)
             )
+            .filter((item) =>
+              moment(item.order_date).isBetween(
+                moment(sd),
+                moment(nd),
+                null,
+                "[]"
+              )
+            )
             .map((item) => item.qty)
             .reduce(add, 0)
         : 0;
@@ -313,6 +332,14 @@ router.route("/getpastpayout/:rest_id").get(async (req, res) => {
             .apply(
               [],
               updatedorders.flatMap((item) => item.add_on)
+            )
+            .filter((item) =>
+              moment(item.order_date).isBetween(
+                moment(sd),
+                moment(nd),
+                null,
+                "[]"
+              )
             )
             .map((item) => item.subtotal)
             .reduce(add, 0)
