@@ -186,11 +186,16 @@ router.route("/forchefhome/:restaurant_id").get(async (req, res) => {
   add_on_name.forEach((add_on) =>
     filtered_add_ons.push(
       orderedAdOns
-        .filter((item) => item.item === add_on)
+        .filter(
+          (item) =>
+            item.item === add_on &&
+            item.order_date === moment().format("DD-MMM-YYYY")
+        )
         .map((item) => item.qty)
         .reduce(add, 0)
     )
   );
+  let total_ad_on = filtered_add_ons.reduce(add, 0);
   let add_ons_orders = [];
   add_on_name.forEach((element, index) => {
     let obj = {
@@ -205,6 +210,7 @@ router.route("/forchefhome/:restaurant_id").get(async (req, res) => {
     count: activeorders.length,
     meal_name: meal_name,
     add_ons: add_ons_orders,
+    add_on_count: total_ad_on,
   });
 });
 //get active orders
