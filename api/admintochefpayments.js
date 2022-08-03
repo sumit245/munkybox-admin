@@ -308,11 +308,11 @@ router.route("/getpastpayout/:rest_id").get(async (req, res) => {
     );
     const basePrices = updatedorders.map((order) => order.base_price);
     let totalAddOns =
-      updatedorders.map((item) => item.add_on).length > 0
+      myorders.map((item) => item.add_on).length > 0
         ? [].concat
             .apply(
               [],
-              updatedorders.flatMap((item) => item.add_on)
+              myorders.flatMap((item) => item.add_on)
             )
             .filter((item) =>
               moment(item.order_date).isBetween(
@@ -327,11 +327,11 @@ router.route("/getpastpayout/:rest_id").get(async (req, res) => {
         : 0;
 
     let totalAddOnRevenue =
-      updatedorders.map((item) => item.add_on).length > 0
+      myorders.map((item) => item.add_on).length > 0
         ? [].concat
             .apply(
               [],
-              updatedorders.flatMap((item) => item.add_on)
+              myorders.flatMap((item) => item.add_on)
             )
             .filter((item) =>
               moment(item.order_date).isBetween(
