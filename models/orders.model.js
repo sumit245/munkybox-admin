@@ -31,6 +31,7 @@ let Order = new Schema({
   order_time: {
     type: String,
   },
+  expiry_time: String,
   status: {
     type: String,
     default: "pending",
