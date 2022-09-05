@@ -88,10 +88,32 @@ export const ViewOrders = () => {
     taxes;
   const downloadPdf = async () => {
     const res = await axios.post("/api/orders/create-pdf", {
-      name: order.user_name,
-      receiptId: order.order_id,
-      price1: 0,
-      price2: 0,
+      order_time,
+      add_on,
+      time,
+      address,
+      category,
+      discount,
+      email_id,
+      end_date,
+      meal_type,
+      notes,
+      order_id,
+      card,
+      phone,
+      plan,
+      price,
+      delivery_fee,
+      restaurant_id,
+      service_fee,
+      taxes,
+      tip,
+      total,
+      restaurant,
+      start_date,
+      user_id,
+      user_name,
+      restaddress,
     });
     const response = await axios.get("/api/orders/fetch-pdf", {
       responseType: "blob",
@@ -279,5 +301,3 @@ export const ViewOrders = () => {
     return <ShowCard card={card} closeHandler={closeHandler} />;
   }
 };
-
-// ReactDOM.render(<ViewOrders />, document.getElementById('root'));

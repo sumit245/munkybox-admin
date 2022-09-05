@@ -172,6 +172,31 @@ router.put("/addaddress/:id", function (req, res) {
   });
 });
 //add an address
+router.put("/changeaddress/:id", function (req, res) {
+  const id = req.params.id;
+  const address = req.body.addresses;
+  Users.findById(id, function (err, user) {
+    if (user) {
+      user.addresses = address;
+      user
+        .save()
+        .then((user) => user)
+        .then((response) => {
+          res.json({
+            statusText: "updated",
+            data: response,
+            msg: "Address Added Successfully",
+          });
+        })
+        .catch((err) => {
+          res.status(400).send("adding new address failed");
+        });
+    } else {
+      res.json({ statusText: "NF", msg: "Please login first to proceed" });
+    }
+  });
+});
+//add an address
 
 router.put("/editaddress/:id", function (req, res) {
   let id = req.params.id;

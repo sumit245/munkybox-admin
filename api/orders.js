@@ -3,12 +3,8 @@ const moment = require("moment");
 const router = express.Router();
 const Order = require("../models/orders.model");
 const NewRestaurant = require("../models/newrest.model");
-const stripe = require("stripe");
 const pdfTemplate = require("../receipt");
 const pdf = require("html-pdf");
-// const pdf = require("pdf-creator-node");
-// const fs = require("fs");
-// const html = fs.readFileSync("template/template.html", "utf-8");
 
 router.route("/create-pdf/").post(async (req, res) => {
   pdf
@@ -24,58 +20,6 @@ router.route("/create-pdf/").post(async (req, res) => {
 router.route("/fetch-pdf").get(async (req, res) => {
   await res.sendFile(`${__dirname}/receipt.pdf`);
 });
-
-// const options = {
-//   format: "A4",
-//   orientation: "portrait",
-//   border: "10mm",
-//   header: {
-//     height: "45mm",
-//     contents: '<div style="text-align: center;">Author: Shyam Hajare</div>',
-//   },
-//   footer: {
-//     height: "28mm",
-//     contents: {
-//       first: "Cover page",
-//       2: "Second page", // Any page number is working. 1-based index
-//       default:
-//         '<span style="color: #444;">{{page}}</span>/<span>{{pages}}</span>', // fallback value
-//       last: "Last Page",
-//     },
-//   },
-// };
-// var users = [
-//   {
-//     name: "Shyam",
-//     age: "26",
-//   },
-//   {
-//     name: "Navjot",
-//     age: "26",
-//   },
-//   {
-//     name: "Vitthal",
-//     age: "26",
-//   },
-// ];
-// var document = {
-//   html: html,
-//   data: {
-//     users: users,
-//   },
-//   path: "./output.pdf",
-//   type: "",
-// };
-// router.route("/generate").get(function (req, resp) {
-//   pdf
-//     .create(document, options)
-//     .then((res) => {
-//       resp.sendFile(`${__dirname}/output.pdf`)
-//     })
-//     .catch((error) => {
-//       console.error(error);
-//     });
-// });
 
 router.route("/").get(function (req, res) {
   Order.find(function (err, order) {

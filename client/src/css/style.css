@@ -4900,6 +4900,7 @@ body.mini-navbar.fixed-sidebar .logo-element {
 .invoice-table thead > tr > th:nth-child(2) {
   text-align: right;
 }
+
 .invoice-total > tbody > tr > td:first-child {
   text-align: right;
 }
