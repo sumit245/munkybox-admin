@@ -55,7 +55,6 @@ export default function TopNavigation({ setLoggedIn }) {
       </div>
 
       <ul className="nav navbar-top-links navbar-right">
-
         <li>
           <NavDropdown
             title={envelope}
@@ -94,15 +93,6 @@ export default function TopNavigation({ setLoggedIn }) {
             </NavDropdown.Item>
           </NavDropdown>
         </li>
-        <li>
-          <NavDropdown title={notifications}>
-            <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-            <NavDropdown.Item href="#action4">Another action</NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item href="#action5">View All</NavDropdown.Item>
-          </NavDropdown>
-        </li>
-
         <li>
           <a href="/" onClick={logout} >
             <i className="fa fa-sign-out" /> Log out

@@ -23,25 +23,30 @@ export default function OrdersChart() {
       let completedOrders = await orders.filter(
         (item) => item.status === "completed"
       );
+      let rejectedOrders = await orders.filter(
+        (item) => item.status === "rejected"
+      );
       let totalPrices = await orders.map((item) => item.total);
       let totalDelivery = await orders.map((item) => item.delivery_fee);
       let tips = await orders.map((item) => item.tip);
-      let totalService = await orders.map((item) => (item.service_fee * 0.01 * item.price));
-      let taxes = await orders.map(item => (
-        (parseFloat(item.price) +
-          parseFloat(item.service_fee * 0.01 * item.price) +
-          parseFloat(item.delivery_fee) -
-          parseFloat(item.discount) +
-          parseFloat(item.tip)) *
-        (0.01 *
-          item.taxes)
-      ))
+      let totalService = await orders.map(
+        (item) => item.service_fee * 0.01 * item.price
+      );
+      let taxes = await orders.map(
+        (item) =>
+          (parseFloat(item.price) +
+            parseFloat(item.service_fee * 0.01 * item.price) +
+            parseFloat(item.delivery_fee) -
+            parseFloat(item.discount) +
+            parseFloat(item.tip)) *
+          (0.01 * item.taxes)
+      );
       let price = totalPrices.reduce(add, 0);
       let servicefees = totalService.reduce(add, 0);
       let delivery = totalDelivery.reduce(add, 0);
       let tax = taxes.reduce(add, 0);
       let tip = tips.reduce(add, 0);
-      
+
       setInProgress(startedOrders.length);
       setCompleted(completedOrders.length);
       setTotalCustomerPrice(price);
@@ -65,29 +70,43 @@ export default function OrdersChart() {
             </div>
             <div className="ibox-content">
               <div className="row justify-content-between mb-1">
-                <div className="card col-lg-6 bg-primary">
+                <div className="card col-4 bg-primary">
                   <div className="card-body">
                     <h5 className="text-white">Total Orders</h5>
                     <h1 className="no-margins">{orders && orders.length}</h1>
                   </div>
                 </div>
-
-                <div className="card col-lg-6 bg-warning">
-                  <h5 className="text-white">In Progress</h5>
-                  <h1 className="no-margins">{inProgress}</h1>
+                <div className="card col-4 bg-warning">
+                  <div className="card-body">
+                    <h5 className="text-white">Pending</h5>
+                    <h1 className="no-margins">{inProgress}</h1>
+                  </div>
+                </div>
+                <div className="card col-4 bg-info">
+                  <div className="card-body">
+                    <h5 className="text-white">In Progress</h5>
+                    <h1 className="no-margins">{inProgress}</h1>
+                  </div>
                 </div>
               </div>
-              <div className="row justify-content-between mt-1">
-                <div className="card col-lg-6 bg-success">
+              <div className="row justify-content-between mb-1">
+                <div className="card col-4 bg-success">
                   <div className="card-body">
                     <h5 className="text-white">Completed</h5>
                     <h1 className="no-margins">{completed}</h1>
                   </div>
                 </div>
-
-                <div className="card col-lg-6 bg-danger">
-                  <h5 className="text-white">Cancelled</h5>
-                  <h1 className="no-margins">0</h1>
+                <div className="card col-4 bg-danger">
+                  <div className="card-body">
+                    <h5 className="text-white">Rejected</h5>
+                    <h1 className="no-margins">0</h1>
+                  </div>
+                </div>
+                <div className="card col-4 bg-secondary">
+                  <div className="card-body">
+                    <h5 className="text-white">Cancelled</h5>
+                    <h1 className="no-margins text-white">0</h1>
+                  </div>
                 </div>
               </div>
             </div>
@@ -100,7 +119,7 @@ export default function OrdersChart() {
             </div>
             <div className="ibox-content">
               <div className="row justify-content-between mb-1">
-                <div className="card col-lg-4 bg-primary">
+                <div className="card col-4 bg-primary p-2">
                   <div className="card-body">
                     <h5 className="text-white">Meal Plan</h5>
                     <h3 className="no-margins">
@@ -109,7 +128,7 @@ export default function OrdersChart() {
                   </div>
                 </div>
 
-                <div className="card col-lg-4 bg-warning">
+                <div className="card col-4 bg-warning p-2">
                   <div className="card-body">
                     <h5 className="text-white">Service Charges</h5>
                     <h3 className="no-margins">
@@ -117,7 +136,7 @@ export default function OrdersChart() {
                     </h3>
                   </div>
                 </div>
-                <div className="card col-lg-4 bg-info">
+                <div className="card col-lg-4 bg-info p-2">
                   <div className="card-body">
                     <h5 className="text-white">Delivery Charges</h5>
                     <h3 className="no-margins">
@@ -126,8 +145,8 @@ export default function OrdersChart() {
                   </div>
                 </div>
               </div>
-              <div className="row justify-content-between mt-1">
-                <div className="card col-lg-6 bg-success">
+              <div className="row justify-content-between mb-1">
+                <div className="card col-6 bg-success p-2">
                   <div className="card-body">
                     <h5 className="text-white">Tip</h5>
                     <h3 className="no-margins">
@@ -136,7 +155,7 @@ export default function OrdersChart() {
                   </div>
                 </div>
 
-                <div className="card col-lg-6 bg-danger">
+                <div className="card col-6 bg-danger p-2">
                   <div className="card-body">
                     <h5 className="text-white">Taxes</h5>
                     <h3 className="no-margins">
@@ -154,19 +173,6 @@ export default function OrdersChart() {
           <div className="ibox">
             <div className="ibox-title">
               <h5>Commission Revenue($)</h5>
-              <div className="float-right">
-                <div className="btn-group">
-                  <button type="button" className="btn btn-xs btn-white active">
-                    Today
-                  </button>
-                  <button type="button" className="btn btn-xs btn-white">
-                    Monthly
-                  </button>
-                  <button type="button" className="btn btn-xs btn-white">
-                    Annual
-                  </button>
-                </div>
-              </div>
             </div>
             <div className="ibox-content">
               <div className="row justify-content-between mt-1">
@@ -191,19 +197,6 @@ export default function OrdersChart() {
           <div className="ibox">
             <div className="ibox-title">
               <h5>Marketing Revenue($)</h5>
-              <div className="float-right">
-                <div className="btn-group">
-                  <button type="button" className="btn btn-xs btn-white active">
-                    Today
-                  </button>
-                  <button type="button" className="btn btn-xs btn-white">
-                    Monthly
-                  </button>
-                  <button type="button" className="btn btn-xs btn-white">
-                    Annual
-                  </button>
-                </div>
-              </div>
             </div>
             <div className="ibox-content">
               <div className="row justify-content-between mt-1">

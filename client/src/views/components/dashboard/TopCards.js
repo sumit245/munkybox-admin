@@ -23,16 +23,12 @@ export default function TopCards() {
       <div className="col-lg-3">
         <div className="ibox">
           <div className="ibox-title">
-            <span className="label label-success float-right">Monthly</span>
-            <h5>Requests</h5>
+            <h5>Partner Requests</h5>
           </div>
           <div className="ibox-content">
             <h1 className="no-margins">
               {requests && Object.keys(requests).length}
             </h1>
-            <div className="stat-percent font-bold text-danger">
-              0% <i className="fa fa-bolt" />
-            </div>
             <small>Total requests</small>
           </div>
         </div>
@@ -41,15 +37,11 @@ export default function TopCards() {
       <div className="col-lg-3">
         <div className="ibox">
           <div className="ibox-title">
-            <span className="label label-primary float-right">Low value</span>
-            <h5>User</h5>
+            <h5>Users</h5>
           </div>
           <div className="ibox-content">
             <h1 className="no-margins">{users && users.length}</h1>
-            <div className="stat-percent font-bold text-danger">
-              0% <i className="fa fa-level-down" />
-            </div>
-            <small>In first month</small>
+            <small>Total Users</small>
           </div>
         </div>
       </div>
@@ -57,15 +49,11 @@ export default function TopCards() {
       <div className="col-lg-3">
         <div className="ibox">
           <div className="ibox-title">
-            <span className="label label-info float-right">Annual</span>
             <h5>Orders</h5>
           </div>
           <div className="ibox-content">
             <h1 className="no-margins">{orders && orders.length}</h1>
-            <div className="stat-percent font-bold text-danger">
-              0% <i className="fa fa-level-up" />
-            </div>
-            <small>New orders</small>
+            <small>Total orders</small>
           </div>
         </div>
       </div>
@@ -73,17 +61,13 @@ export default function TopCards() {
       <div className="col-lg-3">
         <div className="ibox">
           <div className="ibox-title">
-            <span className="label label-primary float-right">Today</span>
             <h5>Restaurants</h5>
           </div>
           <div className="ibox-content">
             <h1 className="no-margins">
               {restaurant && Object.keys(restaurant).length}
             </h1>
-            <div className="stat-percent font-bold text-navy">
-              0% <i className="fa fa-level-up" />
-            </div>
-            <small>New visits</small>
+            <small>Total Restaurants</small>
           </div>
         </div>
       </div>
