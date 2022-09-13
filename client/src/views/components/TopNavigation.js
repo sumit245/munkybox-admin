@@ -13,17 +13,6 @@ const envelope = (
     ></span>
   </>
 );
-const notifications = (
-  <>
-    <i className="fa fa-bell" />
-    <span
-      className="label label-primary float-right"
-      style={{ width: 20, marginLeft: 2, marginTop: -10 }}
-    >
-      0
-    </span>
-  </>
-);
 export default function TopNavigation({ setLoggedIn }) {
   const [request, setRequest] = useState([]);
   useEffect(() => {
@@ -37,21 +26,19 @@ export default function TopNavigation({ setLoggedIn }) {
     });
   }, []);
   const logout = () => {
-    setLoggedIn(false)
+    setLoggedIn(false);
     localStorage.setItem(
       "logged_in_token",
       JSON.stringify({
-        logged_in: false
+        logged_in: false,
       })
-    )
-  }
+    );
+  };
 
   return (
     <nav className="navbar navbar-static-top white-bg">
       <div className="navbar-header">
-        <span className="logo-name">
-          Feasti
-        </span>
+        <span className="logo-name">Feasti</span>
       </div>
 
       <ul className="nav navbar-top-links navbar-right">
@@ -94,7 +81,7 @@ export default function TopNavigation({ setLoggedIn }) {
           </NavDropdown>
         </li>
         <li>
-          <a href="/" onClick={logout} >
+          <a href="/" onClick={logout}>
             <i className="fa fa-sign-out" /> Log out
           </a>
         </li>
