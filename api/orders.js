@@ -106,7 +106,7 @@ router.route("/forchefhome/:restaurant_id/:day").get(async (req, res) => {
   function add(accumulator, a) {
     return parseFloat(accumulator) + parseFloat(a);
   }
-  const activeorders = await Order.find({
+  let activeorders = await Order.find({
     restaurant_id: req.params.restaurant_id,
     $or: [{ status: "accepted" }, { status: "started" }],
   });
@@ -122,12 +122,18 @@ router.route("/forchefhome/:restaurant_id/:day").get(async (req, res) => {
   dateInNumber >= 0 ? dateInNumber : 1;
   let meal = [];
   let meal_name = "";
+  let count = 0;
   let type = "";
   let add_on = [];
   let add_ons_orders = [];
   let filtered_add_ons = [];
   let total_ad_on = 0;
   if (req.params.day === "Today") {
+    const today = moment();
+    activeorders = activeorders.filter((item) =>
+      today.isBetween(item.start_date, moment(item.end_date).add(1, "day"))
+    );
+    count = activeorders.length;
     meal = meals[dateInNumber - 1];
     meal_name = meal.meal_name;
     type = meal.type;
@@ -157,6 +163,11 @@ router.route("/forchefhome/:restaurant_id/:day").get(async (req, res) => {
       add_ons_orders.push(obj);
     });
   } else if (req.params.day === "Tomorrow") {
+    const today = moment().add(1, "days");
+    activeorders = activeorders.filter((item) =>
+      today.isBetween(item.start_date, moment(item.end_date).add(1, "day"))
+    );
+    count = activeorders.length;
     meal = meals[dateInNumber];
     meal_name = meal.meal_name;
     type = meal.type;
@@ -186,6 +197,11 @@ router.route("/forchefhome/:restaurant_id/:day").get(async (req, res) => {
       add_ons_orders.push(obj);
     });
   } else {
+    const today = moment().add(2, "days");
+    activeorders = activeorders.filter((item) =>
+      today.isBetween(item.start_date, moment(item.end_date).add(1, "day"))
+    );
+    count = activeorders.length;
     meal = meals[dateInNumber + 1];
     meal_name = meal.meal_name;
     type = meal.type;
@@ -217,7 +233,7 @@ router.route("/forchefhome/:restaurant_id/:day").get(async (req, res) => {
   }
   res.json({
     activeorders: activeorders,
-    count: activeorders.length,
+    count: count,
     meal_name: meal_name,
     add_ons: add_ons_orders,
     add_on_count: total_ad_on,
