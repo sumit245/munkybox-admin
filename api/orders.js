@@ -122,6 +122,7 @@ router.route("/forchefhome/:restaurant_id/:day").get(async (req, res) => {
   dateInNumber >= 0 ? dateInNumber : 1;
   let meal = [];
   let meal_name = "";
+  let type = "";
   let add_on = [];
   let add_ons_orders = [];
   let filtered_add_ons = [];
@@ -129,6 +130,7 @@ router.route("/forchefhome/:restaurant_id/:day").get(async (req, res) => {
   if (req.params.day === "Today") {
     meal = meals[dateInNumber - 1];
     meal_name = meal.meal_name;
+    type = meal.type;
     add_on = meal.add_on;
     let add_on_name =
       Array.isArray(add_on) && add_on.length !== 0
@@ -157,6 +159,7 @@ router.route("/forchefhome/:restaurant_id/:day").get(async (req, res) => {
   } else if (req.params.day === "Tomorrow") {
     meal = meals[dateInNumber];
     meal_name = meal.meal_name;
+    type = meal.type;
     add_on = meal.add_on;
     let add_on_name =
       Array.isArray(add_on) && add_on.length !== 0
@@ -185,6 +188,7 @@ router.route("/forchefhome/:restaurant_id/:day").get(async (req, res) => {
   } else {
     meal = meals[dateInNumber + 1];
     meal_name = meal.meal_name;
+    type = meal.type;
     add_on = meal.add_on;
     let add_on_name =
       Array.isArray(add_on) && add_on.length !== 0
@@ -217,6 +221,7 @@ router.route("/forchefhome/:restaurant_id/:day").get(async (req, res) => {
     meal_name: meal_name,
     add_ons: add_ons_orders,
     add_on_count: total_ad_on,
+    type: type,
   });
 });
 //get active orders
