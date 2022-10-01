@@ -27,7 +27,7 @@ router.route("/active").get(function (req, res) {
 
 router.route("/login").post(async (req, res) => {
   const newChef = await NewRestaurant.findOne({ phone: req.body.phone }).exec();
-  if (newChef) {
+  if (newChef && newChef.status !== "unapproved") {
     res.json({ status: 200, data: newChef });
   } else {
     res.json({ status: 404 });

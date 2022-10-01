@@ -10,12 +10,9 @@ export default function BannerDetails() {
   const [discount, setTotalDiscs] = useState("");
   const [due, setTotalDue] = useState("");
   const [clicks, setClicks] = useState("");
-  const [totalOrders, setTotalOrders] = useState(0);
-  const [paidDisc, setPaidDisc] = useState(0);
   const [revenue, setRevenue] = useState(0);
   const [usedby, setUsedBy] = useState("");
   const [loaded, setLoaded] = useState(false);
-
   const [couponLoaded, setCoupLoaded] = useState(false);
   const { id } = useParams();
 
@@ -77,7 +74,7 @@ export default function BannerDetails() {
       revenue: revenue,
       deactivation_date: moment(),
     };
-    const couponresponse = await axios.put("/api/promo/" + id, {
+    await axios.put("/api/promo/" + id, {
       status: "Inactive",
     });
     const dashboardResponse = await axios.get(
@@ -87,7 +84,7 @@ export default function BannerDetails() {
     const { banners } = await dashboard;
     let prevCoupons = [...banners];
     prevCoupons.push(banner);
-    const updateDashboard = await axios.put(
+    await axios.put(
       "/api/chefdashboard/" + restaurant_name + "/" + dashboard._id,
       { banners: prevCoupons }
     );

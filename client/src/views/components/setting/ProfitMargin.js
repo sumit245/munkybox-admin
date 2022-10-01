@@ -1,7 +1,8 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { editPlans, getPlans } from "../../../actions/planactions";
-import Loading from "../../../utilities/Loading"
+import Loading from "../../../utilities/Loading";
 
 export default function ProfitMargin() {
   const [plans, setPlans] = useState({
@@ -21,20 +22,22 @@ export default function ProfitMargin() {
     return () => {
       componentDidMount = false;
     };
-  }, [dispatch,Plan]);
+  }, [dispatch, Plan]);
   const onChangeText = ({ target }) => {
     const { name, value } = target;
     setPlans((prevState) => ({ ...prevState, [name]: value }));
   };
   const done = async () => {
     setLoading(true);
-    await dispatch(editPlans(plans));
-    await dispatch(getPlans())
+    const res = await axios.put("/api/plans/6066360c920a2e311c95ee92", plans);
+    // const { status } = res;
+    console.log(res.data);
+    // dispatch(editPlans(plans));
+    dispatch(getPlans());
     setLoading(false);
   };
 
-  return (
-    !loading?(
+  return !loading ? (
     <div className="ibox-content">
       <div className="row mt-1">
         <div className="col-lg-12">
@@ -126,7 +129,7 @@ export default function ProfitMargin() {
         </div>
       </div>
     </div>
-    ):
-    <Loading/>
+  ) : (
+    <Loading />
   );
 }

@@ -1,6 +1,5 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
-import { Bi } from "react-icons";
 
 export default function ShowCard({ card, closeHandler }) {
   return (

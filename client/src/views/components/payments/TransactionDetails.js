@@ -44,14 +44,13 @@ export default function TransactionDetails() {
     return () => {
       component = false;
     };
-  }, []);
+  }, [id]);
   const location = useLocation();
   const {
     totalBaseIncome,
     totalDiscount,
     numOrders,
     due,
-    orders,
     totalAddOns,
     totalAddOnRevenue,
     payout_start_date,
