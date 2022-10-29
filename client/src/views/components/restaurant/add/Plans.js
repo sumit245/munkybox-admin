@@ -44,8 +44,8 @@ export default function Plans(props) {
     name === "base_2price"
       ? setCustomer2Price(parseFloat(value) + parseFloat(twoPlan))
       : name === "base_15price"
-      ? setCustomer15Price(parseFloat(value) + parseFloat(fifteenPlan))
-      : setCustomer30Price(parseFloat(value) + parseFloat(thirtyPlan));
+        ? setCustomer15Price(parseFloat(value) + parseFloat(fifteenPlan))
+        : setCustomer30Price(parseFloat(value) + parseFloat(thirtyPlan));
   };
   useEffect(() => {
     let componentMounted = true;
@@ -64,7 +64,17 @@ export default function Plans(props) {
   return (
     <fieldset>
       <p className="mt-2">
+        <div className="text-left">
         <strong>2 Days</strong>
+        </div>
+        <div className="text-right">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked />
+              <label class="form-check-label" for="flexCheckChecked">
+                Provide Delivery
+              </label>
+          </div>
+        </div>
       </p>
       <div className="row">
         <div className="col-lg-4">
@@ -89,6 +99,17 @@ export default function Plans(props) {
               name="customer2price"
               defaultValue={customer2price}
               disabled
+            />
+          </div>
+        </div>
+        <div className="col-lg-4">
+          <div className="form-group">
+            <label>Delivery Charges &nbsp;($)</label>
+            <input
+              className="form-control"
+              type="currency"
+              name="customer2price"
+              defaultValue={customer2price}
             />
           </div>
         </div>
@@ -122,6 +143,17 @@ export default function Plans(props) {
             />
           </div>
         </div>
+        <div className="col-lg-4">
+          <div className="form-group">
+            <label>Delivery Charges &nbsp;($)</label>
+            <input
+              className="form-control"
+              type="currency"
+              name="customer15price"
+              defaultValue={customer15price}
+            />
+          </div>
+        </div>
       </div>
       <p>
         <strong>30 Days</strong>
@@ -152,7 +184,19 @@ export default function Plans(props) {
             />
           </div>
         </div>
+        <div className="col-lg-4">
+          <div className="form-group">
+            <label>Delivery Charges &nbsp;($)</label>
+            <input
+              className="form-control"
+              type="currency"
+              name="customer30price"
+              defaultValue={customer30price}
+            />
+          </div>
+        </div>
       </div>
+
       <div className="row">
         <div className="col-lg-12 justify-content-end">
           <button

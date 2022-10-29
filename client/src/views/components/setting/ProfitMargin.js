@@ -29,10 +29,7 @@ export default function ProfitMargin() {
   };
   const done = async () => {
     setLoading(true);
-    const res = await axios.put("/api/plans/6066360c920a2e311c95ee92", plans);
-    // const { status } = res;
-    console.log(res.data);
-    // dispatch(editPlans(plans));
+    const res = await axios.put("/api/plans/6066360c920a2e311c95ee92", plans)
     dispatch(getPlans());
     setLoading(false);
   };

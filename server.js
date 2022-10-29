@@ -27,6 +27,7 @@ const payoutcycle = require("./api/payoutcycle");
 const stripeintent = require("./api/stripe");
 const admincoupon = require("./api/admin-coupon");
 const calculations = require("./api/calculations");
+const driver = require("./api/driver");
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -57,6 +58,7 @@ app.use("/api/stripe", stripeintent);
 app.use("/api/admin-login", adminLogin);
 app.use("/api/admin-coupon", admincoupon);
 app.use("/api/calculations", calculations);
+app.use("/api/driver", driver);
 app.use(
   cookieSession({
     secret: "mysecret",

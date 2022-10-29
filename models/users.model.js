@@ -5,16 +5,17 @@ let Users = new Schema({
   user_id: { type: String },
   first_name: { type: String },
   last_name: { type: String },
-  profile_picture: {type: String},
-  phone: {type: String},
-  email_id: {type: String},
+  profile_picture: { type: String },
+  phone: { type: String },
+  email_id: { type: String },
   addresses: [
     {
-      flat_num: { type: String },
-      locality: { type: String },
+      addressLine1: { type: String },
+      addressLine2: { type: String },
       city: { type: String },
+      states: { type: String },
+      country: { type: String },
       address_type: { type: String },
-      state: { type: String },
       postal_code: { type: String },
       geo: {
         lat: { type: String },
@@ -40,7 +41,7 @@ let Users = new Schema({
   favorite: {
     type: Array,
   },
-  wallet_balance:{type:String,default:0}
+  wallet_balance: { type: String, default: 0 }
 });
 
 module.exports = mongoose.model("Users", Users);
