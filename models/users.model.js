@@ -18,8 +18,8 @@ let Users = new Schema({
       address_type: { type: String },
       postal_code: { type: String },
       geo: {
-        lat: { type: String },
-        lng: { type: String },
+        latitude: { type: String },
+        longitude: { type: String },
       },
     },
   ],

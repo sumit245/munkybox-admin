@@ -13,6 +13,7 @@ export default function ProfitMargin() {
   const [loading, setLoading] = useState(false);
   const Plan = useSelector((state) => state.plans.plans);
   const dispatch = useDispatch();
+
   useEffect(() => {
     let componentDidMount = true;
     dispatch(getPlans());
@@ -22,14 +23,15 @@ export default function ProfitMargin() {
     return () => {
       componentDidMount = false;
     };
-  }, [dispatch, Plan]);
+  }, []);
+
   const onChangeText = ({ target }) => {
     const { name, value } = target;
     setPlans((prevState) => ({ ...prevState, [name]: value }));
   };
   const done = async () => {
     setLoading(true);
-    const res = await axios.put("/api/plans/6066360c920a2e311c95ee92", plans)
+    await dispatch(editPlans(plans))
     dispatch(getPlans());
     setLoading(false);
   };

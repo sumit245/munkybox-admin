@@ -14,7 +14,7 @@ export default function ServiceCharges() {
   });
 
   const [loading, setLoading] = useState(false);
-  
+
   useEffect(() => {
     let componentMounted = true;
     const fetchdata = async () => {
@@ -30,7 +30,7 @@ export default function ServiceCharges() {
       componentMounted = false;
     };
   }, []);
-  
+
   const onChangeText = ({ target }) => {
     const { name, value } = target;
     setCharges((prevState) => ({ ...prevState, [name]: value }));
@@ -80,7 +80,7 @@ export default function ServiceCharges() {
         <div className="col-lg-12">
           <div className="form-group">
             <label>
-              Delivery Charges (2 Meals){" "}
+              Delivery Commission (2 Meals){" "}
               <strong className="text-danger">*</strong>
             </label>
             <div className="input-group m-b">
@@ -107,7 +107,7 @@ export default function ServiceCharges() {
         <div className="col-lg-12">
           <div className="form-group">
             <label>
-              Delivery Charges (15 Meals){" "}
+              Delivery Commission (15 Meals){" "}
               <strong className="text-danger">*</strong>
             </label>
             <div className="input-group m-b">
@@ -134,7 +134,7 @@ export default function ServiceCharges() {
         <div className="col-lg-12">
           <div className="form-group">
             <label>
-              Delivery Charges (30 Meals){" "}
+              Delivery Commission (30 Meals){" "}
               <strong className="text-danger">*</strong>
             </label>
             <div className="input-group m-b">
