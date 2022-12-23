@@ -1,201 +1,149 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BASIC_INFO, SET_PLANS } from "../../../../utilities/constants";
-export default function Plans(props) {
-  const [plan, setPlan] = useState({});
-  const [customer2price, setCustomer2Price] = useState("");
-  const [customer15price, setCustomer15Price] = useState("");
-  const [customer30price, setCustomer30Price] = useState("");
-  const [inputPlan, setInputPlan] = useState({});
-  const restaurant = useSelector((state) => state.restaurant);
-  const dispatch = useDispatch();
-  const handleContinue = (e) => {
-    if (!customer2price) {
-      alert("Base price for two meals required");
-      return;
-    }
-    if (!customer15price) {
-      alert("Base price for fifteen meals required");
-      return;
-    }
-    if (!customer30price) {
-      alert("Base price for thirty meals required");
-      return;
-    }
-    const plans = {
-      ...restaurant,
-      ...inputPlan,
-    };
-    dispatch({
-      type: SET_PLANS,
-      payload: plans,
-    });
+import { SET_PLANS } from "../../../../utilities/constants";
+import { getPlans } from "../../../../actions/planactions"
 
-    props.goToStep(5);
+export default function Plans(props) {
+  const [plan, setPlan] = useState([]);
+  const [inputPlan, setInputPlan] = useState([{
+    plan_name: "",
+    base_price: "",
+    customer_price: "",
+    delivery_price: ""
+  }]);
+  const [loaded, setLoaded] = useState(false)
+  const restaurant = useSelector((state) => state.restaurant);
+  const [isDelivery, setIsDelivery] = useState(false)
+  const { plans } = useSelector((state) => state.plans)
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getPlansAndSet()
+  }, [])
+
+  const handleContinue = (e) => {
+    console.log('====================================');
+    console.log(inputPlan);
+    console.log('====================================');
+    // const plans = {
+    //   ...restaurant,
+    //   ...inputPlan,
+    // };
+    // dispatch({
+    //   type: SET_PLANS,
+    //   payload: plans,
+    // });
+
+    // props.goToStep(5);
   };
+
   const handleBack = (e) => {
     props.goToStep(3);
   };
-  const onBasePriceChange = (event) => {
-    const { name, value } = event.target;
-    const { twoPlan, fifteenPlan, thirtyPlan } = plan;
-    setInputPlan((prevState) => ({ ...prevState, [name]: value }));
-    name === "base_2price"
-      ? setCustomer2Price(parseFloat(value) + parseFloat(twoPlan))
-      : name === "base_15price"
-        ? setCustomer15Price(parseFloat(value) + parseFloat(fifteenPlan))
-        : setCustomer30Price(parseFloat(value) + parseFloat(thirtyPlan));
-  };
-  useEffect(() => {
-    let componentMounted = true;
-    async function fetchData() {
-      const response = await axios.get("/api/plans/6066360c920a2e311c95ee92");
-      const plan = await response.data;
-      if (componentMounted) {
-        setPlan(plan);
-      }
+
+  const onDeliveryChange = (event, index) => {
+    const { name, value } = event.target
+    let plans = inputPlan
+    let currPlan = plans[index]
+    currPlan.delivery_price = value
+    setInputPlan((prevState) => ({ ...prevState, currPlan }))
+  }
+
+  const onBasePriceChange = (event, index) => {
+    console.log('====================================');
+    console.log(index);
+    console.log('====================================');
+    const { name, value } = event.target
+    let plans = inputPlan
+    let currPlan = plans[index]
+    currPlan.base_price = value
+    currPlan.customer_price = parseFloat(value) + parseFloat(inputPlan[index].customer_price)
+    if (inputPlan[index].plan_name !== name) {
+      setInputPlan((prevState) => ({ ...prevState, currPlan }))
     }
-    fetchData();
-    return () => {
-      componentMounted = false;
-    };
-  });
+  }
+
+  const getPlansAndSet = async () => {
+    const plans = await dispatch(getPlans())
+    setPlan(plans)
+    let inputPlans = []
+    let elements = Array.isArray(plans) && plans.length
+    for (let index = 0; index < elements; index++) {
+      let plan = {
+        plan_name: plans[index].plan_name,
+        base_price: 0,
+        customer_price: plans[index].profit_margin,
+        delivery_price: 0
+      }
+      inputPlans.push(plan)
+    }
+    setInputPlan(inputPlans)
+    setLoaded(true)
+  }
+
   return (
     <fieldset>
-      <p className="mt-2">
-        <div className="text-left">
-        <strong>2 Days</strong>
-        </div>
-        <div className="text-right">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked />
-              <label class="form-check-label" for="flexCheckChecked">
-                Provide Delivery
-              </label>
-          </div>
-        </div>
-      </p>
-      <div className="row">
-        <div className="col-lg-4">
-          <div className="form-group">
-            <label>
-              Base price <strong className="text-danger">*</strong> &nbsp;($)
-            </label>
-            <input
-              className="form-control"
-              type="currency"
-              name="base_2price"
-              onChange={(e) => onBasePriceChange(e)}
-            />
-          </div>
-        </div>
-        <div className="col-lg-4">
-          <div className="form-group">
-            <label>Customer price &nbsp;($)</label>
-            <input
-              className="form-control"
-              type="currency"
-              name="customer2price"
-              defaultValue={customer2price}
-              disabled
-            />
-          </div>
-        </div>
-        <div className="col-lg-4">
-          <div className="form-group">
-            <label>Delivery Charges &nbsp;($)</label>
-            <input
-              className="form-control"
-              type="currency"
-              name="customer2price"
-              defaultValue={customer2price}
-            />
-          </div>
+      <div className="text-right">
+        <div className="form-check">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            value={isDelivery}
+            onChange={() => setIsDelivery(!isDelivery)}
+            id="flexCheckChecked"
+            defaultChecked={isDelivery} />
+          <label className="form-check-label" htmlFor="flexCheckChecked">
+            Provide Delivery
+          </label>
         </div>
       </div>
-      <p>
-        <strong>15 days</strong>
-      </p>
-      <div className="row">
-        <div className="col-lg-4">
-          <div className="form-group">
+      {loaded &&
+        inputPlan.map((data, key) => (
+          <div className="form-group mt-1" key={key}>
             <label>
-              Base price <strong className="text-danger">*</strong> &nbsp;($)
+              <strong>{data.plan_name}</strong>
             </label>
-            <input
-              className="form-control"
-              type="currency"
-              name="base_15price"
-              onChange={(e) => onBasePriceChange(e)}
-            />
+            <div className="row" >
+              <div className="col-lg-4">
+                <div className="form-group">
+                  <label>
+                    Base price <strong className="text-danger">*</strong> &nbsp;($)
+                  </label>
+                  <input
+                    className="form-control"
+                    type="currency"
+                    name={data.plan_name}
+                    onChange={(e) => onBasePriceChange(e, key)}
+                  />
+                </div>
+              </div>
+              <div className="col-lg-4">
+                <div className="form-group">
+                  <label>Customer price &nbsp;($)</label>
+                  <input
+                    className="form-control"
+                    type="currency"
+                    value={inputPlan[key].customer_price}
+                    disabled
+                  />
+                </div>
+              </div>
+              <div className="col-lg-4">
+                <div className="form-group">
+                  <label>Delivery Charges &nbsp;($)</label>
+                  <input
+                    className="form-control"
+                    type="currency"
+                    name="delivery_price"
+                    disabled={!isDelivery}
+                    onChange={(e) => onDeliveryChange(e, key)}
+                  />
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="col-lg-4">
-          <div className="form-group">
-            <label>Customer price &nbsp;($)</label>
-            <input
-              className="form-control"
-              type="currency"
-              name="customer15price"
-              defaultValue={customer15price}
-              disabled
-            />
-          </div>
-        </div>
-        <div className="col-lg-4">
-          <div className="form-group">
-            <label>Delivery Charges &nbsp;($)</label>
-            <input
-              className="form-control"
-              type="currency"
-              name="customer15price"
-              defaultValue={customer15price}
-            />
-          </div>
-        </div>
-      </div>
-      <p>
-        <strong>30 Days</strong>
-      </p>
-      <div className="row">
-        <div className="col-lg-4">
-          <div className="form-group">
-            <label>
-              Base price <strong className="text-danger">*</strong> &nbsp;($)
-            </label>
-            <input
-              className="form-control"
-              type="currency"
-              name="base_30price"
-              onChange={(e) => onBasePriceChange(e)}
-            />
-          </div>
-        </div>
-        <div className="col-lg-4">
-          <div className="form-group">
-            <label>Customer price &nbsp;($)</label>
-            <input
-              className="form-control"
-              type="currency"
-              name="customer30price"
-              defaultValue={customer30price}
-              disabled
-            />
-          </div>
-        </div>
-        <div className="col-lg-4">
-          <div className="form-group">
-            <label>Delivery Charges &nbsp;($)</label>
-            <input
-              className="form-control"
-              type="currency"
-              name="customer30price"
-              defaultValue={customer30price}
-            />
-          </div>
-        </div>
-      </div>
+        ))
+      }
 
       <div className="row">
         <div className="col-lg-12 justify-content-end">

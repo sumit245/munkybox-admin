@@ -1,27 +1,38 @@
 const express = require("express");
 const router = express.Router();
 const NewRestaurant = require("../models/newrest.model");
+const Meals = require('../models/meals.model')
 const Orders = require("../models/orders.model");
 
-router.route("/").get(function (req, res) {
-  NewRestaurant.find(function (err, restaurants) {
-    if (err) {
-      res.json(err);
-    } else {
-      res.json(restaurants);
-    }
-  });
+router.route("/").get(async function (req, res) {
+  const response = await NewRestaurant.find({})
+  const meals = await Meals.find({})
+  let restaurants = []
+  response.forEach((restaurant) => {
+    meals.filter((meal) => {
+      if (restaurant.restaurant_id === meal.restaurant_id) {
+        restaurant.meals = meal.meals
+        restaurants.push(restaurant)
+      }
+    })
+  })
+  res.json(restaurants)
 });
 // get all restaurant for admin
 
-router.route("/active").get(function (req, res) {
-  NewRestaurant.find({ status: "Active" }, function (err, restaurant) {
-    if (err) {
-      res.json(err);
-    } else {
-      res.json(restaurant);
-    }
-  });
+router.route("/active").get(async function (req, res) {
+  const response = await NewRestaurant.find({ status: "Active" })
+  const meals = await Meals.find({})
+  let restaurants = []
+  response.forEach((restaurant) => {
+    meals.filter((meal) => {
+      if (restaurant.restaurant_id === meal.restaurant_id) {
+        restaurant.meals = meal.meals
+        restaurants.push(restaurant)
+      }
+    })
+  })
+  res.json(restaurants)
 });
 //get active restaurants for user
 
@@ -35,31 +46,24 @@ router.route("/login").post(async (req, res) => {
 });
 //restaurant login
 
-router.route("/:id").delete((req, res, next) => {
-  NewRestaurant.findByIdAndDelete(req.params.id, (err, data) => {
-    if (err) {
-      res.json({ msg: "not delete", status: 403, data: err });
-    } else {
-      res.json({ msg: "deleted", status: 200, data: data });
-    }
-  });
+router.route("/:id").delete(async (req, res, next) => {
+  const { id } = req.params
+  const response = await NewRestaurant.findByIdAndDelete(id)
+  res.json({
+    status: 200,
+    msg: "Deleted"
+  })
 });
 //delete a restaurant
 
-router.route("/").post(function (req, res) {
+router.route("/").post(async function (req, res) {
   let restaurant = new NewRestaurant(req.body);
-  restaurant
-    .save()
-    .then((restaurant) => {
-      res.json({
-        data: restaurant,
-        status: 200,
-        msg: "Restaurant Added Successfully",
-      });
-    })
-    .catch((err) => {
-      res.json({ status: 400, msg: "Some error" });
-    });
+  const response = await restaurant.save()
+  res.json({
+    data: restaurant,
+    status: 200,
+    msg: "Restaurant Added Successfully",
+  });
 });
 //save a restaurant
 
@@ -75,60 +79,65 @@ router.route("/:id").put(function (req, res, next) {
 });
 //update a restaurant
 
-router.route("/:id").get(function (req, res) {
-  let id = req.params.id;
-  NewRestaurant.findById(id, function (err, restaurant) {
-    res.json(restaurant);
-  });
+router.route("/:id").get(async function (req, res) {
+  let { id } = req.params;
+  const response = await NewRestaurant.findById(id)
+  const meals = await Meals.find({})
+  let restaurant = response
+  meals.forEach((meal) => {
+    if (restaurant.restaurant_id === meal.restaurant_id) {
+      restaurant.meals = meal.meals
+    }
+  })
+  res.json(restaurant)
 });
 //get specific restaurant
 
 router.route("/getchefbyId/:id").get(async (req, res) => {
-  const restaurant = await NewRestaurant.findOne({
-    restaurant_id: req.params.id,
-  });
+  const response = await NewRestaurant.findOne({ restaurant_id: req.params.id })
+  const meals = await Meals.find({})
+  let restaurant = response
+  meals.forEach((meal) => {
+    if (meal.restaurant_id === restaurant.restaurant_id) {
+      restaurant.meals = meal.meals
+    }
+  })
   res.json(restaurant);
 });
 //get specific restaurant
 
-router.route("/cuisine_type/:meal").get(function (req, res) {
-  const meal_type = req.params.meal;
-  NewRestaurant.find(
-    {
-      $and: [{ status: "Active" }, { cuisine_type: meal_type }],
-    },
-    function (err, restaurants) {
-      if (!err) {
-        res.json(restaurants);
-      }
-    }
-  );
+router.route("/cuisine_type/:cuisine").get(async function (req, res) {
+  const { cuisine } = req.params;
+  const restaurants = await NewRestaurant.find({ $and: [{ status: "Active" }, { cuisine_type: cuisine }] })
+  res.json(restaurants)
+
 });
 // filter by cuisine_type
 
-router.route("/category/:food").get(function (req, res) {
-  const meal_type = req.params.food;
-  NewRestaurant.find(
-    { $and: [{ status: "Active" }, { category: meal_type }] },
-    function (err, restaurants) {
-      if (!err) {
-        res.json(restaurants);
+router.route("/category/:food").get(async function (req, res) {
+  const { food } = req.params;
+  const response = await NewRestaurant.find({ $and: [{ status: "Active" }] })
+  const meals = await Meals.find({})
+  let restaurants = []
+  response.forEach((restaurant) => {
+    meals.forEach((meal) => {
+      if (restaurant.restaurant_id === meal.restaurant_id) {
+        const { meals } = meal
+        restaurant.meals = meals.find((meal) => meal.category === food).items
+        restaurants.push(restaurant)
       }
-    }
-  );
+
+    })
+  })
+  res.json(restaurants)
 });
 // filter by lunch dinner
 
-router.route("/meal_type/:food").get(function (req, res) {
-  const meal_type = req.params.food;
-  NewRestaurant.find(
-    { $and: [{ status: "Active" }, { meal_type: meal_type }] },
-    function (err, restaurants) {
-      if (!err) {
-        res.json(restaurants);
-      }
-    }
-  );
+router.route("/meal_type/:meal_type").get(async function (req, res) {
+  const { meal_type } = req.params;
+  const restaurants = await NewRestaurant.find({ $and: [{ status: "Active" }, { meal_type: meal_type }] })
+  res.json(restaurants)
+
 });
 // filter by veg non-veg
 

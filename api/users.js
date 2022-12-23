@@ -3,59 +3,30 @@ const router = express.Router();
 const Users = require("../models/users.model");
 const NewRestaurant = require("../models/newrest.model");
 
-router.route("/").get(function (req, res) {
-  Users.find(function (err, users) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.json(users);
-    }
-  });
+router.route("/").get(async (req, res) => {
+  const users = await Users.find({})
+  res.json(users)
 });
 //get all user
 
 router.route("/").post(async function (req, res) {
-  let data = req.body;
-  if (typeof data.phone !== "undefined") {
-    const phone = await Users.findOne({ phone: data.phone }).exec();
-    if (phone) {
-      return res.json({ status: 201, data: phone, msg: "User Already Exists" });
-    } else {
-      const users = new Users(data);
-      users
-        .save()
-        .then((response) => {
-          res.json({
-            status: 200,
-            data: response,
-            msg: "Welcome to Munky-Box",
-          });
-        })
-        .catch((err) => {
-          res.send(err);
-        });
-    }
+  const { phone } = req.body;
+  const user = await Users.findOne({ phone: phone }).exec();
+  if (user) {
+    return res.json({ status: 201, data: user, msg: "User Already Exists" });
   }
-  if (typeof data.email_id !== "undefined") {
-    const email = await Users.findOne({ email_id: data.email_id }).exec();
-    if (email) {
-      return res.json({ status: 201, data: email, msg: "Email Already Taken" });
-    } else {
-      const users = new Users(data);
-      users
-        .save()
-        .then((response) => {
-          res.json({
-            status: 200,
-            data: response,
-            msg: "Welcome to Munky-Box",
-          });
-        })
-        .catch((err) => {
-          res.send(err);
-        });
-    }
+  else {
+    const count = await Users.count()
+    const userId = "USER".concat(count.toString().padStart(4, "0"))
+    const user = new Users({ phone: phone, user_id: userId });
+    const response = await user.save()
+    res.json({
+      status: 200,
+      data: response,
+      msg: `A 6-digit OTP has been sent to your mobile ${phone}`
+    })
   }
+
 });
 //save a singe user to database
 

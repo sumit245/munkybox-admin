@@ -5,6 +5,9 @@ const cors = require("cors");
 const path = require("path");
 const timeout = require("connect-timeout");
 require("./database/database");
+// End of important imports
+
+// Start of api imports
 const orders = require("./api/orders");
 const adminLogin = require("./api/admin-login");
 const users = require("./api/users");
@@ -28,11 +31,14 @@ const stripeintent = require("./api/stripe");
 const admincoupon = require("./api/admin-coupon");
 const calculations = require("./api/calculations");
 const driver = require("./api/driver");
+const priceplans = require("./api/price_plans")
+// End of API imports
+
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(bodyParser.json({ limit: "10mb" }));
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: false }));
+app.use(bodyParser.json());
 app.use(cors());
 app.use("/api/users", users);
 app.use(timeout("90s"));
@@ -59,6 +65,7 @@ app.use("/api/admin-login", adminLogin);
 app.use("/api/admin-coupon", admincoupon);
 app.use("/api/calculations", calculations);
 app.use("/api/driver", driver);
+app.use("/api/pricing", priceplans)
 app.use(
   cookieSession({
     secret: "mysecret",

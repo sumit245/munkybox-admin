@@ -1,12 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { SET_PLANS } from "../../../../utilities/constants";
+import { getPlans } from "../../../../actions/planactions";
 export default function EditPlans({ plan, restaurant, goToStep }) {
-   
+
   const dispatch = useDispatch();
   const [price, setPrice] = useState({});
   let { base_2price, base_15price, base_30price } = restaurant;
   const { twoPlan, fifteenPlan, thirtyPlan } = plan;
+  const [isDelivery, setIsDelivery] = useState(false)
+  const [plans, setPlans] = useState([])
+
+  const getPlansAndSet = async () => {
+    const plans = await dispatch(getPlans())
+    console.log('====================================');
+    console.log(plans);
+    console.log('====================================');
+    setPlans(plans)
+  }
+
+  useEffect(() => {
+    getPlansAndSet()
+  }, [])
 
   const handleContinue = (e) => {
     if (!base_2price) {
@@ -72,101 +87,67 @@ export default function EditPlans({ plan, restaurant, goToStep }) {
 
   return (
     <fieldset>
-      <p className="mt-2">
-        <strong>2 Days</strong>
-      </p>
-      <div className="row">
-        <div className="col-lg-4">
-          <div className="form-group">
-            <label>
-              Base price <strong className="text-danger">*</strong> &nbsp;($)
-            </label>
-            <input
-              className="form-control"
-              type="currency"
-              name="base_2price"
-              defaultValue={price.base_2price}
-              onChange={(e) => onBasePriceChange(e)}
-            />
-          </div>
-        </div>
-        <div className="col-lg-4">
-          <div className="form-group">
-            <label>Customer price &nbsp;($)</label>
-            <input
-              className="form-control"
-              type="currency"
-              name="customer2price"
-              defaultValue={price.customer2price}
-              disabled
-            />
-          </div>
+      <div className="text-right">
+        <div className="form-check">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            value={isDelivery}
+            onChange={() => setIsDelivery(!isDelivery)}
+            id="flexCheckChecked"
+            defaultChecked={isDelivery} />
+          <label className="form-check-label" htmlFor="flexCheckChecked">
+            Provide Delivery
+          </label>
         </div>
       </div>
-      <p>
-        <strong>15 days</strong>
-      </p>
-      <div className="row">
-        <div className="col-lg-4">
-          <div className="form-group">
+      {
+        plans.map((data, key) => (
+          <div className="form-group mt-1" key={key}>
             <label>
-              Base price <strong className="text-danger">*</strong> &nbsp;($)
+              <strong>{data.plan_name}</strong>
             </label>
-            <input
-              className="form-control"
-              type="currency"
-              name="base_15price"
-              defaultValue={price.base_15price}
-              onChange={(e) => onBasePriceChange(e)}
-              
-            />
+            <div className="row" >
+              <div className="col-lg-4">
+                <div className="form-group">
+                  <label>
+                    Base price <strong className="text-danger">*</strong> &nbsp;($)
+                  </label>
+                  <input
+                    className="form-control"
+                    type="currency"
+                    name="base_price"
+                    onChange={(e) => onBasePriceChange(e)}
+                  />
+                </div>
+              </div>
+              <div className="col-lg-4">
+                <div className="form-group">
+                  <label>Customer price &nbsp;($)</label>
+                  <input
+                    className="form-control"
+                    type="currency"
+                    name="customer_price"
+                    disabled
+                  />
+                </div>
+              </div>
+              <div className="col-lg-4">
+                <div className="form-group">
+                  <label>Delivery Charges &nbsp;($)</label>
+                  <input
+                    className="form-control"
+                    type="currency"
+                    name="delivery_price"
+                    onChange={(e) => onBasePriceChange(e)}
+                    disabled={!isDelivery}
+                  />
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="col-lg-4">
-          <div className="form-group">
-            <label>Customer price &nbsp;($)</label>
-            <input
-              className="form-control"
-              type="currency"
-              name="customer15price"
-              defaultValue={price.customer15price}
-              disabled
-            />
-          </div>
-        </div>
-      </div>
-      <p>
-        <strong>30 Days</strong>
-      </p>
-      <div className="row">
-        <div className="col-lg-4">
-          <div className="form-group">
-            <label>
-              Base price <strong className="text-danger">*</strong> &nbsp;($)
-            </label>
-            <input
-              className="form-control"
-              type="currency"
-              name="base_30price"
-              defaultValue={price.base_30price}
-              onChange={(e) => onBasePriceChange(e)}
-              // disabled
-            />
-          </div>
-        </div>
-        <div className="col-lg-4">
-          <div className="form-group">
-            <label>Customer price &nbsp;($)</label>
-            <input
-              className="form-control"
-              type="currency"
-              name="customer30price"
-              defaultValue={price.customer30price}
-               disabled
-            />
-          </div>
-        </div>
-      </div>
+        ))
+      }
 
       <div className="row">
         <div className="col-lg-12 justify-content-end">

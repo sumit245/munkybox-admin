@@ -3,8 +3,11 @@ const moment = require("moment");
 const router = express.Router();
 const Order = require("../models/orders.model");
 const NewRestaurant = require("../models/newrest.model");
+const CurrentOrder = require("../models/currentorders.model")
+const Meals = require("../models/meals.model")
 const pdfTemplate = require("../receipt");
 const pdf = require("html-pdf");
+const { add } = require('../utility/utility')
 
 router.route("/create-pdf/").post(async (req, res) => {
   pdf
@@ -30,21 +33,10 @@ router.route("/").get(function (req, res) {
 });
 //get all orders
 
-router.route("/:id").get(function (req, res) {
-  let id = req.params.id;
-  Order.findById(id, function (err, order) {
-    res.json(order);
-  });
-});
-//get specific order
-
-router.route("/getOrderbyID/:id").get(function (req, res) {
-  let id = req.params.id;
-  Order.findOne({ order_id: id }, function (err, order) {
-    if (!err) {
-      res.json(order);
-    }
-  });
+router.route("/:id").get(async function (req, res) {
+  const { id } = req.params;
+  const order = await Order.findById(id)
+  res.json(order)
 });
 //get specific order
 
@@ -102,31 +94,25 @@ router.route("/cancelled/:restaurant_id").get(async (req, res) => {
 });
 //get cancelled orders
 
-router.route("/forchefhome/:restaurant_id/:day").get(async (req, res) => {
-  function add(accumulator, a) {
-    return parseFloat(accumulator) + parseFloat(a);
-  }
-  let activeorders = await Order.find({
-    restaurant_id: req.params.restaurant_id,
-    $or: [{ status: "accepted" }, { status: "started" }],
-  });
+router.route("/forchefhome/:restaurant_id/:day/:category").get(async (req, res) => {
+  const { restaurant_id, day, category } = req.params
+  let activeorders = await Order.find({ restaurant_id: restaurant_id, $or: [{ status: "accepted" }, { status: "started" }] });
   let orderedAdOns = [].concat.apply(
     [],
     activeorders.flatMap((item) => item.add_on)
   );
-  const restaurant = await NewRestaurant.findOne({
-    restaurant_id: req.params.restaurant_id,
-  });
-  const { meals } = restaurant;
+  let restaurant = await NewRestaurant.findOne({ restaurant_id: restaurant_id });
+  let { meals } = await Meals.findOne({ restaurant_id: restaurant_id })
+  meals = meals.find((meal) => meal.category === category).items
   let dateInNumber = moment().day();
   dateInNumber >= 0 ? dateInNumber : 1;
-  let meal = [];
+  let meal = {};
   let meal_name = "";
-  let count = 0;
   let type = "";
   let add_on = [];
-  let add_ons_orders = [];
+  let count = 0;
   let filtered_add_ons = [];
+  let add_on_name = [];
   let total_ad_on = 0;
   if (req.params.day === "Today") {
     const today = moment();
@@ -138,30 +124,27 @@ router.route("/forchefhome/:restaurant_id/:day").get(async (req, res) => {
     meal_name = meal.meal_name;
     type = meal.type;
     add_on = meal.add_on;
-    let add_on_name =
-      Array.isArray(add_on) && add_on.length !== 0
-        ? add_on.map((data) => data.add_on)
-        : [];
-    add_on_name.forEach((add_on) =>
-      filtered_add_ons.push(
-        orderedAdOns
-          .filter(
-            (item) =>
-              item.item === add_on &&
-              item.order_date === moment().format("DD-MMM-YYYY")
-          )
-          .map((item) => item.qty)
-          .reduce(add, 0)
-      )
-    );
-    total_ad_on = filtered_add_ons.reduce(add, 0);
-    add_on_name.forEach((element, index) => {
-      let obj = {
-        add_on_name: add_on_name[index],
-        qty: filtered_add_ons[index],
-      };
-      add_ons_orders.push(obj);
-    });
+    add_on_name = Array.isArray(add_on) && add_on.length !== 0 ? add_on.map((data) => data.add_on) : [];
+    // add_on_name.forEach((add_on) =>
+    //   filtered_add_ons.push(
+    //     orderedAdOns
+    //       .filter(
+    //         (item) =>
+    //           item.item === add_on &&
+    //           item.order_date === moment().format("DD-MMM-YYYY")
+    //       )
+    //       .map((item) => item.qty)
+    //       .reduce(add, 0)
+    //   )
+    // );
+    // total_ad_on = filtered_add_ons.reduce(add, 0);
+    // add_on_name.forEach((element, index) => {
+    //   let obj = {
+    //     add_on_name: add_on_name[index],
+    //     qty: filtered_add_ons[index],
+    //   };
+    //   add_ons_orders.push(obj);
+    // });
   } else if (req.params.day === "Tomorrow") {
     const today = moment().add(1, "days");
     activeorders = activeorders.filter((item) =>
@@ -172,30 +155,27 @@ router.route("/forchefhome/:restaurant_id/:day").get(async (req, res) => {
     meal_name = meal.meal_name;
     type = meal.type;
     add_on = meal.add_on;
-    let add_on_name =
-      Array.isArray(add_on) && add_on.length !== 0
-        ? add_on.map((data) => data.add_on)
-        : [];
-    add_on_name.forEach((add_on) =>
-      filtered_add_ons.push(
-        orderedAdOns
-          .filter(
-            (item) =>
-              item.item === add_on &&
-              item.order_date === moment().format("DD-MMM-YYYY")
-          )
-          .map((item) => item.qty)
-          .reduce(add, 0)
-      )
-    );
-    total_ad_on = filtered_add_ons.reduce(add, 0);
-    add_on_name.forEach((element, index) => {
-      let obj = {
-        add_on_name: add_on_name[index],
-        qty: filtered_add_ons[index],
-      };
-      add_ons_orders.push(obj);
-    });
+    add_on_name = Array.isArray(add_on) && add_on.length !== 0 ? add_on.map((data) => data.add_on) : [];
+    // add_on_name.forEach((add_on) =>
+    //   filtered_add_ons.push(
+    //     orderedAdOns
+    //       .filter(
+    //         (item) =>
+    //           item.item === add_on &&
+    //           item.order_date === moment().format("DD-MMM-YYYY")
+    //       )
+    //       .map((item) => item.qty)
+    //       .reduce(add, 0)
+    //   )
+    // );
+    // total_ad_on = filtered_add_ons.reduce(add, 0);
+    // add_on_name.forEach((element, index) => {
+    //   let obj = {
+    //     add_on_name: add_on_name[index],
+    //     qty: filtered_add_ons[index],
+    //   };
+    //   add_ons_orders.push(obj);
+    // });
   } else {
     const today = moment().add(2, "days");
     activeorders = activeorders.filter((item) =>
@@ -206,37 +186,33 @@ router.route("/forchefhome/:restaurant_id/:day").get(async (req, res) => {
     meal_name = meal.meal_name;
     type = meal.type;
     add_on = meal.add_on;
-    let add_on_name =
-      Array.isArray(add_on) && add_on.length !== 0
-        ? add_on.map((data) => data.add_on)
-        : [];
-    add_on_name.forEach((add_on) =>
-      filtered_add_ons.push(
-        orderedAdOns
-          .filter(
-            (item) =>
-              item.item === add_on &&
-              item.order_date === moment().format("DD-MMM-YYYY")
-          )
-          .map((item) => item.qty)
-          .reduce(add, 0)
-      )
-    );
-    total_ad_on = filtered_add_ons.reduce(add, 0);
-    add_on_name.forEach((element, index) => {
-      let obj = {
-        add_on_name: add_on_name[index],
-        qty: filtered_add_ons[index],
-      };
-      add_ons_orders.push(obj);
-    });
+    add_on_name = Array.isArray(add_on) && add_on.length !== 0 ? add_on.map((data) => data.add_on) : [];
+    // add_on_name.forEach((add_on) =>
+    //   filtered_add_ons.push(
+    //     orderedAdOns
+    //       .filter(
+    //         (item) =>
+    //           item.item === add_on &&
+    //           item.order_date === moment().format("DD-MMM-YYYY")
+    //       )
+    //       .map((item) => item.qty)
+    //       .reduce(add, 0)
+    //   )
+    // );
+    // total_ad_on = filtered_add_ons.reduce(add, 0);
+    // add_on_name.forEach((element, index) => {
+    //   let obj = {
+    //     add_on_name: add_on_name[index],
+    //     qty: filtered_add_ons[index],
+    //   };
+    //   add_ons_orders.push(obj);
+    // });
   }
   res.json({
-    activeorders: activeorders,
+    // activeorders: activeorders,
     count: count,
     meal_name: meal_name,
-    add_ons: add_ons_orders,
-    add_on_count: total_ad_on,
+    add_ons: add_on_name,
     type: type,
   });
 });
@@ -263,12 +239,51 @@ router.route("/").post(function (req, res) {
 });
 //save a order
 
-router.route("/getorderbyuser/:user_id").get(async function (req, res) {
-  let id = req.params.user_id;
+router.route("/getorderbyuser/:id").get(async function (req, res) {
+  let { id } = req.params;
   const orders = await Order.find({ user_id: id });
-  res.json(orders);
+  const restaurants = await NewRestaurant.find()
+  let myOrders = []
+  orders.map(async (order) => {
+    restaurants.filter((restaurant) => {
+      if (restaurant.restaurant_id === order.restaurant_id) {
+        order.restaurant_image = restaurant.documents[0].restaurant_image
+      }
+    })
+    order.color = order.status === "accepted" ? "#ffc300" :
+      order.status === "started" ? "#f5a617" :
+        order.status === "pending" ? "#aaa" :
+          order.status === "rejected" ? "#777" : "#22cf6c"
+    myOrders.push(order)
+  })
+  res.json({ myOrders: myOrders, totalCount: myOrders.length });
 });
-//get specific order by user
+//get all order by user
+
+router.route("/getsubscription/:id").get(async function (req, res) {
+  let { id } = req.params;
+  const orders = await Order.find({ user_id: id, status: "started" });
+  const restaurants = await NewRestaurant.find()
+  let myOrders = []
+  orders.map(async (order) => {
+    restaurants.filter((restaurant) => {
+      if (restaurant.restaurant_id === order.restaurant_id) {
+        order.restaurant_image = restaurant.documents[0].restaurant_image
+        order.meals = restaurant.meals
+      }
+    })
+    myOrders.push(order)
+  })
+  res.json({ mySubscription: myOrders, totalCount: myOrders.length });
+});
+//get all subscription by user
+
+router.route("/getSubscriptionDetails/:id").get(async function (req, res) {
+  let { id } = req.params;
+  const order = await Order.findOne({ order_id: id, status: "started" });
+  res.json({ mySubscription: order, remaining: 0, add_ons: [], futuremeals: [], delivered: false });
+});
+//get all subscription by user
 
 router.route("/dashboard/:restaurant_id").get(async (req, res) => {
   let restaurant_id = req.params.restaurant_id;

@@ -2,14 +2,10 @@ const express = require("express");
 const router = express.Router();
 const Plan = require("../models/plans.model");
 
-router.route("/").get(function (req, res) {
-  Plan.find(function (err, plans) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.json(plans);
-    }
-  });
+router.route("/").get(async (req, res) => {
+  const plans = await Plan.find()
+  res.json(plans);
+
 });
 
 router.route("/:id").get(function (req, res) {
@@ -28,22 +24,11 @@ router.put("/:id", function (req, res) {
 });
 //add an address
 
-router.route("/:id").post(function (req, res) {
-  Plan.findById(req.params.id, function (err, plan) {
-    if (!plan) res.status(404).send("data is not found");
-    else
-      (plan.twoPlan = req.body.twoPlan),
-        (plan.fifteenPlan = req.body.fifteenPlan),
-        (plan.thirtyPlan = req.body.thirtyPlan),
-        plan
-          .save()
-          .then((plan) => {
-            res.json("Plan Update Successfully");
-          })
-          .catch((err) => {
-            res.status(400).send("Update not possible");
-          });
-  });
+router.route("/").post(async (req, res) => {
+  const { plan } = req.body
+  const plans = new Plan(plan)
+  const response = await plans.save()
+  res.json(response)
 });
 //update a plan
 router.route("/:id").delete(function (req, res, next) {

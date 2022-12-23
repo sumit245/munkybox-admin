@@ -5,20 +5,22 @@ import { editPlans, getPlans } from "../../../actions/planactions";
 import Loading from "../../../utilities/Loading";
 
 export default function ProfitMargin() {
-  const [plans, setPlans] = useState({
+  const [plan, setPlan] = useState({
+    singlePlan: "",
     twoPlan: "",
+    sevenPlan: "",
     fifteenPlan: "",
     thirtyPlan: "",
   });
   const [loading, setLoading] = useState(false);
-  const Plan = useSelector((state) => state.plans.plans);
+  const { plans } = useSelector((state) => state.plans);
   const dispatch = useDispatch();
 
   useEffect(() => {
     let componentDidMount = true;
     dispatch(getPlans());
     if (componentDidMount) {
-      setPlans(Plan);
+      setPlan(plans);
     }
     return () => {
       componentDidMount = false;
@@ -27,11 +29,11 @@ export default function ProfitMargin() {
 
   const onChangeText = ({ target }) => {
     const { name, value } = target;
-    setPlans((prevState) => ({ ...prevState, [name]: value }));
+    setPlan((prevState) => ({ ...prevState, [name]: value }));
   };
   const done = async () => {
     setLoading(true);
-    await dispatch(editPlans(plans))
+    await dispatch(editPlans(plan))
     dispatch(getPlans());
     setLoading(false);
   };
@@ -42,7 +44,31 @@ export default function ProfitMargin() {
         <div className="col-lg-12">
           <div className="form-group">
             <label>
-              2 Days <strong className="text-danger">*</strong>
+              1 Meal <strong className="text-danger">*</strong>
+            </label>
+            <div className="input-group m-b">
+              <div className="input-group-prepend">
+                <span className="input-group-addon">$</span>
+              </div>
+              <input
+                type="text"
+                className="form-control"
+                name="singlePlan"
+                onChange={(e) => onChangeText(e)}
+                defaultValue={plans.singlePlan}
+              />
+              <div className="input-group-append">
+                <span className="input-group-addon">.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="row mt-1">
+        <div className="col-lg-12">
+          <div className="form-group">
+            <label>
+              2 Meals <strong className="text-danger">*</strong>
             </label>
             <div className="input-group m-b">
               <div className="input-group-prepend">
@@ -53,7 +79,7 @@ export default function ProfitMargin() {
                 className="form-control"
                 name="twoPlan"
                 onChange={(e) => onChangeText(e)}
-                defaultValue={Plan.twoPlan}
+                defaultValue={plans.twoPlan}
               />
               <div className="input-group-append">
                 <span className="input-group-addon">.00</span>
@@ -67,7 +93,7 @@ export default function ProfitMargin() {
         <div className="col-lg-12">
           <div className="form-group">
             <label>
-              15 Days <strong className="text-danger">*</strong>
+              7 Meals <strong className="text-danger">*</strong>
             </label>
             <div className="input-group m-b">
               <div className="input-group-prepend">
@@ -76,7 +102,32 @@ export default function ProfitMargin() {
               <input
                 type="text"
                 className="form-control"
-                defaultValue={Plan.fifteenPlan}
+                defaultValue={plans.sevenPlan}
+                name="sevenPlan"
+                onChange={(e) => onChangeText(e)}
+              />
+              <div className="input-group-append">
+                <span className="input-group-addon">.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="row mt-1">
+        <div className="col-lg-12">
+          <div className="form-group">
+            <label>
+              15 Meals <strong className="text-danger">*</strong>
+            </label>
+            <div className="input-group m-b">
+              <div className="input-group-prepend">
+                <span className="input-group-addon">$</span>
+              </div>
+              <input
+                type="text"
+                className="form-control"
+                defaultValue={plans.fifteenPlan}
                 name="fifteenPlan"
                 onChange={(e) => onChangeText(e)}
               />
@@ -92,7 +143,7 @@ export default function ProfitMargin() {
         <div className="col-lg-12">
           <div className="form-group">
             <label>
-              30 Days <strong className="text-danger">*</strong>
+              30 Meals <strong className="text-danger">*</strong>
             </label>
             <div className="input-group m-b">
               <div className="input-group-prepend">
@@ -101,7 +152,7 @@ export default function ProfitMargin() {
               <input
                 type="text"
                 className="form-control"
-                defaultValue={Plan.thirtyPlan}
+                defaultValue={plans.thirtyPlan}
                 name="thirtyPlan"
                 onChange={(e) => onChangeText(e)}
               />

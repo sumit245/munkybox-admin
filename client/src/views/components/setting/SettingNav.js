@@ -30,6 +30,9 @@ export default function SettingNav() {
         <Tab eventKey="privacy" title="Privacy Policies">
           <SummerNoteEditor />
         </Tab>
+        <Tab eventKey="privacy" title="Create Meal Plan">
+          <SummerNoteEditor />
+        </Tab>
       </Tabs>
     </div>
   );

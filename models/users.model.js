@@ -42,6 +42,6 @@ let Users = new Schema({
     type: Array,
   },
   wallet_balance: { type: String, default: 0 }
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model("Users", Users);

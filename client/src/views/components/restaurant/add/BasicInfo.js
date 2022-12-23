@@ -10,7 +10,7 @@ export default function BasicInfo(props) {
   const [chef, setChef] = useState({});
 
   const onChangeText = ({ target }) => {
-    setChef((prevState) => ({ ...prevState, [target.name]: target.value }));
+    setChef((prevState) => ({ ...prevState, [target.name]: target.value }));  
   };
 
   const handleContinue = (e) => {
@@ -124,10 +124,10 @@ export default function BasicInfo(props) {
           </div>
           <div className="form-group">
             <label>
-              STATE <strong className="text-danger">*</strong>
+              CITY <strong className="text-danger">*</strong>
             </label>
             <input
-              name="state"
+              name="city"
               onChange={(e) => onChangeText(e)}
               type="text"
               className="form-control required"
@@ -135,26 +135,16 @@ export default function BasicInfo(props) {
           </div>
           <div className="form-group">
             <label>
-              CUISINE <strong className="text-danger">*</strong>
+              COUNTRY <strong className="text-danger">*</strong>
             </label>
-            <select
-              name="cuisine_type"
+            <input
+              name="country"
               onChange={(e) => onChangeText(e)}
+              type="text"
               className="form-control required"
-              defaultValue="Choose an option"
-            >
-              <option>Choose an option</option>
-              {cuisine.map((data, key) => (
-                <option
-                  name={data.cuisinename}
-                  value={data.cuisineName}
-                  key={key}
-                >
-                  {data.cuisineName}
-                </option>
-              ))}
-            </select>
+            />
           </div>
+
         </div>
         <div className="col-lg-4">
           <div className="form-group">
@@ -170,7 +160,7 @@ export default function BasicInfo(props) {
           </div>
           <div className="form-group">
             <label>
-              STREET <strong className="text-danger">*</strong>
+              ADDRESS LINE 1 <strong className="text-danger text-uppercase">*</strong>
             </label>
             <input
               name="locality"
@@ -181,10 +171,10 @@ export default function BasicInfo(props) {
           </div>
           <div className="form-group">
             <label>
-              COUNTRY <strong className="text-danger">*</strong>
+              STATE<strong className="text-danger">*</strong>
             </label>
             <input
-              name="country"
+              name="state"
               onChange={(e) => onChangeText(e)}
               type="text"
               className="form-control required"
@@ -207,7 +197,7 @@ export default function BasicInfo(props) {
         <div className="col-lg-4">
           <div className="form-group">
             <label>
-              EMAIL ADDRESS <strong className="text-danger">*</strong>
+              EMAIL ID <strong className="text-danger">*</strong>
             </label>
             <input
               name="email"
@@ -218,7 +208,7 @@ export default function BasicInfo(props) {
           </div>
           <div className="form-group">
             <label>
-              CITY <strong className="text-danger">*</strong>
+              ADDRESS LINE 2
             </label>
             <input
               name="city"
@@ -254,8 +244,34 @@ export default function BasicInfo(props) {
           </div>
         </div>
       </div>
+
+
       <div className="row mt-2">
+
+
         <div className="col-lg-4">
+          <div className="form-group">
+            <label>
+              CUISINE <strong className="text-danger">*</strong>
+            </label>
+            <select
+              name="cuisine_type"
+              onChange={(e) => onChangeText(e)}
+              className="form-control required"
+              defaultValue="Choose an option"
+            >
+              <option>Choose an option</option>
+              {cuisine.map((data, key) => (
+                <option
+                  name={data.cuisinename}
+                  value={data.cuisineName}
+                  key={key}
+                >
+                  {data.cuisineName}
+                </option>
+              ))}
+            </select>
+          </div>
           <div className="form-group">
             <label>
               MEAL TIME <strong className="text-danger">*</strong>
@@ -270,8 +286,9 @@ export default function BasicInfo(props) {
               <option value="Dinner">Dinner</option>
             </select>
           </div>
+
         </div>
-        <div className="col-lg-8">
+        <div className="col-lg-8" aria-rowspan={2}>
           <div className="form-group">
             <label>
               About <strong className="text-danger">*</strong>

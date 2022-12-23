@@ -25,10 +25,7 @@ export const getRestaurant = (id) => async (dispatch) => {
 export const getAllRestaurant = () => async (dispatch) => {
   const response = await httpClient.get("/api/newrest/");
   const restaurant = await response.data;
-  dispatch({
-    type: GET_RESTAURANT,
-    payload: restaurant,
-  });
+  dispatch({ type: GET_RESTAURANT, payload: restaurant,});
 };
 export const editBasicInfo = (data) => {
   return { type: EDIT_BASIC_INFO, payload: data };

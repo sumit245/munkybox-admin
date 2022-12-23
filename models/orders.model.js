@@ -13,7 +13,9 @@ let Order = new Schema({
   end_date: { type: String },
   restaurant_id: { type: String },
   restaurant: { type: String },
+  restaurant_image: { type: String },
   plan: { type: String },
+  plan_name: { type: String },
   base_price: { type: String },
   price: { type: String },
   tip: { type: String },
@@ -28,6 +30,8 @@ let Order = new Schema({
   notes: { type: String },
   category: { type: String },
   meal_type: { type: String },
+  meals: { type: Array },
+  isDelivery: { type: Boolean },
   order_time: {
     type: String,
   },
@@ -49,6 +53,7 @@ let Order = new Schema({
       },
     ],
   },
+  color: { type: String }
 });
 
 module.exports = mongoose.model("Order", Order);

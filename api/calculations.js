@@ -76,7 +76,8 @@ router.route("/revenue").get(async function (req, res) {
   totalservicefee = totalservicefee.reduce(add, 0); //Service Revenue
   let profits = await profit_margins.find();
   let commission_array = await commissions.find();
-  const { commission } = commission_array[0];
+  // const { commission } = commission_array[0];
+  const commission = 0
   let tips = await neworders.map((item) => item.tip);
   tips = tips.reduce(add, 0); //Tips Revenue
   let taxes = await neworders.map((item) => item.taxes);

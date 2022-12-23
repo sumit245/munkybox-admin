@@ -10,6 +10,15 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
   },
 });
 
+const stripe_us = require("stripe")(process.env.STRIPE_SECRET_KEY_US, {
+  apiVersion: "2020-08-27",
+  appInfo: {
+    name: "feasti dash inc",
+    version: "0.0.2",
+    url: "https://github.com/stripe-samples",
+  },
+});
+
 router.route("/create-payment-intent").post(async (req, res) => {
   const {
     paymentMethodId,
@@ -52,23 +61,23 @@ router.route("/create-payment-intent").post(async (req, res) => {
   }
 });
 
-router.route("/charge").post(async (req, res) => {
+router.route("/charge/:currency").post(async (req, res) => {
   const { token, amount, user_id } = req.body;
   const charge = await stripe.charges.create({
     amount: amount * 100,
-    currency: "cad",
+    currency: req.params.currency,
     description: `Wallet Recharge for ${user_id}`,
     source: token,
   });
   res.send(charge);
 });
 
-router.route("/pay").post(async (req, res) => {
+router.route("/pay/:currency").post(async (req, res) => {
   const { token, amount, user_id, restaurant_id, plan_name } = req.body;
   try {
     const charge = await stripe.charges.create({
       amount: amount * 100,
-      currency: "cad",
+      currency: req.params.currency,
       description: `Amount of $${amount} has been received for ${plan_name} from ${user_id} `,
       source: token,
       metadata: {
